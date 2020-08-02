@@ -11,7 +11,7 @@ public class BinADec {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Introduce un numero binario a convertir en decimal de flotante.");
+        System.out.println("Insert a binary number to cast in float");
         String numer = sc.nextLine();
         StringTokenizer tokens = new StringTokenizer(numer, ".");
 

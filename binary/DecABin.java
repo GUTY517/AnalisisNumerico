@@ -12,7 +12,7 @@ public class DecABin {
         double bin;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Introduce un numero");
+        System.out.println("Insert a decimal number to cast");
         String numer = sc.nextLine();
         StringTokenizer tokens = new StringTokenizer(numer, ".");
 
