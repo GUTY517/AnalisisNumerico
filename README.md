@@ -1,5 +1,7 @@
 # Analisis Numerico
 
+This git will hold numerical analysis methods implemented for the course "Analisis númerico" at EAFIT University.
+
 ## Team members:
 * Mateo Gutiérrez
 * Mateo Marulanda
@@ -11,15 +13,18 @@
    - Python3
    - Java
 
-<p align="center">
-  <img width="100" height="100" src="https://www.python.org/static/community_logos/python-logo.png">
-  <img width="100" height="100" src="https://logos-download.com/wp-content/uploads/2016/10/Java_logo_icon-700x392.png">
-</p>
-
 ### Requirements
 
-To run this project you'll need to install:
+This project is mainly develop in Python3.7 and Java, the libreries needed for python can be found in the requirementes file located in the python folder.
 
-* Python3
-* Java
-* Git
+## Usage
+
+For Python implementation using Linux:
+```
+python3 <script>.py
+```
+For Java implementation using Linux:
+```
+To compile: javac <filename>.java
+To run: java filename
+```
