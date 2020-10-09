@@ -8,7 +8,7 @@ from prettytable import PrettyTable
 
 
 def function(num):
-    '''Takes a function and return it to the main function'''
+    '''Calculates inputed function'''
     f_x = (math.exp(-num)) - math.sin(4*num)
     return f_x
 
