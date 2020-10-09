@@ -1,4 +1,5 @@
 # -*- mode: gitignore; -*-
+## Emacs
 *~
 \#*\#
 /.emacs.desktop
@@ -16,3 +17,25 @@ tramp
 __pycache__/
 *$py.class
 *.pyc
+## Netbeans
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+## Java
+# Compiled class file
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
