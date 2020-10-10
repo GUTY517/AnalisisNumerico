@@ -25,26 +25,26 @@ def secant(x_0, x_1, tolerance, iterations):
         f_x1 = function(x_1)
         iteration = 0
         error = tolerance + 1
-        den = f_x1 - f_x0
+        denominator = f_x1 - f_x0
         table.add_row([iteration, x_0, '%.2E' % Decimal(str(f_x0)), '-'])
         iteration += 1
         table.add_row([iteration, x_1, '%.2E' % Decimal(str(f_x1)), '-'])
-        while error > tolerance and f_x1 != 0 and den != 0 and iteration < iterations:
+        while error > tolerance and f_x1 != 0 and denominator != 0 and iteration < iterations:
             iteration += 1
-            x_2 = x_1 - ((f_x1 * (x_1 - x_0)) / den)
+            x_2 = x_1 - ((f_x1 * (x_1 - x_0)) / denominator)
             error = abs((x_2-x_1))
             x_0 = x_1
             f_x0 = f_x1
             x_1 = x_2
             f_x1 = function(x_1)
-            den = f_x1 - f_x0
+            denominator = f_x1 - f_x0
             table.add_row([iteration, x_1, '%.2E' % Decimal(
                 str(f_x1)), '%.2E' % Decimal(str(error))])
         if f_x1 == 0:
             root = x_1
         elif error < tolerance:
             root = (x_1, '%.2E' % Decimal(str(error)))
-        elif den == 0:
+        elif denominator == 0:
             root = (x_1, "Multiple root found")
         else:
             root = None
