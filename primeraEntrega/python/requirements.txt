@@ -3,3 +3,4 @@ python3 -m pip install setuptools
 python3 -m pip install wheel
 python3 -m pip install prettytable
 python3 -m pip install pandas
+python3 -m pip install scipy
