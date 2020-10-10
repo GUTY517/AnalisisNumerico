@@ -21,17 +21,17 @@ def newton(x_0, tolerance, iterations):
     table = PrettyTable(['Iteration', 'Xn', 'function(Xn)', 'df(Xn)', 'Error'])
     f_x = function(x_0)[0]
     deriv_f = function(x_0)[1]
-    cont = 0
+    iteration = 0
     error = tolerance + 1
-    table.add_row([cont, x_0, f_x, deriv_f, '-'])
-    while error > tolerance and f_x != 0 and deriv_f != 0 and cont < iterations:
+    table.add_row([iteration, x_0, f_x, deriv_f, '-'])
+    while error > tolerance and f_x != 0 and deriv_f != 0 and iteration < iterations:
         x_1 = x_0 - (f_x/deriv_f)
         f_x = function(x_1)[0]
         deriv_f = function(x_1)[1]
         error = abs((x_1-x_0)/x_1)
         x_0 = x_1
-        cont += 1
-        table.add_row([cont, x_1, f_x, deriv_f, '%.2E' % Decimal(str(error))])
+        iteration += 1
+        table.add_row([iteration, x_1, f_x, deriv_f, '%.2E' % Decimal(str(error))])
     if f_x == 0:
         root = (x_0, '%.2E' % Decimal(str(error)))
     elif error < tolerance:
