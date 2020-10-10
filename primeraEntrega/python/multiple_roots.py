@@ -23,7 +23,7 @@ def function(number):
 def multiple_roots(x_0, tolerance, iterations):
     '''Multiple roots method'''
     table = PrettyTable(['Iteration', 'Xn', 'f(Xn)',
-                         'df(Xn)', 'd\'\'f(Xn)', 'Error'])
+                         'f\'(Xn)', 'f\'\'(Xn)', 'Error'])
     f_x = function(x_0)[0]
     deriv_f = function(x_0)[1]
     deriv_f2 = function(x_0)[2]

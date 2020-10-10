@@ -16,7 +16,7 @@ def function(num):
 
 def secant(x_0, x_1, tolerance, iterations):
     '''Secant method to calculate multiple roots'''
-    table = PrettyTable(['Iteration', 'Xn', 'f(Xm)', 'Error'])
+    table = PrettyTable(['Iteration', 'Xn', 'f(Xn)', 'Error'])
     f_x0 = function(x_0)
     root = 0
     if f_x0 == 0:

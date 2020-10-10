@@ -36,6 +36,7 @@ def fixed_point(x_a, tolerance, iterations):
         root = (x_a, '%.2E' % Decimal(str(error)))
     else:
         root = (None, iterations)
+        print("Root not found!")
     print(table)
     return root
 

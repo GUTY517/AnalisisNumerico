@@ -18,7 +18,7 @@ def function(num):
 
 def newton(x_0, tolerance, iterations):
     '''Newton method implemetation'''
-    table = PrettyTable(['Iteration', 'Xn', 'function(Xn)', 'df(Xn)', 'Error'])
+    table = PrettyTable(['Iteration', 'Xn', 'f(Xn)', 'f\'(Xn)', 'Error'])
     f_x = function(x_0)[0]
     deriv_f = function(x_0)[1]
     iteration = 0

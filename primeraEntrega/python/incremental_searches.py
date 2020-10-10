@@ -47,6 +47,6 @@ def incremental_searches(x_0, delta, iterations):
             x_1 = x_0 + delta
             fx1 = function(x_1)
             cont += 1
-    return 0, roots, cont
+    return roots, cont
 
 print(incremental_searches(5, 1.5, 20))
