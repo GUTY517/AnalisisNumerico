@@ -11,7 +11,7 @@ def function(number):
     '''Calculate the inputed function'''
     sympy.init_printing(use_unicode=True)
     x_sym = sympy.symbols('x')
-    f_x = sympy.exp(x_sym-2) - sympy.ln(x_sym-1) - (x_sym**2) + (4*x_sym) - 5
+    f_x = sympy.exp(x_sym) - x_sym - 1
     f_n = f_x.evalf(subs={x_sym: number})
     deriv_f = sympy.Derivative(f_x, x_sym).doit()
     derivative = deriv_f.evalf(subs={x_sym: number})
@@ -22,15 +22,14 @@ def function(number):
 
 def multiple_roots(x_0, tolerance, iterations):
     '''Multiple roots method'''
-    table = PrettyTable(['Iteration', 'Xn', 'f(Xn)',
-                         'f\'(Xn)', 'f\'\'(Xn)', 'Error'])
+    table = PrettyTable(['Iteration', 'xi', 'f(xi)',
+                         'Error'])
     f_x = function(x_0)[0]
     deriv_f = function(x_0)[1]
     deriv_f2 = function(x_0)[2]
     iteration = 0
     error = tolerance + 1
-    table.add_row([iteration, x_0, '%.2E' % Decimal(str(f_x)), '%.2E' %
-                   Decimal(str(deriv_f)), '%.2E' % Decimal(str(deriv_f2)), '-'])
+    table.add_row([iteration, x_0, '%.2E' % Decimal(str(f_x)), '-'])
     while error > tolerance and f_x != 0 and deriv_f != 0 and iteration < iterations:
         numerator = f_x * deriv_f
         denominator = (deriv_f**2) - (f_x * deriv_f2)
@@ -41,12 +40,11 @@ def multiple_roots(x_0, tolerance, iterations):
         error = abs((x_1-x_0))
         x_0 = x_1
         iteration += 1
-        table.add_row([iteration, x_1, '%.2E' % Decimal(str(f_x)), '%.2E' % Decimal(
-            str(deriv_f)), '%.2E' % Decimal(str(deriv_f2)), '%.2E' % Decimal(str(error))])
+        table.add_row([iteration, x_1, '%.2E' % Decimal(str(f_x)), '%.2E' % Decimal(str(error))])
     if f_x == 0:
         root = x_0
     elif error < tolerance:
-        root = (x_1, '%.2E' % Decimal(str(error)))
+        root = x_1
     elif deriv_f == 0 and f_x == 0 and deriv_f2 != 0:
         root = x_1
     else:
@@ -55,4 +53,4 @@ def multiple_roots(x_0, tolerance, iterations):
     return root
 
 
-print(multiple_roots(1.6, 1e-04, 100))
+print("There is an aproximate root in:", multiple_roots(1, 1e-07, 100))

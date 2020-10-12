@@ -9,14 +9,14 @@ from prettytable import PrettyTable
 
 def function(num):
     '''Calculates inputed function'''
-    f_x = (math.exp(-num)) - math.sin(4*num)
+    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
     return f_x
 
 
 def bisection(initial_b, initial_a, tolerance, iterations):
     '''Main function to calculate the root of the provided function'''
     # Output table titles
-    table = PrettyTable(['Iteration', 'bi', 'ai', 'f(ai)', 'f(x_m)', 'Error'])
+    table = PrettyTable(['Iteration', 'a', 'xm', 'b', 'f(xm)', 'Error'])
     fbi = function(initial_b)
     fai = function(initial_a)
     root = 0
@@ -29,7 +29,7 @@ def bisection(initial_b, initial_a, tolerance, iterations):
         fxm = function(x_m)
         iteration = 1
         error = tolerance + 1
-        table.add_row([iteration, initial_b, initial_a, x_m, fxm, '-'])
+        table.add_row([iteration, initial_b, x_m, initial_a, '%.2E' % fxm, '-'])
         while error > tolerance and fxm != 0 and iteration < iterations:
             if fbi * fxm < 0:
                 initial_a = x_m
@@ -42,18 +42,18 @@ def bisection(initial_b, initial_a, tolerance, iterations):
             fxm = function(x_m)
             error = abs(x_m-aux)
             iteration += 1
-            table.add_row([iteration, initial_b, initial_a, x_m, fxm, '%.2E' %
+            table.add_row([iteration, initial_b, x_m, initial_a, '%.2E' % fxm, '%.2E' %
                            Decimal(str(error))])
         if fxm == 0:
             root = x_m
         elif error < tolerance:
-            root = (x_m, '%.2E' % Decimal(str(error)))
+            root = x_m
         else:
-            root = (None, iterations)
+            root = None
         print(table)
     else:
         root = "Root not found!"
     return root
 
 
-print(bisection(3, 3.5, 1e-07, 100))
+print("There is an aproximate root in:", bisection(0, 1, 1e-07, 100))

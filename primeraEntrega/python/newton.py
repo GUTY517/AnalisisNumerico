@@ -18,12 +18,12 @@ def function(num):
 
 def newton(x_0, tolerance, iterations):
     '''Newton method implemetation'''
-    table = PrettyTable(['Iteration', 'Xn', 'f(Xn)', 'f\'(Xn)', 'Error'])
+    table = PrettyTable(['Iteration', 'xi', 'f(xi)', 'Error'])
     f_x = function(x_0)[0]
     deriv_f = function(x_0)[1]
     iteration = 0
     error = tolerance + 1
-    table.add_row([iteration, x_0, f_x, deriv_f, '-'])
+    table.add_row([iteration, x_0, '%.2E' % f_x, '-'])
     while error > tolerance and f_x != 0 and deriv_f != 0 and iteration < iterations:
         x_1 = x_0 - (f_x/deriv_f)
         f_x = function(x_1)[0]
@@ -31,11 +31,11 @@ def newton(x_0, tolerance, iterations):
         error = abs((x_1-x_0)/x_1)
         x_0 = x_1
         iteration += 1
-        table.add_row([iteration, x_1, f_x, deriv_f, '%.2E' % Decimal(str(error))])
+        table.add_row([iteration, x_1, '%.2E' % f_x, '%.2E' % Decimal(str(error))])
     if f_x == 0:
-        root = (x_0, '%.2E' % Decimal(str(error)))
+        root = x_0
     elif error < tolerance:
-        root = (x_1, '%.2E' % Decimal(str(error)))
+        root = x_1
     elif deriv_f == 0:
         root = (x_1, "Multiple root found")
     else:
@@ -43,4 +43,4 @@ def newton(x_0, tolerance, iterations):
     print(table)
     return root
 
-print(newton(0.5, 1e-07, 100))
+print("There is an aproximate root in:", newton(0.5, 1e-07, 100))

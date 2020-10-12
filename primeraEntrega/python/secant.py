@@ -9,14 +9,13 @@ from prettytable import PrettyTable
 
 def function(num):
     '''Calculate inputed function'''
-    f_x = math.exp(num+1)-(7*(num**2))-(4*num)+2 + \
-        (7*(math.sin((num**2)-8)*math.sin((num**2)-8)))
+    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
     return f_x
 
 
 def secant(x_0, x_1, tolerance, iterations):
     '''Secant method to calculate multiple roots'''
-    table = PrettyTable(['Iteration', 'Xn', 'f(Xn)', 'Error'])
+    table = PrettyTable(['Iteration', 'xi', 'f(xi)', 'Error'])
     f_x0 = function(x_0)
     root = 0
     if f_x0 == 0:
@@ -43,7 +42,7 @@ def secant(x_0, x_1, tolerance, iterations):
         if f_x1 == 0:
             root = x_1
         elif error < tolerance:
-            root = (x_1, '%.2E' % Decimal(str(error)))
+            root = x_1
         elif denominator == 0:
             root = (x_1, "Multiple root found")
         else:
@@ -52,4 +51,4 @@ def secant(x_0, x_1, tolerance, iterations):
     return root
 
 
-print(secant(3.1, 3.7, 1E-07, 100))
+print("There is an aproximate root in:", secant(0.5, 1, 1E-07, 100))

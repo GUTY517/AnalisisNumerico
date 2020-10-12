@@ -4,17 +4,18 @@
 from __future__ import print_function
 from decimal import Decimal
 from prettytable import PrettyTable
+import math
 
 
 def function(number):
     '''Calculates inputed function'''
-    f_x = (2 * (number**2)) + (3 * number) - 3
+    f_x = (math.log((math.sin(number)*math.sin(number)) + 1)) - (1/2)
     return f_x
 
 
 def false_rule(initial_b, initial_a, tolerance, iterations):
     '''Returns root of a function using false rule method'''
-    table = PrettyTable(['Iteration', 'bi', 'ai', 'f(a)', 'f(X_m)', 'Error'])
+    table = PrettyTable(['Iteration', 'a', 'xm', 'b', 'f(xm)', 'Error'])
     fxi = function(initial_b)
     fxs = function(initial_a)
     s_i = initial_b - initial_a
@@ -30,7 +31,7 @@ def false_rule(initial_b, initial_a, tolerance, iterations):
             fxm = function(x_m)
             interation = 1
             error = tolerance + 1
-            table.add_row([interation, initial_b, initial_a, x_m, fxm, '-'])
+            table.add_row([interation, initial_b, x_m, initial_a, '%.2E' % fxm, '-'])
             while error > tolerance and fxm != 0 and interation < iterations:
                 if fxi * fxm < 0:
                     initial_a = x_m
@@ -47,14 +48,14 @@ def false_rule(initial_b, initial_a, tolerance, iterations):
                 fxm = function(x_m)
                 error = abs(x_m-aux)
                 interation += 1
-                table.add_row([interation, initial_b, initial_a,
-                               x_m, fxm, '%.2E' % Decimal(str(error))])
+                table.add_row([interation, initial_b, x_m,
+                               initial_a, '%.2E' % fxm, '%.2E' % Decimal(str(error))])
             if fxm == 0:
                 root = x_m
             elif error < tolerance:
-                root = (x_m, '%.2E' % Decimal(str(error)))
+                root = x_m
             else:
-                root = (None, iterations)
+                root = None
             print(table)
         else:
             root = False
@@ -62,4 +63,4 @@ def false_rule(initial_b, initial_a, tolerance, iterations):
         root = None
     return root
 
-print(false_rule(0.65, 0.7, 0.5e-5, 100))
+print("There is an aproximate root in:", false_rule(0, 1, 1e-7, 100))

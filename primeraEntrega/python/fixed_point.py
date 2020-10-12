@@ -8,36 +8,37 @@ from prettytable import PrettyTable
 
 def function(num):
     '''Calculates inputed function'''
-    f_x = (math.exp(num)) - math.sin(4*num)
+    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2) - num
     return f_x
 
 def function_g(num):
     '''Calculates second inputed function'''
-    f_x = (math.exp(num+1)-(7*(num**2))+2)/4
+    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
     return f_x
 
 def fixed_point(x_a, tolerance, iterations):
     '''Main function of the fixed point'''
-    table = PrettyTable(['Iteration', 'x_n', 'f(x_n)', 'Error'])
+    table = PrettyTable(['Iteration', 'xi', 'g(xi)', 'f(xi)', 'Error'])
     f_x = function(x_a)
+    g_x = function_g(x_a)
     iteration = 0
     error = tolerance + 1
-    table.add_row([iteration, x_a, f_x, '-'])
+    table.add_row([iteration, x_a, g_x, '%.2E' % f_x, '-'])
     while f_x != 0 and error > tolerance and iteration < iterations:
-        x_n = function_g(x_a)
-        f_x = function(x_n)
-        error = abs((x_n-x_a))
-        x_a = x_n
+        x_i = function_g(x_a)
+        f_x = function(x_i)
+        error = abs((x_i-x_a))
+        x_a = x_i
         iteration += 1
-        table.add_row([iteration, x_n, f_x, '%.2E' % Decimal(str(error))])
+        table.add_row([iteration, x_i, g_x, '%.2E' % f_x, '%.2E' % Decimal(str(error))])
     if f_x == 0:
         root = x_a
     elif error < tolerance:
-        root = (x_a, '%.2E' % Decimal(str(error)))
+        root = x_a
     else:
-        root = (None, iterations)
+        root = None
         print("Root not found!")
     print(table)
     return root
 
-print(fixed_point(3.5, 1e-07, 100))
+print("There is an aproximate root in:", fixed_point(0.5, 1e-07, 100))
