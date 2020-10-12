@@ -43,7 +43,8 @@ def get_values(step_matrix, matrix_size):
     vector = []
     for x in range(matrix_size):
         vector.append(0)
-    vector[matrix_size - 1] = step_matrix[matrix_size - 1][matrix_size] / step_matrix[matrix_size - 1][matrix_size - 1]
+    vector[matrix_size - 1] = step_matrix[matrix_size - 1][matrix_size] / \
+        step_matrix[matrix_size - 1][matrix_size - 1]
     i = matrix_size - 2
     while i >= 0:
         result = 0
@@ -55,6 +56,7 @@ def get_values(step_matrix, matrix_size):
         i -= 1
     return vector
 
+
 def matrix_input():
     '''Console matrix input'''
     rows = int(input("Enter number of rows: "))
@@ -65,12 +67,16 @@ def matrix_input():
 
     return matrix
 
+
 def main():
+    print("Input matrix A:")
     matrix = matrix_input()
+    print("Input matrix B:")
     vector = matrix_input()
 
     results_x = get_values(stepped_matrix(matrix, vector), len(matrix))
     x_values = '\n'.join([str(elem) for elem in results_x])
     print("Values of X: \n", x_values)
+
 
 main()
