@@ -76,6 +76,7 @@ def main():
 
     results_x = get_values(stepped_matrix(matrix, vector), len(matrix))
     x_values = '\n'.join([str(elem) for elem in results_x])
+    print("Pivoted Matrix: \n", stepped_matrix(matrix, vector), "\n")
     print("Values of X: \n", x_values)
 
 
