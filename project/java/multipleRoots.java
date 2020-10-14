@@ -1,15 +1,11 @@
 package analisisnumerico;
 
-/**
- *
- * @author Yashua
- */
 public class Raices {
 
     /*
-    La 'F', 'fp', 'fpp' se reemplaza con la funcion objetivo
+    The 'F', 'fp', 'fpp' get replaced by the objective function
      */
-    public static String raicesMultiples(double tol, double xn, int iter) {
+    public static String multipleRoots(double tol, double xn, int iter) {
         double fx, fxpp, fxp, error, xna, fxa;
         int cont;
         if (iter > 0) {
@@ -33,22 +29,22 @@ public class Raices {
             }
             System.out.println(xn);
             if (fx == 0) {
-                return "Raíz en xn = " + xn;
+                return "Root found in xn = " + xn;
             }
             if (error < tol) {
                 if ((fx * fxa) < 0) {
-                    return "Entre xn = (" + xna + "," + xn + ") existe una raíz.";
+                    return "There is a root between xn = (" + xna + "," + xn + ")";
                 } else {
                     double xns = xn - xna;
                     double fns = fp(xn + xns);
                     if ((fxp * fns) < 0) {
-                        return xn + " es una aproximacion a una raiz";
+                        return xn + " is an aproximate root";
                     }
-                    return "Falló en encontrar una raíz.";
+                    return "No root found.";
                 }
             }
-            return "Superado el número de iteraciones.";
+            return "The number of iterations has been surpassed.";
         }
-        return "El número de iteraciones debe ser mayor a 0.";
+        return "The number of iterations mus be bigger than zero";
     }
 }

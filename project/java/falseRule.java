@@ -1,29 +1,25 @@
 import java.util.Scanner;
 
-/**
- *
- * @author Yashua
- */
-public class ReglaFalsa {
+public class falseRule {
 
     /**
-     * ℯ^((3x-12))+x*cos(3x)-x^(2)+4 intervalo [2,3]
+     * ℯ^((3x-12))+x*cos(3x)-x^(2)+4 interval [2,3]
      *
      * @param xi Limite Inferior
      * @param xs Limite Superior
      * @param tol Tolerancia
      * @param ite Numero de Iteraciones
      */
-    public void reglaFalsa(double xi, double xs, double tol, int iter) {
-        ReglaFalsa rf = new ReglaFalsa();
+    public void falseRule(double xi, double xs, double tol, int iter) {
+        falseRule rf = new falseRule();
         double yi = rf.Fx(xi);
         double ys = rf.Fx(xi);
 
         if (yi == 0) {
-            System.out.println("xi, el limite inferior es raiz");
+            System.out.println("xi, is the bottom limit of the root");
 
         } else if (ys == 0) {
-            System.out.println("xs, el limite superior es raiz");
+            System.out.println("xs, is the top limit of the root");
 
         } else {
 
@@ -31,10 +27,10 @@ public class ReglaFalsa {
                 double xm = xi - (yi * (xs - xi)) / (ys - yi);
                 double ym = rf.Fx(xm);
 
-                int contador = 1;
+                int cont = 1;
                 double error = tol + 1;
 
-                while ((ym != 0) && (error > tol) && (contador < iter)) {
+                while ((ym != 0) && (error > tol) && (cont < iter)) {
 
                     if (yi * ym < 0) {
                         xs = xm;
@@ -50,20 +46,20 @@ public class ReglaFalsa {
                     ym = rf.Fx(xm);
 
                     error = Math.abs(xm - temp);
-                    contador = contador + 1;
+                    cont = cont + 1;
                 }
 
                 if (ym == 0) {
-                    System.out.println("El valor de xm es raiz, xm = " + xm);
+                    System.out.println("xm is root, xm = " + xm);
                 } else if (error < tol) {
-                    System.out.println("El valor de xm es una aproximacion a la raiz, con tolerancia de: " + tol);
-                    System.out.println("Valor de xm = " + xm);
+                    System.out.println("xm is an aproximation of a root, with tolerance of: " + tol);
+                    System.out.println("xm = " + xm);
                 } else {
-                    System.out.println("Fracaso en " + iter + " iteraciones");
+                    System.out.println("Failed in " + iter + " iterations");
                 }
 
             } else {
-                System.out.println("Intervalo inadecuado no hay cambio de signo");
+                System.out.println("There is no sing change in the interval");
             }
         }
     }
@@ -74,21 +70,18 @@ public class ReglaFalsa {
         return y;
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
 
-        Scanner lector = new Scanner(System.in);
+        Scanner reader = new Scanner(System.in);
 
         double xi = 0f, xs = 0f;
         double tol = 0f;
         int ite = 0;
 
-        xi = lector.nextDouble();
-        xs = lector.nextDouble();
-        tol = lector.nextDouble();
-        ite = lector.nextInt();
+        xi = reader.nextDouble();
+        xs = reader.nextDouble();
+        tol = reader.nextDouble();
+        ite = reader.nextInt();
 
     }
 

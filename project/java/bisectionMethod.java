@@ -1,17 +1,13 @@
 
 package analisisnumerico;
 
-/**
- *
- * @author Yashua
- */
 public class bisectionMethod {
     /*
-    La 'F' se reemplaza con la funcion objetivo
+    'F' gets replaced with the objective function
     */
-    
-    public static String metodoBiseccion(double xi, double xs, double tol, int iter)
-	{	
+
+    public static String bisectionMethod(double xi, double xs, double tol, int iter)
+	{
             double xm, yi, ys, ym, err = 5.0f, erra;
             int cont;
             yi = f(xi);
@@ -36,16 +32,16 @@ public class bisectionMethod {
                         erra = xm;
                         cont++;
                     }
-                    if (ym == 0) return "La ecuación tiene solución en xm = " + xm;
-                    if (err < tol) return "La ecuación tiene solución aproximada en xm = " + xm 
-			+ " con un error absoluto de " + err;
-			return "El número de iteraciones ha sido superado.";
+                    if (ym == 0) return "The ecuation have a solution in xm = " + xm;
+                    if (err < tol) return "There is an aproximate solution in xm = " + xm
+			+ " with and absolut error of " + err;
+			return "The number of iterations has been surpassed";
                     } else {
-			return "El número de iteraciones debe ser mayor a 0.";
+			return "The number of iterations mus be bigger than zero";
                     }
 		}
-            if (yi == 0) return "En xi = " + xi + " existe una raíz.";
-            if (ys == 0) return "En xs = " + xs + " existe una raíz.";
-            return "Dentro del intervalo dado no se encuentra una raíz.";
+            if (yi == 0) return "There is a root in xi = " + xi;
+            if (ys == 0) return "There is a root in xs = " + xs;
+            return "There is no root in the given interval.";
 	}
 }

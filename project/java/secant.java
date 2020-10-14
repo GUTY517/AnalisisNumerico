@@ -1,16 +1,12 @@
 
 package analisisnumerico;
 
-/**
- *
- * @author Yashua
- */
 public class Secante {
 
     /*
-    La 'F'  se reemplaza con la funcion objetivo
+    'F'  gets replaced by the objective function
      */
-    public static String metodoSecante(double tol, double x0, double x1, int iter) {
+    public static String secant(double tol, double x0, double x1, int iter) {
         double fx0, fx1, error, x1a;
         int cont;
         if (iter > 0) {
@@ -28,22 +24,22 @@ public class Secante {
                 cont++;
             }
             if (fx1 == 0) {
-                return "Raíz en xn = " + x1;
+                return "Root found in xn = " + x1;
             }
             if (error < tol) {
                 if ((fx1 * fx0) < 0) {
-                    return "Entre xn = (" + x0 + "," + x1 + ") existe una raíz.";
+                    return "There is a root between xn = (" + x0 + "," + x1 + ")";
                 } else {
                     double xns = x1 - (x1 * tol);
                     double fns = f(xns);
                     if ((fx1 * fns) < 0) {
-                        return "Entre xn = (" + xns + ", " + x1 + ") existe una raíz.";
+                        return "There is a root between xn = (" + xns + ", " + x1 + ")";
                     }
-                    return "Falló en encontrar una raíz.";
+                    return "No root found.";
                 }
             }
-            return "Superado el número de iteraciones.";
+            return "The number of iterations has been surpassed.";
         }
-        return "El número de iteraciones debe ser mayor a 0.";
+        return "The number of iterations mus be bigger than zero";
     }
 }

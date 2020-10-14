@@ -1,16 +1,12 @@
 
 package analisisnumerico;
 
-/**
- *
- * @author Yashua
- */
 public class PuntoFijo {
 
     /*
-    La 'F' y 'g' se reemplaza con la funcion objetivo
+    'F' y 'g' values gets replaced by the objective function
      */
-    public static String metodoPuntoFijo(double tol, double xn, int iter) {
+    public static String fixedPoint(double tol, double xn, int iter) {
         double fx, fxa, error, xna;
         int cont;
         if (iter > 0) {
@@ -28,22 +24,22 @@ public class PuntoFijo {
                 cont++;
             }
             if (fx == 0) {
-                return "Raíz en xn = " + xn;
+                return "Root in xn = " + xn;
             }
             if (error < tol) {
                 if ((fx * fxa) < 0) {
-                    return "Entre xn = (" + xna + "," + xn + ") existe una raíz.";
+                    return "There is a root between xn = (" + xna + "," + xn + ")";
                 } else {
                     double xns = xn - (xn * tol);
                     double fns = f(xns);
                     if ((fx * fns) < 0) {
-                        return "Entre xn = (" + xns + ", " + xn + ") existe una raíz.";
+                        return "There is a root between xn = (" + xns + ", " + xn + ")";
                     }
-                    return "Falló en encontrar una raíz.";
+                    return "No root found.";
                 }
             }
-            return "Superado el número de iteraciones.";
+            return "The number of iterations has been surpassed.";
         }
-        return "El número de iteraciones debe ser mayor a 0.";
+        return "The number of iterations mus be bigger than zero";
     }
 }
