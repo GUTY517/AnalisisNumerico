@@ -1,6 +1,5 @@
-python3 -m pip install sympy
-python3 -m pip install setuptools
-python3 -m pip install wheel
-python3 -m pip install prettytable
-python3 -m pip install pandas
-python3 -m pip install scipy
+numpy==1.19.2
+pandas==1.1.3
+prettytable==1.0.0
+scipy==1.5.2
+sympy==1.6.2
