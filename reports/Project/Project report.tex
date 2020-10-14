@@ -1,0 +1,122 @@
+\documentclass[11pt,spanish]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ragged2e}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{amsmath}
+\onehalfspacing
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=it]{caption}
+\usepackage[margin=2.5cm]{geometry}
+\graphicspath{ {images/} }
+
+\title{EAFIT UNIVERSITY\\
+COMPUTER SCIENCE DEPARTMENT\\
+CLASS METHODS IMPLEMENTATION}
+\author{
+  Gutiérrez Gómez, Mateo\\
+  \texttt{mgutie22@eafit.edu.co}
+    \and
+  Marulanda Cifuentes, Mateo\\
+  \texttt{mmarulandc@eafit.edu.co}
+    \and
+  Narvaez Pulgarin, Yashua\\
+  \texttt{yanarvaezp@eafit.edu.co}
+}
+
+\date{October 13, 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+For every method an matrix ,we are going to use the following formulas and test matrix, also we are going to use a $ Tol = 10^-7$ and $ N = 100 $
+
+\section{Formulas and matrix to use:}
+\begin{center}
+$f(x)= ln(sin^2(x) + 1) -\frac{1}{2}$\\
+$f'(x)= 2(sin^2(x) + 1)^-1 sin(x)cos(x)$\\
+$f1(x) = ln(sin^2(x) + 1) -\frac{1}{2}$\\
+$g(x) = ln(sin^2(x) + 1) -\frac{1}{2}$\\
+$h(x)=e^x - x -1$\\
+$h'(x) = e^x -1$\\
+$h''(x) = e^x$\\
+\end{center}
+\begin{center}
+Matrix and vectors:\\
+
+$A= \begin{pmatrix}
+2 & -1 & 0 & 3\\
+1 & 0.5 & 3 & 8\\
+0 & 13 & -2 & 11\\
+14 & 5 & -2 & 3
+\end{pmatrix}$ 
+,  
+$b= \begin{pmatrix}
+1\\
+1\\
+1\\
+1
+\end{pmatrix}$
+\end{center}
+
+\section{Bisection method}
+Valores de entrada: $f,a = 0,b = 1, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{bisection.png}
+\end{center}
+\section{Incremental search}
+Valores de entrada: $f,x_0 = -3, \triangle_x = 0.5$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{incremental-searches.png}
+\end{center}
+\section{Newton}
+Valores de entrada: $f,f'x_0 = 0.5, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{newton.png}
+\end{center}
+\section{Fixed Point}
+Valores de entrada: $f_1, g, x_0 = -0.5, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{fixed-point.png}
+\end{center}
+\section{Multiple Roots}
+Valores de entrada: $h,h',h'',x_0 = 1, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{multiple-roots.png}
+\end{center}
+\section{False Rule}
+Valores de entrada: $f,a = 0,b = 1, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{false-rule.png}
+\end{center}
+\section{Secant}
+Valores de entrada: $f,x_0 = 0.5, x_0 = 1, Tol$ y $N$
+\begin{center}
+    \includegraphics [scale=0.7]{secant.png}
+\end{center}
+
+
+\section{Gaussian Elimination}
+Valores de entrada: $A, b$
+\begin{center}
+    \includegraphics [scale=0.7]{gauss.png}
+\end{center}
+
+
+\section{Partial Pivoting}
+Valores de entrada: $A, b$
+\begin{center}
+    \includegraphics [scale=0.9]{partial-pivoting.png}
+\end{center}
+
+\section{Total Pivoting}
+Valores de entrada: $A, b$
+\begin{center}
+    \includegraphics [scale=0.7]{total-pivoting.png}
+\end{center}
+
+
+\end{document}
