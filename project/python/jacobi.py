@@ -17,11 +17,12 @@ def jacobi():
 
     for _ in range(iterations):
         guess = (vector_b - np.dot(hollow_matrix, guess)) / diagonal_matrix
+        # print("Iteration: ", i)                     #Uncomment if want to see the whole process
+        # print(guess)                                #Uncomment if want to see the whole process
     return guess
 
 print("Answer: ", jacobi())
 
 # matrix_a = np.array([[4.0, -2.0, 1.0], [1.0, -3.0, 2.0], [-1.0, 2.0, 6.0]])  # Change
 # vector_b = [1.0, 2.0, 3.0]                                   # Change
-# guess = [1.0, 1.0, 1.0]                                      # Change
 # print("Answer: ", solve(matrix_a, vector_b))
