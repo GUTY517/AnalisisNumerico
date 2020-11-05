@@ -7,9 +7,11 @@ from resources.fixed_point import Fixed_Point
 from resources.multiple_roots import Multiple_Roots
 from resources.newton import Newton
 from resources.secant import Secant
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 
