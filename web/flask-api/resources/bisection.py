@@ -5,7 +5,7 @@ from decimal import Decimal
 from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
-
+from resources.f_function import f_x
 
 def function(num):
     '''Calculates inputed function'''
@@ -13,12 +13,13 @@ def function(num):
     return f_x
 
 
-def bisection(initial_b, initial_a, tolerance, iterations):
+def bisection(function, initial_b, initial_a, tolerance, iterations):
     '''Main function to calculate the root of the provided function'''
     # Output table titles
+    raw_function = f_x(function=function, g_function='')
     table = PrettyTable(['Iteration', 'a', 'xm', 'b', 'f(xm)', 'Error'])
-    fbi = function(initial_b)
-    fai = function(initial_a)
+    fbi = raw_function.get_f_components(initial_b)[0]
+    fai = raw_function.get_f_components(initial_a)[0]
     root = 0
     if fbi == 0:
         root = initial_b
@@ -26,7 +27,7 @@ def bisection(initial_b, initial_a, tolerance, iterations):
         root = initial_a
     elif fbi * fai < 0:
         x_m = (initial_b + initial_a)/2
-        fxm = function(x_m)
+        fxm = raw_function.get_f_components(x_m)[0]
         iteration = 1
         error = tolerance + 1
         table.add_row([iteration, initial_b, x_m,
@@ -40,7 +41,7 @@ def bisection(initial_b, initial_a, tolerance, iterations):
                 fbi = fxm
             aux = x_m
             x_m = (initial_b + initial_a)/2
-            fxm = function(x_m)
+            fxm = raw_function.get_f_components(x_m)[0]
             error = abs(x_m-aux)
             iteration += 1
             table.add_row([iteration, initial_b, x_m, initial_a, '%.2E' % fxm, '%.2E' %
@@ -60,6 +61,7 @@ class Bisection(Resource):
 
     def post(self):
         body_params = request.get_json()
+        function = body_params["function"]
         initial_a = body_params["initial_a"]
         initial_b = body_params["initial_b"]
         tolerance = body_params["tolerance"]
@@ -68,7 +70,7 @@ class Bisection(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        root, json_table = bisection(initial_b, initial_a, tolerance, iterations)
+        root, json_table = bisection(function, initial_b, initial_a, tolerance, iterations)
         # if(root == None):     we need to find some way of handling root errors
         #     abort(500, message="root not found")
         return json_table
