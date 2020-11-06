@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Geogebra from "../assets/Geogebra";
-import json_data from "../../json_data/bisection.json";
 import axios from "axios";
 
 
-const Bisection = () => {
+const Newton = () => {
   const [data, setData] = useState([]);
   const [form_data, setFormData] = useState({
-    func: "",
-    initial_a: 0,
-    initial_b: 0,
+    function: "",
+    initial_x0: 0,
     tolerance: 1e-7,
     iterations: 100,
   });
-
-  const calculate = (event) => {
-    event.preventDefault();
-    setData(json_data);
-  };
 
   const handleInputChange = (e) => {
 
@@ -31,22 +24,22 @@ const Bisection = () => {
     e.preventDefault();
 
 
-    const {func, initial_a, initial_b, tolerance, iterations} = form_data;
+    const {func, initial_x0,  tolerance, iterations} = form_data;
     const body = {
       function: func,
-      initial_a: parseFloat(initial_a),
-      initial_b: parseFloat(initial_b),
+      initial_x0: parseFloat(initial_x0),
       tolerance: parseFloat(tolerance),
       iterations: parseFloat(iterations)
     }
-    const result = await axios.post("http://127.0.0.1:5000/bisection", body);
+    console.log(body);
+    const result = await axios.post("http://127.0.0.1:5000/newton", body);
+    console.log(result);
     setData(result.data);
     showData()
   };
   const showData = () => {
     if (data.length > 0) {
-      let columns = data[0];
-      let results = data.slice(1);
+      let results = data;
 
       console.log(results);
       return (
@@ -54,19 +47,20 @@ const Bisection = () => {
           <table class="table">
             <thead>
               <tr>
-                {columns.map((column) => (
-                  <th scope="col">{column}</th>
-                ))}
+
+                  <th scope="col">Iteration</th>
+                  <th scope="col">xi</th>
+                  <th scope="col">f(xi)</th>
+                  <th scope="col">Error</th>
+        
               </tr>
             </thead>
             <tbody>
               {results.map((result, index) => (
                 <tr id={index}>
                   <th>{result.Iteration}</th>
-                  <th>{result.a}</th>
-                  <th>{result.xm}</th>
-                  <th>{result.b}</th>
-                  <th>{result["f(xm)"]}</th>
+                  <th>{result.xi}</th>
+                  <th>{result["f(xi)"]}</th>
                   <th>{result.Error}</th>
                 </tr>
               ))}
@@ -80,7 +74,7 @@ const Bisection = () => {
 
   return (
     <div>
-      <h2 className="text-center mt-2">Bisection</h2>
+      <h2 className="text-center mt-2">Newton</h2>
       <div className="container mt-2">
         <div className="row">
           <div className="col-6 mt-3">
@@ -98,24 +92,12 @@ const Bisection = () => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Initial a"
-                  name="initial_a"
+                  placeholder="Initial x0"
+                  name="initial_x0"
                   onChange={handleInputChange}
                 ></input>
                 <small id="initialAHelp" class="form-text text-muted">
-                  First element included in a range
-                </small>
-              </div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Initial b"
-                  name="initial_b"
-                  onChange={handleInputChange}
-                ></input>
-                <small id="initialAHelp" class="form-text text-muted">
-                  Last element included in a range
+                  First aproximation
                 </small>
               </div>
               <div className="form-group">
@@ -160,4 +142,5 @@ const Bisection = () => {
   );
 };
 
-export default Bisection;
+export default Newton;
+

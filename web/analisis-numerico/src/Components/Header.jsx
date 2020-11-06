@@ -7,12 +7,22 @@ const Header = () => {
         <Link className="navbar-brand" to="#">
           Numeric Methods
         </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
-                
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-toggle="dropdown"
@@ -28,19 +38,19 @@ const Header = () => {
                 <Link className="dropdown-item" to="#">
                   Incremental Search
                 </Link>
-                <Link className="dropdown-item" to="/Bisection">
+                <Link className="dropdown-item" to="/bisection">
                   Bisection
                 </Link>
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/newton">
                   Newton
                 </Link>
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/fixed_point">
                   Fixed Point
                 </Link>
                 <Link className="dropdown-item" to="#">
                   Multiple Roots
                 </Link>
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/false_rule">
                   False Rule
                 </Link>
                 <Link className="dropdown-item" to="#">

@@ -13,6 +13,7 @@ class f_x():
         x = symbols('x')
         error = 0
         try:
+            print(self.function)
             fx = eval(self.function)
             function = fx.evalf(subs={x: number})
             dfx = Derivative(fx, x).doit()
@@ -34,7 +35,7 @@ class f_x():
         x = symbols('x')
         error = 0
         try:
-            gx = eval(self.gunction)
+            gx = eval(self.g_function)
             gfunc = gx.evalf(subs={x:number})
             return gfunc, error
         except ZeroDivisionError:

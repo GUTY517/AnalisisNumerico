@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Geogebra from "../assets/Geogebra";
-import json_data from "../../json_data/bisection.json";
 import axios from "axios";
 
 
-const Bisection = () => {
+const False_Rule = () => {
   const [data, setData] = useState([]);
   const [form_data, setFormData] = useState({
     func: "",
@@ -14,10 +13,6 @@ const Bisection = () => {
     iterations: 100,
   });
 
-  const calculate = (event) => {
-    event.preventDefault();
-    setData(json_data);
-  };
 
   const handleInputChange = (e) => {
 
@@ -39,9 +34,9 @@ const Bisection = () => {
       tolerance: parseFloat(tolerance),
       iterations: parseFloat(iterations)
     }
-    const result = await axios.post("http://127.0.0.1:5000/bisection", body);
+    const result = await axios.post("http://127.0.0.1:5000/false_rule", body);
     setData(result.data);
-    showData()
+    showData();
   };
   const showData = () => {
     if (data.length > 0) {
@@ -80,7 +75,7 @@ const Bisection = () => {
 
   return (
     <div>
-      <h2 className="text-center mt-2">Bisection</h2>
+      <h2 className="text-center mt-2">False_Rule</h2>
       <div className="container mt-2">
         <div className="row">
           <div className="col-6 mt-3">
@@ -160,4 +155,6 @@ const Bisection = () => {
   );
 };
 
-export default Bisection;
+export default False_Rule;
+  // "function": "ln(sin(x)^2 + 1) -1/2",
+    // "g_function": "ln(sin(x)^2 + 1) -1/2",
