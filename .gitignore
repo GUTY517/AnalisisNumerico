@@ -31,7 +31,7 @@ nbdist/
 # Compiled class file
 *.class
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.nar
@@ -39,3 +39,6 @@ nbdist/
 *.zip
 *.tar.gz
 *.rar
+
+# Text files
+LINKS.txt
