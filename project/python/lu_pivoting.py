@@ -3,6 +3,7 @@
 
 import numpy as np
 import scipy.linalg as la
+from scipy.linalg import solve
 
 def matrix_input():
     '''Console matrix input'''
@@ -31,23 +32,22 @@ def lu_pivoting():
     print("Augmented matrix:")
     print(augmented_matrix)
     print()
-    pivoted_matrix, triangular_matrix, solved_matrix = la.lu(augmented_matrix)
-    print("Dot matrix:")
-    print(np.dot(triangular_matrix, solved_matrix))
-    print()
-    print("Pivoted Matrix:")
+    pivoted_matrix, triangular_matrix, solved_matrix = la.lu(matrix_a)
+    print("Pivoted Matrix (P):")
     print(pivoted_matrix)
     print()
-    print("Triangular matrix:")
+    print("Triangular matrix (L):")
     print(triangular_matrix)
     print()
-    print("Solved matrix:")
+    print("Solved matrix (U):")
     print(solved_matrix)
-
+    print()
+    print("Solved function using regression and progression:")
+    print(solve(matrix_a, matrix_b))
 
 lu_pivoting()
 
 
 ####### Tests #######
-# augmented_matrix = np.array([[2, -3, 0, 1], [-4, 2, 0, -2], [1, 3, 0, 3], [-3, -1, 0, -1]]) #Det 0
-# augmented_matrix = np.array([[2, -3, 5, 1], [-4, 2, 3, -2], [1, 3, 1, 3], [-3, -1, 9, -1]])
+# matrix_a = np.array([[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]])
+# matrix_b = np.array([[1], [1], [1], [1]])
