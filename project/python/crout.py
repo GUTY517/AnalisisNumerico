@@ -50,7 +50,7 @@ def main():
     print("Upper triangular matrix (U)")
     print(upper_triangular_matrix)
     print()
-    print("Result:")
+    print("Solved function using regression and progression:")
     print(solve(matrix_a, vector))
 
 
