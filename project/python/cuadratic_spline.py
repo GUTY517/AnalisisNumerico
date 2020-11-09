@@ -123,11 +123,10 @@ def check_det(matrix):
 
 def main():
     '''Input data and excute method'''
-    data = []
-    # [float(item) for item in input("Input X values separated by space: ").split()]
-    x_values = [-1, 0, 3, 4]
-    # [float(item) for item in input("Input Y values separated by space: ").split()]
-    y_values = [15.5, 3, 8, 1]
+    x_values = [float(item) for item in input(
+        "Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input(
+        "Input Y values separated by space: ").split()]
     data = list(map(lambda x, y: [x, y], x_values, y_values))
     print("Polynomials:")
     print(cuadratic_spline(data)[1])
