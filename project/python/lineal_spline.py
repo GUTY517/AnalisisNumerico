@@ -98,6 +98,7 @@ def check_det(data):
     return(0, "Ok.")
 
 def main():
+    '''Input data and excute method'''
     data = []
     x_values = [float(item) for item in input("Input X values separated by space: ").split()]
     y_values = [float(item) for item in input("Input Y values separated by space: ").split()]
