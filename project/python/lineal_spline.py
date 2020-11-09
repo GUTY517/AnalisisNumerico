@@ -15,7 +15,7 @@ def lineal_spline(data):
     if determinant[0] == 1:
         return determinant
     _, matrix = lu(matrix, permute_l=True)
-    coefficients = polyniomial_values(matrix.tolist(), len(matrix))
+    coefficients = polynomial_values(matrix.tolist(), len(matrix))
     polynomials = clean_output(coefficients, data)
     return (0, polynomials, gen)
 
@@ -48,7 +48,7 @@ def resulted_matrix(data, data_size):
     return result
 
 
-def polyniomial_values(matrix, data_size):
+def polynomial_values(matrix, data_size):
     '''Get polynomial values'''
     vector = [0] * data_size
     vector[data_size-1] = matrix[data_size-1][data_size] / \
@@ -77,14 +77,14 @@ def clean_output(coefficients, data):
     polynomials.append(["Polynomials", "Ranges"])
     data_size = len(results)
     for i in range(data_size):
-        polynom = f'P{i+1}='
-        polynom += str(results[i][1]) + "x "
+        polynomial = f'P{i+1}='
+        polynomial += str(results[i][1]) + "x "
         if results[i][2] < 0:
-            polynom += str(results[i][2])
+            polynomial += str(results[i][2])
         else:
-            polynom += "+" + str(results[i][2])
+            polynomial += "+" + str(results[i][2])
         ranges = str(data[i][0]) + "<= x <= " + str(data[i+1][0])
-        polynomials.append([polynom, ranges])
+        polynomials.append([polynomial, ranges])
     return polynomials
 
 def check_det(data):
@@ -95,7 +95,7 @@ def check_det(data):
         return (
             1, 'The generated matrix is not invertible. '
             'You may want to select a different set of points')
-    return(0, "Ok.")
+    return(0, "OK")
 
 def main():
     '''Input data and excute method'''
