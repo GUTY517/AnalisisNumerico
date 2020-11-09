@@ -97,8 +97,15 @@ def check_det(data):
             'You may want to select a different set of points')
     return(0, "Ok.")
 
-X = [[0, 6], [1, 1], [2, 1], [3, 0]]
-res = lineal_spline(X)
-print(res[1])
-print()
-print(res[2])
+def main():
+    data = []
+    x_values = [float(item) for item in input("Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input("Input Y values separated by space: ").split()]
+    data = list(map(lambda x, y:[x,y], x_values, y_values))
+    print("Polynomials:")
+    print(lineal_spline(data)[1])
+    print()
+    print("Matrix:")
+    print(np.array(lineal_spline(data)[2]))
+
+main()
