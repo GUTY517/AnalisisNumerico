@@ -1,4 +1,5 @@
 #!/bin/python3
+'''Cubic spline implementation'''
 
 import numpy as np
 from numpy.linalg import det
@@ -17,6 +18,7 @@ def cubic_spline(data):
     coefficients = polynomial_values(matrix, len(matrix))
     polynomials = clean_output(coefficients, data)
     return (0, polynomials, gen)
+
 
 def resulted_matrix(data, data_size):
     '''Matrix creation by organizing and evaluating inputed data'''
@@ -82,20 +84,22 @@ def resulted_matrix(data, data_size):
     return result
 
 
-def polynomial_values(stepMat, data_size):
+def polynomial_values(matrix, data_size):
     '''Get polynomial values'''
     vector = [0] * data_size
-    vector[data_size-1]=stepMat[data_size-1][data_size]/stepMat[data_size-1][data_size-1]
+    vector[data_size-1] = matrix[data_size-1][data_size] / \
+        matrix[data_size-1][data_size-1]
     i = data_size-2
     while i >= 0:
         result = 0
         counter = len(vector)-1
         while counter >= 0:
-            result += (stepMat[i][counter]*vector[counter])
+            result += (matrix[i][counter]*vector[counter])
             counter -= 1
-        vector[i] = (stepMat[i][data_size]-result)/stepMat[i][i]
+        vector[i] = (matrix[i][data_size]-result)/matrix[i][i]
         i -= 1
     return vector
+
 
 def clean_output(coefficients, data):
     '''Function to clean an organize the output'''
@@ -103,7 +107,8 @@ def clean_output(coefficients, data):
     polynomials = []
     cont = 0
     for i in range(int(len(coefficients)/4)):
-        results.append([i, coefficients[cont], coefficients[cont+1], coefficients[cont+2], coefficients[cont+3]])
+        results.append([i, coefficients[cont], coefficients[cont+1],
+                        coefficients[cont+2], coefficients[cont+3]])
         cont += 4
 
     polynomials.append(["Polynomials", "Ranges"])
@@ -134,25 +139,22 @@ def check_det(matrix):
     '''Get matrix determinant and check if is zero'''
     data_size = len(matrix[0]) - 1
     square_matrix = [x[0:data_size] for x in matrix]
-    if(np.linalg.det(square_matrix) == 0):
+    if det(square_matrix) == 0:
         return(
             1, 'The generated matrix is not invertible. '
             'You may want to select a different set of points')
     return(0, "OK")
 
+
 def main():
     '''Input data and excute method'''
-    data = []
-    # [float(item) for item in input("Input X values separated by space: ").split()]
-    x_values = [-1, 0, 3, 4]
-    # [float(item) for item in input("Input Y values separated by space: ").split()]
-    y_values = [15.5, 3, 8, 1]
+    x_values = [float(item) for item in input("Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input("Input Y values separated by space: ").split()]
     data = list(map(lambda x, y: [x, y], x_values, y_values))
     print("Polynomials:")
     print(cubic_spline(data)[1])
     print()
     print("Matrix:")
     print(np.array(cubic_spline(data)[2]))
-
 
 main()
