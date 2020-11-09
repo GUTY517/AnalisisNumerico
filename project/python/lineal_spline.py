@@ -87,6 +87,7 @@ def clean_output(coefficients, data):
         polynomials.append([polynomial, ranges])
     return polynomials
 
+
 def check_det(data):
     '''Get matrix determinant and check if is zero'''
     data_size = len(data[0]) - 1
@@ -97,16 +98,20 @@ def check_det(data):
             'You may want to select a different set of points')
     return(0, "OK")
 
+
 def main():
     '''Input data and excute method'''
     data = []
-    x_values = [float(item) for item in input("Input X values separated by space: ").split()]
-    y_values = [float(item) for item in input("Input Y values separated by space: ").split()]
-    data = list(map(lambda x, y:[x,y], x_values, y_values))
+    x_values = [float(item) for item in input(
+        "Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input(
+        "Input Y values separated by space: ").split()]
+    data = list(map(lambda x, y: [x, y], x_values, y_values))
     print("Polynomials:")
     print(lineal_spline(data)[1])
     print()
     print("Matrix:")
     print(np.array(lineal_spline(data)[2]))
+
 
 main()
