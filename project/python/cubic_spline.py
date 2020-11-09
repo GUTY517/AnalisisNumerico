@@ -148,13 +148,16 @@ def check_det(matrix):
 
 def main():
     '''Input data and excute method'''
-    x_values = [float(item) for item in input("Input X values separated by space: ").split()]
-    y_values = [float(item) for item in input("Input Y values separated by space: ").split()]
+    x_values = [float(item) for item in input(
+        "Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input(
+        "Input Y values separated by space: ").split()]
     data = list(map(lambda x, y: [x, y], x_values, y_values))
     print("Polynomials:")
     print(cubic_spline(data)[1])
     print()
     print("Matrix:")
     print(np.array(cubic_spline(data)[2]))
+
 
 main()
