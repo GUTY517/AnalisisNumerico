@@ -8,6 +8,7 @@ from prettytable import PrettyTable
 from numpy import diag, tril, triu, array, matmul
 from numpy.linalg import det, matrix_power
 from scipy import linalg as LA
+import numpy as np
 
 
 def gauss_sor(x_0, matrix, vector, w_value):
@@ -114,7 +115,7 @@ def main():
 
 
 
-print(main(tolerance, x_0, iterations, matrix, vector, w_value))
+print(main())
 
 ### Test ###
 # tolerance = 1e-7
