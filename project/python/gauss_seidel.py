@@ -51,16 +51,14 @@ def matrix_input():
 
 def main():
     '''Input variables and method execution'''
-    # tolerance = float(input("Input tolerance: "))
-    # iterations = int(input("Input iterations: "))
-    # matrix = matrix_input()
-    # vector = matrix_input()
-    # x_0 = matrix_input()
-    tolerance = 1e-7
-    x_0 = [0, 0, 0, 0]
-    iterations = 100
-    matrix = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]
-    vector = [1, 1, 1, 1]
+    tolerance = float(input("Input tolerance: "))
+    iterations = int(input("Input iterations: "))
+    print("Input matrix in one line")
+    matrix = matrix_input()
+    print("Input vector in one line")
+    vector = matrix_input()
+    print("Input x0 in one line")
+    x_0 = matrix_input()
 
     determinant = det(matrix)
     if determinant == 0:

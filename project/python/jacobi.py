@@ -47,8 +47,11 @@ def main():
     '''Returns Jacobi answer and calculation table'''
     tolerance = float(input("Input tolerance: "))
     iterations = int(input("Input iterations: "))
+    print("Input matrix in one line")
     matrix = matrix_input()
+    print("Input vector in one line")
     vector = matrix_input()
+    print("Input x0 in one line")
     x_0 = matrix_input()
 
     determinant = det(matrix)

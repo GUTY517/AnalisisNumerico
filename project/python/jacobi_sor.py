@@ -5,9 +5,10 @@ from decimal import Decimal
 from numpy import linalg, diag, tril, triu, transpose, matmul, array
 from scipy.linalg import eigvals
 from prettytable import PrettyTable
+import numpy as np
 
 
-def jacobi_SOR(A, b, x_value, w, iterations, tol):
+def jacobi_sor(matrix, vector, x_value, w_value, iterations, tolerance):
     '''Jacobi method'''
     title = ['Iteration']
     table_names = 0
@@ -18,24 +19,24 @@ def jacobi_SOR(A, b, x_value, w, iterations, tol):
     title.append("Error")
     table = PrettyTable(title)
 
-    data_size = len(A)
-    determinant = linalg.det(A)
+    data_size = len(matrix)
+    determinant = linalg.det(matrix)
     if determinant == 0:
         return(1, "Determinant is ZERO")
 
-    diagonal_matrix = diag(diag(A))
-    lower_matrix = diagonal_matrix - tril(A)
-    upper_matrix = diagonal_matrix - triu(A)
-    helper = diagonal_matrix - (w * lower_matrix)
-    helper2 = ((1 - w) * diagonal_matrix) + (w * upper_matrix)
+    diagonal_matrix = diag(diag(matrix))
+    lower_matrix = diagonal_matrix - tril(matrix)
+    upper_matrix = diagonal_matrix - triu(matrix)
+    helper = diagonal_matrix - (w_value * lower_matrix)
+    helper2 = ((1 - w_value) * diagonal_matrix) + (w_value * upper_matrix)
 
     power = linalg.matrix_power(helper, -1)
     t_matrix = matmul(power, helper2)
-    relaxed = transpose(b) * w
+    relaxed = transpose(vector) * w_value
     sor_answer = matmul(power, relaxed)
 
     transposed_matrix = array(
-        [[abs(A[i][j]) for i in range(data_size)] for j in range(data_size)])
+        [[abs(matrix[i][j]) for i in range(data_size)] for j in range(data_size)])
     sum_columns = transposed_matrix.sum(axis=1)
 
     for i in range(data_size):
@@ -57,8 +58,8 @@ def jacobi_SOR(A, b, x_value, w, iterations, tol):
         counter = 0
         table.add_row([counter] + x_value + ["-"])
         x_value = transpose(x_value)
-        tolerance = tol + 1
-        while counter < iterations and tolerance > tol:
+        new_tolerance = tolerance + 1
+        while counter < iterations and new_tolerance > tolerance:
             x_n = (matmul(t_matrix, x_value)) + sor_answer
             tolerance = linalg.norm(x_n - x_value)
             counter += 1
@@ -85,10 +86,13 @@ def main():
     tolerance = float(input("Input tolerance: "))
     iterations = int(input("Input iterations: "))
     w_value = float(input("Input W value: "))
+    print("Input matrix in one line")
     matrix = matrix_input()
+    print("Input vector in one line")
     vector = matrix_input()
+    print("Input x0 in one line")
     x_0 = matrix_input()
-    return jacobi_SOR(matrix, vector, x_0, w_value, iterations, tolerance)
+    return jacobi_sor(matrix, vector, x_0, w_value, iterations, tolerance)
 
 
 print(main())
