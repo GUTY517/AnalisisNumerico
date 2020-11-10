@@ -85,10 +85,10 @@ def main():
     tolerance = float(input("Input tolerance: "))
     iterations = int(input("Input iterations: "))
     w_value = float(input("Input W value: "))
-    matrix_a = matrix_input()
+    matrix = matrix_input()
     vector = matrix_input()
     x_0 = matrix_input()
-    return jacobi_SOR(matrix_a, vector, x_0, w_value, iterations, tolerance)
+    return jacobi_SOR(matrix, vector, x_0, w_value, iterations, tolerance)
 
 
 print(main())
@@ -96,6 +96,7 @@ print(main())
 ### Test ###
 # tolerance = 1e-7
 # iterations = 100
+# w_value = 1.5
 # matrix_a = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]
-# vector = [1,1,1,1]
-# x_0 = [0,0,0,0]
+# vector = [1, 1, 1, 1]
+# x_0 = [0, 0, 0, 0]
