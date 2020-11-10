@@ -14,13 +14,13 @@ def gauss_seidel(x_0, matrix, vector):
     new_x0 = copy(x_0)
     data_size = len(matrix)
     for i in range(data_size):
-        suma = 0
+        results = 0
         for j in range(data_size):
             if j != i:
-                suma += matrix[i][j]*new_x0[j]
-        suma = (vector[i] - suma)/matrix[i][i]
-        new_x0[i] = suma
-        answers.append(suma)
+                results += matrix[i][j]*new_x0[j]
+        results = (vector[i] - results)/matrix[i][i]
+        new_x0[i] = results
+        answers.append(results)
     return answers
 
 
@@ -51,11 +51,16 @@ def matrix_input():
 
 def main():
     '''Input variables and method execution'''
-    tolerance = float(input("Input tolerance: "))
-    iterations = int(input("Input iterations: "))
-    matrix = matrix_input()
-    vector = matrix_input()
-    x_0 = matrix_input()
+    # tolerance = float(input("Input tolerance: "))
+    # iterations = int(input("Input iterations: "))
+    # matrix = matrix_input()
+    # vector = matrix_input()
+    # x_0 = matrix_input()
+    tolerance = 1e-7
+    x_0 = [0, 0, 0, 0]
+    iterations = 100
+    matrix = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]
+    vector = [1, 1, 1, 1]
 
     determinant = det(matrix)
     if determinant == 0:
