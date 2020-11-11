@@ -26,8 +26,8 @@ public class DolytleLU {
             }
         }
 
-        double[] z = BasicMethods.progressiveSustitution(L, b);
-        double[] x = BasicMethods.regresiveSustitution(U, z);
+        double[] z = BasicMethods.progressiveSubstitution(L, b);
+        double[] x = BasicMethods.regresiveSubstitution(U, z);
         
         return x;
     }

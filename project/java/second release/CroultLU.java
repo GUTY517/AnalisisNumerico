@@ -24,8 +24,8 @@ public class CroultLU {
         BasicMethods.printMatrix(U);
         BasicMethods.printMatrix(L);
 
-        double[] z = BasicMethods.progressiveSustitution(L, b);
-        double[] x = BasicMethods.regresiveSustitution(U, z);
+        double[] z = BasicMethods.progressiveSubstitution(L, b);
+        double[] x = BasicMethods.regresiveSubstitution(U, z);
 
         return x;
 

@@ -54,7 +54,7 @@ public class GaussianaPivTotalLU {
     }
 
     public static double[] getResults(double[][] A) {
-        double[] X = BasicMethods.regresiveSustitution(A);
+        double[] X = BasicMethods.regresiveSubstitution(A);
         X = Util.timesMatrix(P, X);
         return X;
     }

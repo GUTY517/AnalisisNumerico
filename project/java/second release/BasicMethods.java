@@ -26,7 +26,7 @@ public class BasicMethods {
         }
     }
 
-    public static double[] progressiveSustitution(double[][] L, double[] b) {
+    public static double[] progressiveSubstitution(double[][] L, double[] b) {
         int n = L.length;
         double[] z = new double[n];
         for (int j = 0; j < n; j++) {
@@ -38,7 +38,7 @@ public class BasicMethods {
         return z;
     }
 
-    public static double[] regresiveSustitution(double[][] U, double[] z) {
+    public static double[] regresiveSubstitution(double[][] U, double[] z) {
         int n = U.length;
         double[] x = new double[n];
         for (int j = n - 1; j >= 0; j--) {
@@ -50,7 +50,7 @@ public class BasicMethods {
         return x;
     }
 
-    public static double[] regresiveSustitution (double[][] A){
+    public static double[] regresiveSubstitution (double[][] A){
         int n = A.length;
         double[] X = new double[n];
         double acum;
@@ -159,7 +159,7 @@ public class BasicMethods {
         };
         double[] B = {12,36,105,16,36};
         double[][]test2 = BasicMethods.extendedMatrix(test, B);
-        double[]X = BasicMethods.regresiveSustitution(test2);
+        double[]X = BasicMethods.regresiveSubstitution(test2);
         for (int i = 0; i< X.length; i++){
             System.out.println("X["+ i + "] = " + X[i]);
         }

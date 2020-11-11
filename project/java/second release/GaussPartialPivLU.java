@@ -42,7 +42,7 @@ public class GaussPartialPivLU {
     }
 
     public double[] getResult(double[][] A) {
-        double[] X = BasicMethods.regresiveSustitution(A);
+        double[] X = BasicMethods.regresiveSubstitution(A);
         return X;
     }
 
