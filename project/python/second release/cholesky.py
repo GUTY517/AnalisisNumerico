@@ -43,8 +43,8 @@ def cholesky(matrix_a):
 
 def main():
     '''Output function'''
-    matrix_a = np.array([[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]])
-    vector = np.array([[1], [1], [1], [1]])
+    matrix_a = matrix_input()
+    vector = matrix_input()
 
     try:
         lower_triangular_matrix, upper_triangular_matrix = cholesky(matrix_a)

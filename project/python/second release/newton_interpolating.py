@@ -2,85 +2,81 @@
 '''Interpolation using Newton'''
 
 
-def interp_coeffs(xvals, yvals):
-    nbr_data_points = len(xvals)
+def interpolate_coefficients(x_values, y_values):
+    '''Interpolation of coefficients'''
+    data_size = len(x_values)
 
-    # sort inputs by xvals =>
-    data = sorted(zip(xvals, yvals), reverse=False)
-    xvals, yvals = zip(*data)
-
-    depth = 1
-    coeffs = [yvals[0]]
-    iter_yvals = yvals
-
-    while depth < nbr_data_points:
-
-        iterdata = []
-
-        for i in range(len(iter_yvals)-1):
-
-            delta_y = iter_yvals[i+1]-iter_yvals[i]
-            delta_x = xvals[i+depth]-xvals[i]
-            iterval = (delta_y/delta_x)
-            iterdata.append(iterval)
-
-            # append top-most entries from table to coeffs =>
-            if i == 0:
-                coeffs.append(iterval)
-
-        iter_yvals = iterdata
-        depth += 1
-
-    return(coeffs)
-
-
-def interp_val(xvals, yvals):
-    nbr_data_points = len(xvals)
-
-    # sort inputs by xvals =>
-    data = sorted(zip(xvals, yvals), reverse=False)
-    xvals, yvals = zip(*data)
+    data = sorted(zip(x_values, y_values), reverse=False)
+    x_values, y_values = zip(*data)
 
     depth = 1
-    coeffs = [yvals[0]]
-    iter_yvals = yvals
+    coefficients = [y_values[0]]
+    new_y_values = y_values
 
-    while depth < nbr_data_points:
+    while depth < data_size:
+        iterative_data = []
 
-        iterdata = []
-
-        for i in range(len(iter_yvals)-1):
-
-            delta_y = iter_yvals[i+1]-iter_yvals[i]
-            delta_x = xvals[i+depth]-xvals[i]
-            iterval = (delta_y/delta_x)
-            iterdata.append(iterval)
-
-            # append top-most entries in tree to coeffs =>
+        for i in range(len(new_y_values)-1):
+            delta_y = new_y_values[i+1]-new_y_values[i]
+            delta_x = x_values[i+depth]-x_values[i]
+            iterative_value = (delta_y/delta_x)
+            iterative_data.append(iterative_value)
             if i == 0:
-                coeffs.append(iterval)
+                coefficients.append(iterative_value)
 
-        iter_yvals = iterdata
+        new_y_values = iterative_data
         depth += 1
 
-    def f(i):
-        """
-        Evaluate interpolated estimate at x.
-        """
+    return(coefficients)
+
+
+def interpolate_values(x_values, y_values):
+    '''Interpolate values'''
+    data_size = len(x_values)
+    data = sorted(zip(x_values, y_values), reverse=False)
+    x_values, y_values = zip(*data)
+
+    depth = 1
+    coefficients = [y_values[0]]
+    new_y_values = y_values
+
+    while depth < data_size:
+        iterative_data = []
+        for i in range(len(new_y_values)-1):
+            delta_y = new_y_values[i+1]-new_y_values[i]
+            delta_x = x_values[i+depth]-x_values[i]
+            iterative_value = (delta_y/delta_x)
+            iterative_data.append(iterative_value)
+
+            if i == 0:
+                coefficients.append(iterative_value)
+
+        new_y_values = iterative_data
+        depth += 1
+
+    def function(i):
+        '''Evaluate interpolated estimate at x'''
         terms = []
-        retval = 0
+        answer = 0
+        data_size = len(coefficients)
 
-        for j in range(len(coeffs)):
+        for j in range(data_size):
+            iterative_value = coefficients[j]
+            iterative_x_values = x_values[:j]
+            for k in iterative_x_values:
+                iterative_value *= (i-k)
+            terms.append(iterative_value)
+            answer += iterative_value
+        return answer
+    return function
 
-            iterval = coeffs[j]
-            iterxvals = xvals[:j]
-            for k in iterxvals:
-                iterval *= (i-k)
-            terms.append(iterval)
-            retval += iterval
-        return(retval)
-    return(f)
 
-x = [-1, 0, 3, 4]
-y = [15.5, 3, 8, 1]
-print(interp_coeffs(x, y))
+def main():
+    '''Input data and method execution'''
+    x_values = [float(item) for item in input(
+        "Input X values separated by space: ").split()]
+    y_values = [float(item) for item in input(
+        "Input Y values separated by space: ").split()]
+    print(interpolate_coefficients(x_values, y_values))
+
+main()

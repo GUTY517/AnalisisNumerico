@@ -19,22 +19,16 @@ def matrix_input():
 
 def lu_pivoting():
     '''LU pivoting method'''
-    matrix_a = np.array(matrix_input())
+    matrix = np.array(matrix_input())
     vector = np.array(matrix_input())
 
-    augmented_matrix = np.append(matrix_a, vector, axis=1)
+    augmented_matrix = np.append(matrix, vector, axis=1)
 
-    print("Matrix A:")
-    print(matrix_a)
-    print()
-    print("Vector:")
-    print(vector)
-    print()
     print("Augmented matrix:")
     print(augmented_matrix)
     print()
     permuted_matrix, lower_triangular_matrix, upper_triangular_matrix = lu(
-        matrix_a)
+        matrix)
     print("Permuted matrix (P):")
     print(permuted_matrix)
     print()
@@ -45,12 +39,12 @@ def lu_pivoting():
     print(upper_triangular_matrix)
     print()
     print("Solved function using regression and progression:")
-    print(solve(matrix_a, vector))
+    print(solve(matrix, vector))
 
 
 lu_pivoting()
 
 
 ####### Tests #######
-# matrix_a = np.array([[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]])
+# matrix = np.array([[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]])
 # vector = np.array([[1], [1], [1], [1]])
