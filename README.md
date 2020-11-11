@@ -5,7 +5,6 @@ This git will hold numerical analysis methods implemented for the course "Analis
 ## Team members:
 * Mateo Gutiérrez
 * Mateo Marulanda
-* Pascual Gómez
 * Yashua Narváez
 
 ## Technologies
@@ -15,7 +14,7 @@ This git will hold numerical analysis methods implemented for the course "Analis
 
 ### Requirements
 
-This project is mainly develop in Python3.7 and Java, the libreries needed for python can be found in the requirementes file located in the python folder.
+This project is mainly develop in Python3.7 and Java, the libreries needed for python can be found in the ```requirements.txt``` file located in the python folder.
 
 ## Usage
 
