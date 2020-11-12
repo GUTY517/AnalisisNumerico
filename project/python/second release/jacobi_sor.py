@@ -61,10 +61,10 @@ def jacobi_sor(matrix, vector, x_value, w_value, iterations, tolerance):
         new_tolerance = tolerance + 1
         while counter < iterations and new_tolerance > tolerance:
             x_n = (matmul(t_matrix, x_value)) + sor_answer
-            tolerance = linalg.norm(x_n - x_value)
+            new_tolerance = linalg.norm(x_n - x_value)
             counter += 1
             table.add_row([counter] + x_n.tolist() + ['%.2E' %
-                                                      Decimal(str(tolerance))])
+                                                      Decimal(str(new_tolerance))])
             x_value = x_n
     print("Spectral value: ", max(abs(eigvals(t_matrix))))
     print("Answer (C): ", sor_answer)
@@ -83,15 +83,23 @@ def matrix_input():
 
 def main():
     '''Value input and method execution'''
-    tolerance = float(input("Input tolerance: "))
-    iterations = int(input("Input iterations: "))
-    w_value = float(input("Input W value: "))
-    print("Input matrix in one line")
-    matrix = matrix_input()
-    print("Input vector in one line")
-    vector = matrix_input()
-    print("Input x0 in one line")
-    x_0 = matrix_input()
+    # tolerance = float(input("Input tolerance: "))
+    # iterations = int(input("Input iterations: "))
+    # w_value = float(input("Input W value: "))
+    # print("Input matrix in one line")
+    # matrix = matrix_input()
+    # print("Input vector in one line")
+    # vector = matrix_input()
+    # print("Input x0 in one line")
+    # x_0 = matrix_input()
+    
+    tolerance = 1e-7
+    iterations = 100
+    w_value = 1.5
+    matrix = [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]
+    vector = [1, 1, 1, 1]
+    x_0 = [0, 0, 0, 0]
+
     return jacobi_sor(matrix, vector, x_0, w_value, iterations, tolerance)
 
 
