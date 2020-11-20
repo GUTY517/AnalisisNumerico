@@ -47,13 +47,13 @@ const Header = () => {
                 <Link className="dropdown-item" to="/fixed_point">
                   Fixed Point
                 </Link>
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/multiple_roots">
                   Multiple Roots
                 </Link>
                 <Link className="dropdown-item" to="/false_rule">
                   False Rule
                 </Link>
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/secant">
                   Secant
                 </Link>
               </div>
@@ -77,7 +77,7 @@ const Header = () => {
                 <Link className="dropdown-item" to="#">
                   Parcial Pivoting
                 </Link>
-                <Link className="dropdown-item" to="total-pivoting">
+                <Link className="dropdown-item" to="gauss">
                   Total Pivoting
                 </Link>
                 {/* <Link className="dropdown-item" to="#">
