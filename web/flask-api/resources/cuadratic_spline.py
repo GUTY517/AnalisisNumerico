@@ -124,7 +124,7 @@ def check_det(matrix):
     return(0, "OK")
 
 
-class cuadratic_spline(Resources):
+class cuadratic_spline(Resource):
 
     def post(self):
         body_params = request.get_json()
