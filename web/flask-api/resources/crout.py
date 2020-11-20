@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 '''Crout implementation using numpy and scipy'''
 
+import json
 import numpy as np
 from scipy.linalg import solve
 from flask_restful import Resource
@@ -27,7 +28,7 @@ def crout(matrix_a):
     return lower_triangular_matrix, upper_triangular_matrix
 
 
-class Crout(Resources):
+class Crout(Resource):
 
     def post(self):
         body_params = request.get_json()
