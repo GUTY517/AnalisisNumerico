@@ -1,0 +1,83 @@
+read xl, xu, tol, iter
+
+yl = f(xl)
+
+yu = f(xu)
+
+if yl == 0 then
+
+        print xl Is a root
+
+else
+
+        if yu == 0 then
+
+                print xu Is a root
+
+        else
+
+                if ylyu < 0 then
+
+                        xm = xl - ( yl ( xu - xl ) ) / ( yu - yl )
+
+                        ym = f(xm)
+
+                        count = 1
+
+                        error = tol + 1
+
+                        while ym != 0 && error > tol && count < iter do
+
+                                if ylym < 0 then
+
+                                        xu = xm
+
+                                        yu = ym
+
+                                else
+
+                                        xl = xm
+
+                                        yl = ym
+
+                                end if
+
+                            temp = xm
+
+                            xm = xl - ( yl ( xu - xl ) ) / ( yu - yl )
+
+                            ym = f(xm)
+
+                            error = abs(xm - temp)
+
+                            count = count + 1
+
+                        end while
+
+                        if ym == 0 then
+
+                                print xm Is a root
+
+                        else
+
+                                if error < tol then
+
+                                        print "xm is an approximation to the root with tolerance = " tol
+
+                                else
+
+                                        print "The method fails finding a root, reason: Maximum iterations reached"
+
+                                end if
+
+                        end if
+
+                else
+
+                        print "Inadequate interval, there's not a sign change"
+
+                end if
+
+        end if
+
+end if

@@ -1,0 +1,47 @@
+Lea Xn, Tol, Iter
+	Yn = f(Xn)
+	Y’n = f’(Xn)
+	Y”n = f”(Xn)
+	error = Tol+1
+	count = 0
+	den = - Yn * Y”n
+
+	while (Yn != 0 y error &gt; Tol y count &lt; Iter y den !=0 )
+		Xn+1 = Xn – ((Yn * Y’n)/ den)
+
+		Yn = f(Xn+1)
+		Y’n = f‘(Xn+1)
+		Y“n = f“(Xn+1)
+
+		error = Abs(Xn+1 - Xn)
+		count = count +1
+		Xn = Xn+1
+		den = - Yn * Y”n
+
+	end while
+
+	if (Yn = 0) then
+
+		print Xn " Is a Root"
+
+		else
+
+			if (error &lt; Tol) then
+
+				print Xn "is a root with an approximation = " error
+
+			else
+
+				if (den = 0) then
+
+					print "The method fails, reason: diviifon by 0"
+
+				else
+
+					print "The method fails, reason: Root not found"
+
+				end if
+
+			end if
+
+	end if

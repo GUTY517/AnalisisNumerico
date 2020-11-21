@@ -1,0 +1,65 @@
+read xo, ite, delta
+
+ y0 = f(xo)
+
+if y0 = 0 then
+
+            print xo Is a root
+
+            else
+
+                        if delta = 0 then
+
+                                    print "Inadequate delta"
+
+                                    else
+
+                                                if ite ≤ 0 then
+
+                                                            print "Inadequate iterations"
+
+                                                            else
+
+                                                                        x1 = xo + delta
+
+                                                                        y1 = f(x1)
+
+                                                                        count = 1
+
+                                                                        while y0y1 > 0 , y ≠ 0, count < ite do
+
+                                                                                    x0 = x1
+
+                                                                                    y0 = y1
+
+                                                                                    x1 = x1 + delta
+
+                                                                                    y1 = f(x1)
+
+                                                                                    count++
+
+                                                                        end while
+
+                                                                        if y0y1 < 0 then
+
+                                                                              print "x0, x1 defines an interval"
+
+                                                                         else
+
+                                                                              if y1 = 0 then
+
+                                                                                    print "x1 Is a root"
+
+                                                                              else
+
+                                                                                    print "The method fails, reason: Root not found"
+
+                                                                              end if
+
+                                                                        end if
+
+                                                end if
+
+                        end if
+
+            end if
