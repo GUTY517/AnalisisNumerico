@@ -102,7 +102,7 @@ def check_det(data):
     return(0, "OK")
 
 
-class lineal_spline(Resources):
+class LinealSpline(Resource):
 
     def post(self):
         body_params = request.get_json()

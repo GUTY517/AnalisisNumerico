@@ -72,7 +72,7 @@ def main(tolerance, iterations, matrix, vector, x_0):
     return table, gauss_seidel_answer
 
 
-class GaussSeidelSor(Resource):
+class GaussSeidel(Resource):
 
     def post(self):
         body_params = request.get_json()

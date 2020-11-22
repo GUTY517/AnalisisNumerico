@@ -1,12 +1,15 @@
 #! /usr/bin/env python3
 '''New Jacobi method implementation'''
 
+import numpy as np
+import pandas as pd
 from math import sqrt
 from copy import copy
 from prettytable import PrettyTable
 from numpy.linalg import inv, det, LinAlgError
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def jacobi(x_0, matrix, vector):
@@ -35,16 +38,16 @@ def norm_2(x_0, x_1):
     except OverflowError:
         return 0, 1
 
-def main(tolerance, iterations, matrix, vector, x_0):
+def main(matrix, vector, x_0, tolerance, iterations):
     '''Returns Jacobi answer and calculation table'''
 
     determinant = det(matrix)
     if determinant == 0:
-        return(1, "Determinant is zero")
+        abort(500, "Determinant is zero")
     try:
         inv(matrix)
     except LinAlgError:
-        return 1, "Matrix is not invertible"
+        abort(500, "Matrix is not invertable")
 
     title = ['iterations']
     answer = 0
@@ -53,8 +56,8 @@ def main(tolerance, iterations, matrix, vector, x_0):
         title.append(f"x{str(answer)}")
         answer += 1
     title.append("Error")
-    table = PrettyTable(title)
-    table.add_row([iterator] + x_0 + ["-"])
+    table = pd.DataFrame(columns=title)
+    table.append(pd.Series([iterator, x_0, x_0, x_0, x_0, "-"], index=table.columns), ignore_index=True)
     error = tolerance + 1
     jacobi_response = jacobi(x_0, matrix, vector)
     while error > tolerance and iterator < iterations:
@@ -63,25 +66,33 @@ def main(tolerance, iterations, matrix, vector, x_0):
         error = answer[0]
         err = answer[1]
         if err == 1:
-            return 1, "Result is too big"
+            abort(500, "Result is too big")
         iterator += 1
-        table.add_row([iterator] + x_1 + [error])
+        table.append(pd.Series([iterator, x_1, x_1, x_1, x_1, error], index=table.columns), ignore_index=True)
         x_0 = copy(x_1)
 
     return jacobi_response, table
 
 class Jacobi(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
-        matrix = body_params["matrix"]
-        vector = body_params["vector"]
+        matrix = np.array(body_params["matrix"])
+        vector = np.array(body_params["vector"])
+        x_0 = np.array(body_params["x_0"])
         tolerance = body_params["tolerance"]
         iterations = body_params["iterations"]
-        x_0 = body_params["x_0"]
         if not tolerance:
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        _, json_table = main(tolerance, iterations, matrix, vector, x_0)
-        return json_table
+        if iterations < 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance < 0:
+            abort(500, "Inadequate tolerance.")
+        answer, json_table = main(matrix, vector, x_0, tolerance, iterations)
+        print(json_table)
+        json_data = None
+        return json_data

@@ -1,34 +1,32 @@
 #! /usr/bin/env python3
+'''Gauss web implementation'''
+
 from __future__ import print_function
-import math
 import json
-import sympy
 import numpy as np
-import pandas as pd
-from decimal import Decimal
-from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
 from numpy import linalg as la
 from flask import abort
 
 
-def stepped_matrix(A, b):
-    if la.det(A) == 0:
+def stepped_matrix(matrix, vector):
+    '''Returns stepped matrix'''
+    if la.det(matrix) == 0:
         return 0
     try:
-        la.inv(A)
+        la.inv(matrix)
     except la.LinAlgError:
         return -1
-    augmented_matrix = np.append(A, b, axis=1)
+    augmented_matrix = np.append(matrix, vector, axis=1)
     matrix_size = len(augmented_matrix)
     for i in range(0, matrix_size):
         for j in range(i, matrix_size):
             if i == j:
                 column = [row[i] for row in augmented_matrix]
-                lenColumn = len(column)
+                column_size = len(column)
                 if augmented_matrix[i][i] == 0:
-                    for k in range(i, lenColumn):
+                    for k in range(i, column_size):
                         if column[k] != 0:
                             aux = augmented_matrix[k]
                             augmented_matrix[k] = augmented_matrix[i]
@@ -42,45 +40,41 @@ def stepped_matrix(A, b):
                 mult = augmented_matrix[j][i] / augmented_matrix[i][i]
                 row1 = augmented_matrix[i]
                 row2 = augmented_matrix[j]
-                for k in range(0, len(row2)):
+                data_size = len(row2)
+                for k in range(0, data_size):
                     row2[k] -= (mult * row1[k])
                 augmented_matrix[j] = row2
     return augmented_matrix
 
 
 def get_values(step_matrix, matrix_size):
+    '''Returns x values (answers)'''
     vector = []
-    for x in range(matrix_size):
+    for _ in range(matrix_size):
         vector.append(0)
     vector[matrix_size - 1] = step_matrix[matrix_size - 1][matrix_size] / \
         step_matrix[matrix_size - 1][matrix_size - 1]
     i = matrix_size - 2
     while i >= 0:
         result = 0
-        p = len(vector) - 1
-        while p >= 0:
-            result += (step_matrix[i][p] * vector[p])
-            p -= 1
+        data_size = len(vector) - 1
+        while data_size >= 0:
+            result += (step_matrix[i][data_size] * vector[data_size])
+            data_size -= 1
         vector[i] = (step_matrix[i][matrix_size] - result) / step_matrix[i][i]
         i -= 1
     return vector
 
 
-def main(matrix, vector):
-    results_x = get_values(stepped_matrix(matrix, vector), len(matrix))
-    x_values = '\n'.join([str(elem) for elem in results_x])
-    return x_values, stepped_matrix(matrix, vector)
-
-
 class Gauss(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         matrix = np.array(body_params["matrix"])
-        print(matrix)
         vector = np.array(body_params["vector"])
-        print(vector)
-        x_values, pivoted_matrix = main(matrix, vector)
-        #json_x_values = json.loads(json.dumps(x_values))
-        json_table = json.loads(pivoted_matrix.tolist())
-        return json_table
+        x_values = get_values(stepped_matrix(matrix, vector), len(matrix))
+        pivoted_matrix = stepped_matrix(matrix, vector).tolist()
+        json_values = json.loads(json.dumps(pivoted_matrix + x_values))
+        return json_values

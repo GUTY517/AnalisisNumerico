@@ -8,37 +8,36 @@ from flask_restful import Resource
 from flask import request
 
 
-def crout(matrix_a):
+def crout(matrix):
     '''Crout method'''
-    matrix_size = matrix_a.shape[0]
+    matrix_size = matrix.shape[0]
     upper_triangular_matrix = np.zeros(
         (matrix_size, matrix_size), dtype=np.double)
     lower_triangular_matrix = np.zeros(
         (matrix_size, matrix_size), dtype=np.double)
 
     for k in range(matrix_size):
-        lower_triangular_matrix[k, k] = matrix_a[k, k] - \
+        lower_triangular_matrix[k, k] = matrix[k, k] - \
             lower_triangular_matrix[k, :] @ upper_triangular_matrix[:, k]
         upper_triangular_matrix[k, k:] = (
-            matrix_a[k, k:] - lower_triangular_matrix[k, :k]
+            matrix[k, k:] - lower_triangular_matrix[k, :k]
             @ upper_triangular_matrix[:k, k:]) / lower_triangular_matrix[k, k]
-        lower_triangular_matrix[(k+1):, k] = (matrix_a[(k+1):, k] - lower_triangular_matrix[(
+        lower_triangular_matrix[(k+1):, k] = (matrix[(k+1):, k] - lower_triangular_matrix[(
             k+1):, :] @ upper_triangular_matrix[:, k]) / upper_triangular_matrix[k, k]
 
     return lower_triangular_matrix, upper_triangular_matrix
 
 
 class Crout(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
-        matrix = body_params["matrix"]
-        vector = body_params["vector"]
+        matrix = np.array(body_params["matrix"])
+        vector = np.array(body_params["vector"])
         solved = solve(matrix, vector)
-
         lower_triangular_matrix, upper_triangular_matrix = crout(matrix)
-        table_lower_triangular_matrix = json.dumps(lower_triangular_matrix.tolist())
-        lower_json_table = json.loads(table_lower_triangular_matrix)
-        table_upper_triangular_matrix = json.dumps(upper_triangular_matrix)
-        upper_triangular_matrix = json.loads(table_upper_triangular_matrix)
-        return lower_json_table, upper_triangular_matrix
+        json_data = json.loads(json.dumps(lower_triangular_matrix.tolist(
+        ) + upper_triangular_matrix.tolist() + solved.tolist()))
+        return json_data

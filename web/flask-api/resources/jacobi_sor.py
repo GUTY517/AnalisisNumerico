@@ -67,7 +67,7 @@ def jacobi_sor(matrix, vector, x_value, w_value, iterations, tolerance):
             table.add_row([counter] + x_n.tolist() + ['%.2E' %
                                                       Decimal(str(new_tolerance))])
             x_value = x_n
-    return table, sor_answer, max(abs(eigvals(t_matrix))))
+    return table, sor_answer, max(abs(eigvals(t_matrix)))
 
 
 class JacobiSor(Resource):

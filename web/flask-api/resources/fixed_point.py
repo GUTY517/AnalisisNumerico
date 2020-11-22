@@ -34,7 +34,7 @@ def fixed_point(function_f, function_g, x_a, tolerance, iterations):
     return root, table
 
 
-class Fixed_Point(Resource):
+class FixedPoint(Resource):
 
     def post(self):
         body_params = request.get_json()

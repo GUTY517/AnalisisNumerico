@@ -42,7 +42,7 @@ def multiple_roots(function, x_0, tolerance, iterations):
     return root, table
 
 
-class Multiple_Roots(Resource):
+class MultipleRoots(Resource):
 
     def post(self):
         body_params = request.get_json()

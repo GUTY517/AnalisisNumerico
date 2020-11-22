@@ -148,7 +148,7 @@ def check_det(matrix):
     return(0, "OK")
 
 
-class cubic_spline(Resources):
+class CubicSpline(Resource):
 
     def post(self):
         body_params = request.get_json()

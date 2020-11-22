@@ -60,7 +60,7 @@ def false_rule(function, initial_b, initial_a, tolerance, iterations):
     return root, table
 
 
-class False_Rule(Resource):
+class FalseRule(Resource):
 
     def post(self):
         body_params = request.get_json()
