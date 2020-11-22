@@ -1,7 +1,7 @@
 from sympy import *
 
 class f_x():
-    
+
     def __init__(self, function, g_function):
         self.function = function
         if(g_function):
@@ -46,7 +46,3 @@ class f_x():
             error = 1
             print("Input error, please try again")
             return None, error
-
-
-
-            

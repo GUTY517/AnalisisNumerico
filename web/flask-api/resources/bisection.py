@@ -6,11 +6,7 @@ from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
 from resources.f_function import f_x
-
-def function(num):
-    '''Calculates inputed function'''
-    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
-    return f_x
+from flask import abort
 
 
 def bisection(function, initial_b, initial_a, tolerance, iterations):
@@ -53,7 +49,7 @@ def bisection(function, initial_b, initial_a, tolerance, iterations):
         else:
             root = None
     else:
-        root = "Root not found!"
+        root = None
     return root, json.loads(table.get_json_string())
 
 
@@ -70,7 +66,14 @@ class Bisection(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        root, json_table = bisection(function, initial_b, initial_a, tolerance, iterations)
-        # if(root == None):     we need to find some way of handling root errors
-        #     abort(500, message="root not found")
+        if iterations < 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance < 0:
+            abort(500, "Inadequate tolerance.")
+        try:
+            root, json_table = bisection(function, initial_b, initial_a, tolerance, iterations)
+        except TypeError:
+            abort(500, "Funtion not correctly inputed.")
+        if(root == None):
+            abort(500, "Root not found!")
         return json_table

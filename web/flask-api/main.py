@@ -7,6 +7,8 @@ from resources.fixed_point import Fixed_Point
 from resources.multiple_roots import Multiple_Roots
 from resources.newton import Newton
 from resources.secant import Secant
+from resources.total_pivoting import total_pivoting
+from resources.gauss import Gauss
 from flask_cors import CORS
 
 
@@ -21,6 +23,8 @@ api.add_resource(Fixed_Point, "/fixed_point")
 api.add_resource(Multiple_Roots, "/multiple_roots")
 api.add_resource(Newton, "/newton")
 api.add_resource(Secant, "/secant")
+api.add_resource(total_pivoting, "/total_pivoting")
+api.add_resource(Gauss, "/gauss")
 
 
 if __name__ == "__main__":

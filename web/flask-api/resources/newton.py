@@ -8,17 +8,7 @@ from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
 from resources.f_function import f_x as fx
-
-
-def function(num):
-    '''Calculates inputed function and it's derivative'''
-    sympy.init_printing(use_unicode=True)
-    x_sym = sympy.symbols('x')
-    f_x = sympy.log((sympy.sin(x_sym)*sympy.sin(x_sym)) + 1) - 1/2
-    f_n = f_x.evalf(subs={x_sym: num})
-    deriv_f = sympy.Derivative(f_x, x_sym).doit()
-    derivative = deriv_f.evalf(subs={x_sym: num})
-    return (f_n, derivative)
+from flask import abort
 
 
 def newton(function, x_0, tolerance, iterations):
@@ -37,14 +27,16 @@ def newton(function, x_0, tolerance, iterations):
         error = abs((x_1-x_0)/x_1)
         x_0 = x_1
         iteration += 1
-        table = table.append(pd.Series([iteration, x_1, '%.2E' %
-                       f_x, '%.2E' % Decimal(str(error))], index=table.columns), ignore_index=True)
+        table = table.append(pd.Series([iteration, x_1, '%.2E' %f_x, '%.2E' % Decimal(str(error))], index=table.columns), ignore_index=True)
     if f_x == 0:
         root = x_0
     elif error < tolerance:
         root = x_1
     elif deriv_f == 0:
-        root = (x_1, "Multiple root found")
+        try:
+            root = (x_1, "Multiple root found")
+        except UnboundLocalError:
+            abort(500, "Inputed x0 value is not correct")
     else:
         root = None
     return root, table
@@ -61,7 +53,16 @@ class Newton(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        root, table = newton(function, initial_x0, tolerance, iterations)
-        table = table.to_json(orient="records", default_handler=str)
-        json_table = json.loads(table)
+        if iterations < 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance < 0:
+            abort(500, "Inadequate tolerance.")
+        try:
+            root, table = newton(function, initial_x0, tolerance, iterations)
+            table = table.to_json(orient="records", default_handler=str)
+            json_table = json.loads(table)
+            if root == None:
+                abort(500, "Root not found!")
+        except TypeError:
+            abort(500, "Function not correctly inputed.")
         return json_table

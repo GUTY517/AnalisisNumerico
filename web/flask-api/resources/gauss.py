@@ -10,6 +10,7 @@ from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
 from numpy import linalg as la
+from flask import abort
 
 
 def stepped_matrix(A, b):
@@ -65,27 +66,21 @@ def get_values(step_matrix, matrix_size):
     return vector
 
 
-def matrix_input():
-    '''Console matrix input'''
-    rows = int(input("Enter number of rows: "))
-    columns = int(input("Enter number of columns: "))
-    print("Enter the entries in a single line (separated by space): ")
-    entries = list(map(float, input().split()))
-    matrix = np.array(entries).reshape(rows, columns)
-
-    return matrix
-
-
-def main():
-    print("Input matrix A:")
-    matrix = matrix_input()
-    print("Input matrix B:")
-    vector = matrix_input()
-
+def main(matrix, vector):
     results_x = get_values(stepped_matrix(matrix, vector), len(matrix))
-    print("Pivoted Matrix: \n", stepped_matrix(matrix, vector), "\n")
     x_values = '\n'.join([str(elem) for elem in results_x])
-    print("Values of X: \n", x_values)
+    return x_values, stepped_matrix(matrix, vector)
 
 
-main()
+class Gauss(Resource):
+
+    def post(self):
+        body_params = request.get_json()
+        matrix = np.array(body_params["matrix"])
+        print(matrix)
+        vector = np.array(body_params["vector"])
+        print(vector)
+        x_values, pivoted_matrix = main(matrix, vector)
+        #json_x_values = json.loads(json.dumps(x_values))
+        json_table = json.loads(pivoted_matrix.tolist())
+        return json_table

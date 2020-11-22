@@ -14,6 +14,11 @@ from resources.f_function import f_x as fx
 
 from __future__ import print_function
 import math
+from flask_restful import Resource
+from flask import request
+from resources.f_function import f_x
+from flask import abort
+import pandas as pd
 
 
 def verify_complex(error):
@@ -23,16 +28,10 @@ def verify_complex(error):
     return 0
 
 
-def function(num):
-    '''Calculates inputed function'''
-    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
-    return f_x
-
-
 def incremental_searches(function, x_0, delta, iterations):
     '''Incremental search method'''
     function = fx(function=function, g_function='')
-    f_x = function(x_0)
+    f_x = raw_function.get_f_components(x_0)[0]
     root = 0
     roots = ['There are roots in: ']
     if f_x == 0:
@@ -41,7 +40,7 @@ def incremental_searches(function, x_0, delta, iterations):
     else:
         x_1 = x_0 + delta
         iteration = 1
-        fx1 = function(x_1)
+        fx1 = raw_function.get_f_components(x_1)[0]
         while iteration < iterations:
             if fx1 == 0:
                 root = x_1
@@ -57,7 +56,7 @@ def incremental_searches(function, x_0, delta, iterations):
             x_0 = x_1
             f_x = fx1
             x_1 = x_0 + delta
-            fx1 = function(x_1)
+            fx1 = raw_function.get_f_components(x_1)[0]
             iteration += 1
     return '\n'.join([str(elem) for elem in roots])
 

@@ -77,7 +77,7 @@ const Header = () => {
                 <Link className="dropdown-item" to="#">
                   Parcial Pivoting
                 </Link>
-                <Link className="dropdown-item" to="gauss">
+                <Link className="dropdown-item" to="total-pivoting">
                   Total Pivoting
                 </Link>
                 {/* <Link className="dropdown-item" to="#">

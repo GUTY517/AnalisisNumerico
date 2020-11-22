@@ -8,12 +8,7 @@ from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
 from resources.f_function import f_x as fx
-
-def function(num):
-    '''Calculate inputed function'''
-    f_x = (math.log((math.sin(num)*math.sin(num)) + 1)) - (1/2)
-    return f_x
-
+from flask import abort
 
 def secant(function ,x_0, x_1, tolerance, iterations):
     '''Secant method to calculate multiple roots'''
@@ -50,7 +45,6 @@ def secant(function ,x_0, x_1, tolerance, iterations):
             root = (x_1, "Multiple root found")
         else:
             root = None
-    print(table)
     return root, table
 
 
@@ -67,9 +61,14 @@ class Secant(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-
-        root, table = secant(function, initial_x0, initial_x1, tolerance, iterations)
-        table = table.to_json(orient="records", default_handler=str)
-        json_table = json.loads(table)
+        if iterations < 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance < 0:
+            abort(500, "Inadequate tolerance.")
+        try:
+            root, table = secant(function, initial_x0, initial_x1, tolerance, iterations)
+            table = table.to_json(orient="records", default_handler=str)
+            json_table = json.loads(table)
+        except TypeError:
+            abort(500, "Function not correctly inputed.")
         return json_table
-        
