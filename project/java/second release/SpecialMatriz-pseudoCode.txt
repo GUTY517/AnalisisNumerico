@@ -1,0 +1,21 @@
+Function SpecialMatriz
+read dp, dss, dst, di, indep
+
+for k = 1 until n – 1 do
+	
+	m = di[k] / dp[k]
+	dp[k+1] = dp[k+1] – m * dss[k]
+	dss[k+1] = dss[k+1] – m * dst[k]
+	indep[k+1] = indep[k+1] – m * indep[k]
+
+end_for
+
+for i = n until 1 do
+	
+	x[i] = (indep[i] – dss[i] * x[i + 1] – dst[i] * x[i + 2]) / dp[i]
+
+end_for
+
+return x
+
+end Function SpecialMatriz

@@ -1,0 +1,36 @@
+Function Jacobi
+read A, b, x, iter, tol
+   cond = ||A|| * ||A^-1||
+    print cond
+    det(A)
+    if det(A)=0 then
+        print "The method fails, reason:The determinant is 0, unpublished solution or no solutions"
+    end if
+
+    n=size(b)
+    d=diagonal(diagonal(A))
+    l= d – lowerTriangular(A)
+    u=d – upperTriangular(A)
+    T = d^-1 * (l+u)
+
+    print T
+    re = max |selfValues(T)|
+
+    if re >1 then
+
+        print "The method fails, reason: spectral radius > 1, therefore the method does not converge"      
+
+    end if
+
+    C= d^-1 * b
+    print C
+    i=0
+    error = tol + 1
+    while error>tol & i<iter do
+        xi = T*x + C
+        i = i +1
+        error = ||xi - x||
+        x=xi
+    end while
+    print Table
+end Funcion Jacobi

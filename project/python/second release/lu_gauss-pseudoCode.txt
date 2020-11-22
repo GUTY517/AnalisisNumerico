@@ -1,0 +1,59 @@
+Function lu_gausss
+read A
+U = A
+
+	for k = 1 until n – 1 do
+		
+		for i = k + 1 until n do
+			
+			L[i,k] = U[i,k] / U[k,k]
+
+			for j = k until n do
+
+				U[i,j] = U[i,j] – L[i,k]*U[k,j]
+			
+			end_for
+		
+		end_for
+	
+	end_for
+
+	for i = 1 until n do
+
+		L[i,i] = 1
+	
+	end_for
+
+// progressive sustitution
+for i = 1 until n do
+	
+	acum = 0
+	
+	for p = 1 until i – 1 do
+	
+		acum = acum + L[i,p]*z[p]	
+
+	end_for
+
+z[i] = b[i] - acum
+
+end_for
+
+// regresive sustitution
+for i = n until 1 do
+
+	acum = 0
+
+	for p = i + 1 until n do
+
+		acum = acum + U[i,p]*x[p]
+	
+	end_for
+
+	x[i] = (z[i] – acum) / U[i,i]
+
+end_for
+
+return x
+
+end Function lu_gausss

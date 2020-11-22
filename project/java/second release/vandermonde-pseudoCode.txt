@@ -1,0 +1,21 @@
+Function vandemonde
+read(x,y)
+N = long (x)
+A = nullMatrix (n)
+
+for I = 1 until n
+	
+	for j = 1 until n
+		
+		A (i,j) = x (i) ^ (j-1)
+	
+	end for
+
+end for
+
+B = y
+X = inv (A) * b
+
+print "the polynomial coefficients are: " x
+
+end Function vandemonde

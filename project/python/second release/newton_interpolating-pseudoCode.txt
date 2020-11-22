@@ -1,0 +1,46 @@
+Function newton_interpolating
+read x, f 
+divided differences( 0, x.ifze() )
+return b // Coefficients array
+end newton_interpolating
+
+Function dividedDifferences(i, k)
+
+if i == k then
+	
+	return f[i]
+
+end_if
+
+if calculated[i, k-1] then
+	
+	f1 = previouslyCalculated[i, k-1]
+
+	else
+		
+		f1 = divided differences(i, k-1)
+end_if
+
+if calculated[i+1, k] then
+	
+	f2 = previouslyCalculated[i+1, k]
+	
+	else
+
+	f2 = divided differences(i+1, k)
+
+end_if
+
+dd = (f1 – f2) / (x[i] – x[k])
+calculated[i,k] = true
+previouslyCalculated[i,k] = dd
+
+if i == 0 then
+	
+	b[k] = dd
+
+end_if
+
+return dd
+
+end dividedDifferences

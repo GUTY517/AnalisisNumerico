@@ -1,0 +1,71 @@
+ Function Doolittle
+ read A, b
+    (n,m)= size(A)
+    a = extendedMatrix (A,b)
+    
+    if n = m then
+        for k=1 until n
+            Lkk= 1
+            add=0
+
+            for p=1 until k-1
+                add =add+Lkp*upk
+            end for
+            ukk=akk – add
+
+            for i=k+1 until n
+                add=0
+                for r=1 until k-1
+                    add=add + Lir*urk
+                end for
+            Lik = (aik – add ) / ukk
+            end for
+
+        for j=k+1 until n
+            add=0
+            for s=1 until k-1
+                add=add + Lks*usj
+            end for
+        Ukj = akj – add
+        end for
+    end for
+
+    determinant(u)=1
+    determinant(L)=1
+
+    for i=1 until n
+        determinant(u)= determinant(u)*uii
+    end for
+
+    product = determinant(u)*determinant(L)
+
+    if product is not 0 then
+        for i=1 until n
+            add=0
+            for p=1 until i -1
+                add=add + Lip*Zp
+            end for
+            Zi = (bi - add) / Lii
+        end for
+
+        for i=n until 1 pass -1
+            add=0
+            for p=i+1 until n
+                add = add + uip*xp
+            end for
+            Xi = (Zi - add) / uii
+        end for
+
+    print a
+    print L
+    print u
+    print z
+    print x
+    else
+        print "The method fails, reason: unpublished solution or no solutions"
+    end if
+    else
+        print "The method fails, The matrix is not NxN"
+    end if
+
+end Function Doolittle

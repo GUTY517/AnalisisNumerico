@@ -1,0 +1,16 @@
+Function lineal_spline
+
+read xs, ys
+n = size(xs)
+
+for i = 0 until n-1 do
+	
+	m = (ys[i+1] – ys[i]) / (xs[i+1] – xs[i])
+	b = ys[i] – xs[i] * m
+	splines[i] = Ecuation(m, b) // Y = m*X + b
+
+end_for
+
+retornar splines
+
+end Function lineal_spline

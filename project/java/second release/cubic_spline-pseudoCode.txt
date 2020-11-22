@@ -1,0 +1,31 @@
+Function cubic_spline
+	read xs, ys
+	n = size(xs)
+	numEcuation = 1 
+
+	for numEcuation = 1 until n-1 do
+		
+		splice(xs[numEcuation], ys[numEcuation]) 
+		numEcuation = numEcuation + 1
+	end_for
+	
+	spliceEnd(xs[0], ys[0]) 
+	spliceEnd(xs[n-1], ys[n-1])
+	
+	for numEcuation = 1 until n-1 do
+
+		spliceFirstDerivative(xs[numEcuation], ys[numEcuation]) 
+		numEcuation = numEcuation + 1 
+	end_for
+
+	for numEcuation = 1 until n-1 do
+		spliceSecondDerivative(xs[numEcuation], ys[numEcuation]) 
+		numEcuation = numEcuation + 1 
+	end_for
+
+	spliceEndSecondDerivative(xs[0], ys[0]) 
+	spliceEndSecondDerivative(xs[n-1], ys[n-1]) 
+
+	return splines
+
+end Function splinesCubicos

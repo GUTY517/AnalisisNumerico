@@ -1,0 +1,56 @@
+Function Jacobi_SOR
+read tol, iter, V
+count = 0
+error = tol + 1
+
+while  error > tol and count < iter do
+
+	for i = 0 until n do
+
+		N[i] = g(V,i)
+	
+	end_for
+
+error = ||N – V||
+
+V = N
+
+count = count + 1
+
+end_while
+
+if error <= tol then
+
+	return V
+
+else
+
+print "The method fails: reason: solution not found"
+
+end if
+
+end Function Jacobi_SOR
+
+
+function g(V, i)
+add1 = 0
+
+for p = 1 until i – 1 do
+
+	add = add + A[i,p] * V[p]
+
+end_for
+
+add2 = 0
+
+for q = i + 1 until n do
+	
+	add2 = add2 + A[i,q] * V[q]
+
+end_for
+
+x = (B[i] – add1 – add2) / A[i,i]
+
+return x
+
+end function g

@@ -1,0 +1,41 @@
+Function Gauss_Seidel_SOR
+read A, b, x, iter, tol,w
+    cond= ||A|| * ||A^-1||
+    print cond
+    det(A)
+
+    if det(A)=0 then
+
+        print "The method fails, reason: infinite solutions or no solutions"
+
+    end if
+
+    n=size(b)
+    d=diagonal(diagonal(A))
+    l= d – lowerTriangular(A)
+    u=d – upperTriangular(A)
+    Tw = (d-w*l)^-1 * ((1-w) * d+ w*u)
+    print Tw
+    re= max |selfValues(Tw)|                        
+
+    if re >1 then
+
+        print "The method fails, reason: spectral radius > 1, therefore the method does not converge"
+
+    end if
+
+    Cw= w * (d - w *l)^-1 *b
+    print Cw
+    i=0
+    error = tol + 1
+
+    while error>tol & i<iter do
+        xi = Tw*x + Cw
+        error =  || xi - x||
+        x=xi
+        i = i +1
+    end while
+
+    print Table
+
+end Function Gauss_Seidel_SOR

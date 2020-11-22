@@ -1,0 +1,91 @@
+Function lu_pivoting
+read a, b
+extendedMatrix(a,b)
+
+for (i = 1 until n ) do
+
+	bigger = 0
+
+	for (j = 1 until n) do
+		
+		if (|a[i,j] | > bigger) then
+			
+			bigger = | a[i,j] |
+		
+		end_if
+	
+	end_for
+	
+	if (bigger == 0) then
+		
+		print "The method fails, reason: There's not solution"
+
+	end_if
+
+s[i] = bigger
+
+end_for
+
+for (k = 1 until n – 1) do
+
+	bigger = 0
+	pos_bigger = -1
+
+	for (i = k until n) do
+		
+		if | a[i,k] | / s[i] > bigger then
+			
+			bigger = | a[i,k] | / s[i]
+			pos_bigger = i
+	
+		end_if
+	
+	end_for
+	
+	if bigger == 0 then
+	
+	print "The method fails, reason: There's not solution"
+	
+	end_if
+
+	if (k != pos_bigger) then 
+
+		for (i = 1 until n) do
+		
+			temp = a[pos_bigger, i]
+			a[pos_bigger, i] = a[k, i]
+			a[k, i] = temp
+		
+		end_for
+	
+	end_if
+	
+	for (i = k + 1 until n) do
+		
+		mik = a[i,k] / a[k,k]
+		
+		for (j = k until n + 1) do
+			
+			a[i,j] = a[i,j] – m[i,k]*a[k,j]
+		
+		end_for
+	
+	end_for
+
+end_for
+
+for (i = n until 1) do 
+
+	acum = 0
+	
+	for (p = i + 1 until n) do
+		
+		acum = acum + a[i,p]*X[p]
+	
+	end_for
+	
+	X[i] = (a[i,n+1] – acum) / a[i,i]
+	
+end_for
+
+end Function lu_pivoting
