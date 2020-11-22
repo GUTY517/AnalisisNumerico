@@ -1,0 +1,96 @@
+Function total_pivoting
+
+Read A, b
+(n,m) = size(A)
+a = extenofdMatrix (A,b)
+
+if n = m then
+
+    for i=1 until n
+    mark(i)= i
+
+end for
+
+For k=1 until n-1
+    bigger = 0
+    rowm = k
+    columnam = k
+
+    for p=k until n
+        for l = k until n
+        if bigger <  |apr|     then
+            bigger = |apr|    
+            rowm = p
+            columnam = r
+
+        end if
+
+        end for
+
+    end for
+
+if bigger = 0 then
+
+ print "the system doesn't have a solution or has infinite solutions"
+
+else
+
+if rowm  different of k then
+    for j=1 until n+1
+        Aux = a(k, j)
+        a(k, j) = a(rowm, j)
+        a(rowm ,j) = Aux
+    end for
+end if
+
+if columnam different of  k then
+    for i=1 until n
+        Aux = a(i, k)
+        a(i, k) = a(i, columnam)
+        a(i, columnam) = Aux
+    end for
+
+    Aux = mark (k)
+    mark (k) = mark (columnam)
+    mark (columnam) = Aux
+end if
+end if
+
+for i=k+1 until n
+    mik = aik / akk
+    for j=k until n+1
+        aij = aij
+    end for
+end for
+end for
+
+for i=n until 1
+    add = 0
+        for p=i+1 until n
+        add = add + aipxp
+     end for
+    xi = ( bi – add ) / aii
+end for
+
+for i=n until 1
+    for j=1 until n
+        if mark(j) = i then
+            k = j
+        end if
+    end for
+    Aux = x(k)
+    x(k) = x(i)
+    x(i) = Aux
+    Aux = mark(k)
+    mark(k) = mark(i)
+    mark(i) = Aux
+end for
+
+print a
+print x
+
+else
+    print "The matrix is not NxN"
+end if
+
+end Function

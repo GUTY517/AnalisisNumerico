@@ -1,0 +1,58 @@
+Read xl, xu, tol, iter
+    if tol <0
+        Print “Inadequate tolerance"
+
+    else
+
+      if iter < 0
+         print “Inadequate iterations"
+
+      else
+
+    Fxl = f(xl)
+    Fxu = f(xu)
+    
+    if Fxl = 0
+       print xl “Is a root”   
+
+    else
+    if fxl * fxu < 0
+       Xm = (xl +xu)/2
+       Fxm = f(Xm)
+       count = 1
+       err = tol +1
+
+While  count < iter && err > tol && Fxm is not 0
+
+if Fxl * Fxm < 0
+xu = xmm
+Fxu = Fxm
+
+else
+    xl = xm
+    Fxl = Fxm
+end if
+
+temp = xm
+xm = (xl+x2)/2
+Fxm = F(xm)
+err = abs ( xm – temp)
+count ++
+
+end while
+
+if Fxm = 0
+    print xm “is a root”
+
+else
+
+if err < tol
+    print "xm is an approximation to a root with tolerance = ” tol
+
+else
+    print “The method fails finding a root, reason: Maximum iterations reached"
+end if
+
+else
+    print “Inadequate interval”
+end if

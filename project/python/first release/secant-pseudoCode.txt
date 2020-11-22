@@ -1,0 +1,52 @@
+read x0, x1, tol, iter
+    y0 = f(x0)
+
+    if y0 == 0 then
+
+        print x0 "Is a root"
+
+    else
+
+        y1 = f(x1)
+        count = 0
+        err = tol + 1
+        den = y1 - y0
+
+        while y1 != 0 && d0 != 0 && error > tol && den != 0 && count < iter do
+
+            x2 = x1 - y1*(x1 - x0)/den
+            err = abs((x1 - x0)/x1)
+            x0 = x1
+            y0 = y1
+            x1 = x2
+            y1 = f(x1)
+            den = y1 - y0
+            count = count + 1
+
+        end while
+
+        if y1 == 0 then
+
+            print  x1 "Is a root"   
+
+        else
+                if error < tol then
+
+                    print x1 "Is an approximation with tolerance = " tol
+
+                else
+                        if den = 0 then
+
+                            print "there's a possible multiple root"
+
+                        else
+
+                            print "The method fails finding a root, reason: Maximum iterations reached"
+
+                        end if
+
+                end if
+                
+        end if
+
+    end if

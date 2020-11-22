@@ -1,0 +1,25 @@
+read xa, tol, iter
+    fx = F(xa)
+    count = 0
+    err = tol + 1
+
+while (count < iter) && (err > tol) && (fx is not 0)
+    xn = g(xa)
+    fx = f(xn)
+    err = abs( (xn-xa) / xn )
+    count++
+    
+fin while
+
+if fx = 0
+    print xa "Is a root"
+
+else
+
+if err < tol
+    print xa "Is an approximation with tolerance = " tol
+
+else
+    print "The method fails finding a root, reason: Maximum iterations reached"
+
+fin if

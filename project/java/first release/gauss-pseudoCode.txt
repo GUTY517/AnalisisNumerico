@@ -1,0 +1,21 @@
+Function Gauss (A, b, n)
+    Ab <- extendedMatrix (A, b)
+
+    for k = 1 until n - 1
+        for i = k + 1 until n
+            multiplicador <- Abik / Abkk
+            
+            for j = k until n + 1
+                Abij <- Abij - multiplicador * Abkj
+            end for
+        end for
+    end for
+
+if Ab = 0
+    print "An element in the diagonal, the system doesn't have a solution or has infinite solutions"
+
+end if
+
+return Ab
+
+end Function

@@ -1,0 +1,94 @@
+Function PartialPivoting
+
+read A, b
+
+(n,m)= size(A)
+
+a = extendedMatrix (A,b)
+
+
+if n = m then 
+
+    for k=1 until n-1 
+
+    bigger = 0
+
+    rowm = k
+
+
+    for p = k until n 
+
+        if bigger < |apk| then 
+
+        bigger = |apk|
+
+        rowm = p
+
+        end if 
+
+    end for
+
+
+if bigger = 0 then 
+
+    print ‘Inenditas soluciones’
+
+else 
+
+    if row m diferente de k then 
+
+
+    for j = 1  until n + 1 
+
+        Aux = a(k, j)
+
+        a(k, j) = a(rowm, j)
+
+        a(rowm ,j) = Aux
+
+    end for
+
+end if 
+
+end if 
+
+
+for i=k+1 until n 
+
+    mik = aik / akk 
+
+    for j=k until n+1 
+
+        aij = aik -mik*akj 
+
+    end for
+
+end for
+
+end for
+
+
+for i = n until 1 
+
+    add = 0
+
+     for p = i+1 until n 
+
+add = add + aipxp 
+
+    end for xi = (bi-add) / aii
+
+end for 
+
+
+  print a 
+
+print x 
+
+else 
+
+print "The matrix is not NxN"
+
+ end if 
+
+end Function
