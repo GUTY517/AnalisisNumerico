@@ -34,7 +34,7 @@ Lea Xn, Tol, Iter
 
 				if (den = 0) then
 
-					print "The method fails, reason: diviifon by 0"
+					print "The method fails, reason: division by 0"
 
 				else
 
