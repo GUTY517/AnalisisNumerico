@@ -1,15 +1,17 @@
 #! /usr/bin/env python3
 '''Gauss Seidel SOR implementation'''
 
+import json
 from math import sqrt
 from copy import copy
 from decimal import Decimal
-from prettytable import PrettyTable
-from numpy import diag, tril, triu, array, matmul
+import pandas as pd
+from numpy import diag, tril, triu, transpose, array, matmul
 from numpy.linalg import det, matrix_power
 from scipy import linalg as LA
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def gauss_sor(x_0, matrix, vector, w_value):
@@ -39,13 +41,13 @@ def norm_2(x_0, x_1):
     return error
 
 
-def main(tolerance, iterations, w_value, matrix, vector, x_0):
-    '''Input data and excute code'''
+def main(matrix, vector, x_0, w_value, iterations, tolerance):
+    '''Input data and execute code'''
 
     data_size = len(matrix)
     determinant = det(matrix)
     if determinant == 0:
-        return(1, "Determinant is ZERO (Multiple solutions)")
+        abort(500, "Determinant is zero")
 
     diagonal_matrix = diag(diag(matrix))
     lower_matrix = diagonal_matrix - tril(matrix)
@@ -55,6 +57,8 @@ def main(tolerance, iterations, w_value, matrix, vector, x_0):
 
     power = matrix_power(helper, -1)
     t_matrix = matmul(power, helper2)
+    relaxed = transpose(vector) * w_value
+    sor_answer = matmul(power, relaxed)
 
     transposed_matrix = [[abs(matrix[i][j])
                           for i in range(data_size)] for j in range(data_size)]
@@ -71,8 +75,8 @@ def main(tolerance, iterations, w_value, matrix, vector, x_0):
     if spectral_checker == 2:
         spectral_value = max(abs(LA.eigvals(t_matrix)))
         if spectral_value > 1:
-            return (
-                1, f"The spectral radio is larger than 1" /
+            abort(
+                500, f"The spectral radio is larger than 1" /
                 "({str(spectral_value)}). This method won't work.")
 
     title = ['Iterations']
@@ -82,22 +86,24 @@ def main(tolerance, iterations, w_value, matrix, vector, x_0):
         title.append(f"x{str(table_names)}")
         table_names += 1
     title.append("Error")
-    table = PrettyTable(title)
-    table.add_row([iterator] + x_0 + ["-"])
+    table = pd.DataFrame(columns=title)
+    table = table.append(pd.Series([iterator] + x_0 + ["-"], index=table.columns), ignore_index=True)
     error = tolerance + 1
     while error > tolerance and iterator < iterations:
         x_1 = gauss_sor(x_0, matrix, vector, w_value)
         error = norm_2(x_0, x_1)
         iterator += 1
-        table.add_row([iterator] + x_1 + ['%.2E' % Decimal(str(error))])
+        table = table.append(pd.Series([iterator] + x_1 + ['%.2E' % Decimal(str(error))], index=table.columns), ignore_index=True)
         x_0 = copy(x_1)
 
-    return table
+    return sor_answer, table, max(abs(LA.eigvals(t_matrix)))
 
 
 class GaussSeidelSor(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         matrix = body_params["matrix"]
         w_value = body_params["w_value"]
@@ -109,5 +115,10 @@ class GaussSeidelSor(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        json_table = main(tolerance, iterations, w_value, matrix, vector, x_0)
-        return json_table
+        if iterations <= 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance <= 0:
+            abort(500, "Inadequate tolerance.")
+        answer, json_table, spectral_value = main(matrix, vector, x_0, w_value, iterations, tolerance)
+        json_data = (json.loads(json_table.to_json(orient="records")) + answer.tolist() + [spectral_value])
+        return json_data
