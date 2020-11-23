@@ -109,5 +109,5 @@ class LinealSpline(Resource):
         y_values = body_params["y_values"]
         data = list(map(lambda x, y: [x, y], x_values, y_values))
         polynomials, gen = lineal_spline(data)
-        json_data = json.loads(json.dumps(gen + polynomials))
+        json_data = json.loads(json.dumps({"Table": gen, "Polynomials": polynomials}))
         return json_data
