@@ -92,6 +92,6 @@ class JacobiSor(Resource):
             abort(500, "Inadequate tolerance.")
         answer, json_table, spectral_values = jacobi_sor(
             matrix, vector, x_0, w_value, iterations, tolerance)
-        json_data = (json.loads(json_table.to_json(orient="records")
-                                ) + answer.tolist() + [spectral_values])
+        json_table = json.loads(json_table.to_json(orient="records"))
+        json_data = json.loads(json.dumps({"Table": json_table, "Answers": answer.tolist(), "SpectralValues": [spectral_values]}))
         return json_data

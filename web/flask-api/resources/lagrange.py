@@ -47,10 +47,14 @@ def main(x_values, y_values):
 
 
 class Lagrange(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
-        json_data = json.loads(json.dumps([l.split(',') for l in ','.join(main(x_values, y_values)).split(',')]))
+        answers = [float(i.split(',')[1]) for i in main(x_values, y_values)]
+        ecuations = [str(i.split(',')[0]) for i in main(x_values, y_values)]
+        json_data = json.loads(json.dumps({"Ecuations": ecuations, "Answers": answers}))
         return json_data

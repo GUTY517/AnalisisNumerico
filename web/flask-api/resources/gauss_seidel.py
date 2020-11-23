@@ -72,8 +72,10 @@ def main(tolerance, iterations, matrix, vector, x_0):
 
 
 class GaussSeidel(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         matrix = body_params["matrix"]
         vector = body_params["vector"]
@@ -89,5 +91,6 @@ class GaussSeidel(Resource):
         if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
         answer, json_table = main(tolerance, iterations, matrix, vector, x_0)
-        json_data = (json.loads(json_table.to_json(orient="records")) + answer)
+        json_table = json.loads(json_table.to_json(orient="records"))
+        json_data =  json.loads(json.dumps({"Table": json_table, "Answer": answer}))
         return json_data

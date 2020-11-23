@@ -95,5 +95,6 @@ class Jacobi(Resource):
         if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
         answer, json_table = main(matrix, vector, x_0, tolerance, iterations)
-        json_data = (json.loads(json_table.to_json(orient="records")) + answer)
+        json_table = json.loads(json_table.to_json(orient="records"))
+        json_data = json.loads(json.dumps({"Table": json_table, "Answers": answer}))
         return json_data

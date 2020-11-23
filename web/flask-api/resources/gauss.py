@@ -76,5 +76,5 @@ class Gauss(Resource):
         vector = np.array(body_params["vector"])
         x_values = get_values(stepped_matrix(matrix, vector), len(matrix))
         pivoted_matrix = stepped_matrix(matrix, vector).tolist()
-        json_values = json.loads(json.dumps(pivoted_matrix + x_values))
+        json_values = json.loads(json.dumps({"PivotedMatrix": pivoted_matrix, "ValuesX": x_values}))
         return json_values
