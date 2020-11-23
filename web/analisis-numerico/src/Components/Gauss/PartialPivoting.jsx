@@ -1,13 +1,13 @@
 import React from 'react';
 import MatrixInput from '../assets/MartrixInput';
 import MatrixMethod from "./MatrixMethod";
-const TotalPivoting = () => {
+const PartialPivoting = () => {
   return ( 
     <MatrixMethod
-      endpoint="total_pivoting"
-      matrix_method="Total Pivoting"
+      endpoint="partial_pivoting"
+      matrix_method="Partial Pivoting"
     />
    );
 }
  
-export default TotalPivoting;
+export default PartialPivoting;

@@ -74,11 +74,17 @@ const Header = () => {
                 className="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="gauss">
+                  Gauss
+                </Link>
+                <Link className="dropdown-item" to="partial_pivoting">
                   Parcial Pivoting
                 </Link>
-                <Link className="dropdown-item" to="total-pivoting">
+                <Link className="dropdown-item" to="total_pivoting">
                   Total Pivoting
+                </Link>
+                <Link className="dropdown-item" to="cholesky">
+                  Cholesky
                 </Link>
                 {/* <Link className="dropdown-item" to="#">
                   Something else here

@@ -4,13 +4,16 @@ import useScript from 'react-script-hook';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Bisection from './Components/open_methods/Bisection';
-import TotalPivoting from './Components/Gauss/TotalPivoting';
 import Newton from './Components/open_methods/Newton';
 import False_Rule from './Components/open_methods/False_Rule';
 import Fixed_Point from './Components/open_methods/Fixed_Point';
 import Secant from './Components/open_methods/Secant';
 import MultipleRoots from './Components/open_methods/MultipleRoots';
-import "./App.css";
+import Gauss from './Components/Gauss/Gauss';
+import PartialPivoting from './Components/Gauss/PartialPivoting';
+import TotalPivoting from './Components/Gauss/TotalPivoting';
+import Cholesky from './Components/Gauss/Cholesky';
+
 function App() {
 	return (
 		<div className="App">
@@ -24,8 +27,17 @@ function App() {
 					<Route path="/newton">
 						<Newton />
 					</Route>
-					<Route path="/total-pivoting">
-						<TotalPivoting />
+					<Route path="/gauss">
+						<Gauss/>
+					</Route>
+					<Route path="/partial_pivoting">
+						<PartialPivoting/>
+					</Route>
+					<Route path="/total_pivoting">
+						<TotalPivoting/>
+					</Route>
+					<Route path="/Cholesky">
+						<Cholesky/>
 					</Route>
 					<Route path="/false_rule">
 						<False_Rule />
