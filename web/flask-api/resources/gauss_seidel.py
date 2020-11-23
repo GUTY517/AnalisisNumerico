@@ -1,12 +1,14 @@
 #! /usr/bin/env python3
 '''Gauss Seidel implementation using norm 2'''
 
+import json
 from math import sqrt
 from copy import copy
-from prettytable import PrettyTable
+import pandas as pd
 from numpy.linalg import det, inv, LinAlgError
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def gauss_seidel(x_0, matrix, vector):
@@ -44,32 +46,29 @@ def main(tolerance, iterations, matrix, vector, x_0):
 
     determinant = det(matrix)
     if determinant == 0:
-        return(1, "Determinant is ZERO (no unique solution)")
-
+        abort(500, "Determinant is zero")
     try:
         inv(matrix)
     except LinAlgError:
-        return(1, "The matrix is not invertible")
-
+        abort(500, "Is not possible to invert matrix")
     title = ['Iterations']
     table_tittles = 0
     iteration = 0
     while table_tittles < len(x_0):
         title.append(f"x{str(table_tittles)}")
         table_tittles += 1
-
     title.append("Error")
-    table = PrettyTable(title)
-    table.add_row([iteration] + x_0 + ["-"])
+    table = pd.DataFrame(columns=title)
+    table = table.append(pd.Series([iteration] + x_0 + ["-"], index=table.columns), ignore_index=True)
     error = tolerance + 1
     gauss_seidel_answer = gauss_seidel(x_0, matrix, vector)
     while error > tolerance and iteration < iterations:
         answers = gauss_seidel(x_0, matrix, vector)
         error = norm_2(x_0, answers)[0]
         iteration += 1
-        table.add_row([iteration] + answers + [error])
+        table = table.append(pd.Series([iteration] + answers + [error], index=table.columns), ignore_index=True)
         x_0 = copy(answers)
-    return table, gauss_seidel_answer
+    return gauss_seidel_answer, table
 
 
 class GaussSeidel(Resource):
@@ -85,5 +84,10 @@ class GaussSeidel(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        json_table, _ = main(tolerance, iterations, matrix, vector, x_0)
-        return json_table
+        if iterations <= 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance <= 0:
+            abort(500, "Inadequate tolerance.")
+        answer, json_table = main(tolerance, iterations, matrix, vector, x_0)
+        json_data = (json.loads(json_table.to_json(orient="records")) + answer)
+        return json_data
