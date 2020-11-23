@@ -17,6 +17,8 @@ import Crout from './Components/Gauss/Crout';
 import Doolittle from './Components/Gauss/Doolittle';
 import LUGauss from './Components/Gauss/LUGauss';
 import LUPartial from "./Components/Gauss/LUPartial";
+import Jacobi from './Components/Gauss/Jacobi';
+import GaussSeidel from './Components/Gauss/GaussSeidel';
 
 function App() {
 	return (
@@ -66,6 +68,12 @@ function App() {
 					</Route>
 					<Route path="/multiple_roots">
 						<MultipleRoots />
+					</Route>
+					<Route path="/jacobi">
+						<Jacobi/>
+					</Route>
+					<Route path="/gauss_seidel">
+						<GaussSeidel/>
 					</Route>
 				</Switch>
 			</Router>

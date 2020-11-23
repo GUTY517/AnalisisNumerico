@@ -92,5 +92,5 @@ class GaussSeidel(Resource):
             abort(500, "Inadequate tolerance.")
         answer, json_table = main(tolerance, iterations, matrix, vector, x_0)
         json_table = json.loads(json_table.to_json(orient="records"))
-        json_data =  json.loads(json.dumps({"Table": json_table, "Answer": answer}))
+        json_data =  json.loads(json.dumps({"Table": json_table, "Answers": answer}))
         return json_data

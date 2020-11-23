@@ -98,6 +98,12 @@ const Header = () => {
                 <Link className="dropdown-item" to="lu_partial">
                   LU Partial
                 </Link>
+                <Link className="dropdown-item" to="jacobi">
+                  Jacobi
+                </Link>
+                <Link className="dropdown-item" to="gauss_seidel">
+                  Gauss Seidel
+                </Link>
                 {/* <Link className="dropdown-item" to="#">
                   Something else here
                 </Link> */}
