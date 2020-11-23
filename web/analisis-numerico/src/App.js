@@ -15,6 +15,8 @@ import TotalPivoting from './Components/Gauss/TotalPivoting';
 import Cholesky from './Components/Gauss/Cholesky';
 import Crout from './Components/Gauss/Crout';
 import Doolittle from './Components/Gauss/Doolittle';
+import LUGauss from './Components/Gauss/LUGauss';
+import LUPartial from "./Components/Gauss/LUPartial";
 
 function App() {
 	return (
@@ -46,6 +48,12 @@ function App() {
 					</Route>
 					<Route path="/crout">
 						<Crout/>
+					</Route>
+					<Route path="/lu_gauss">
+						<LUGauss/>
+					</Route>
+					<Route path="/lu_partial">
+						<LUPartial/>
 					</Route>
 					<Route path="/false_rule">
 						<False_Rule />

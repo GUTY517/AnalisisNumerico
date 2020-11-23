@@ -3,7 +3,7 @@ import json_data from '../../json_data/total_pivoting.json';
 import MatrixInput from '../assets/MartrixInput';
 import axios from 'axios';
 import '../../App.css';
-const MatrixMethod = ({matrix_method, endpoint}) => {
+const MatrixMethod = ({ matrix_method, endpoint }) => {
 	const [matrix_size, setMatrixSize] = useState(3);
 	const [matrix, setMatrix] = useState(new Array(matrix_size));
 	const [b_vector, setBVector] = useState(new Array(matrix_size));
@@ -13,6 +13,9 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 	const [matrix_to_show, setMatrixToShow] = useState([]);
 	const [show_matrix_result, setShowMatrixResult] = useState(false);
 	const [vector_to_show, setVectorToShow] = useState([]);
+	const [error, setError] = useState(null);
+	const [showError, setShowError] = useState(false);
+	const [sizeError, setSizeError] = useState(null);
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -22,6 +25,24 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 
 	const setOnesMatrix = (e) => {
 		e.preventDefault();
+		const regex = new RegExp('[0-9]+');
+		setError(null);
+		if (matrix_size < 2 || matrix_size === null) {
+			setSizeError('Error performing matrix size, the value must be greater than 1');
+			setShowError(true);
+			return;
+		} else if (!matrix_size.toString().match(regex)) {
+			setSizeError('Only numbers are allowed in the matrix size');
+			setShowError(true);
+			return;
+		} else if (matrix_size > 5) {
+			setSizeError('The matrix size should be less than 6 for helping to perform operations');
+			setShowError(true);
+			return;
+		} else {
+			setSizeError(null);
+		}
+		setShowError(false);
 		const matrix_size_aux = parseInt(matrix_size);
 		const matrix_ones = new Array(matrix_size_aux);
 		const vector_ones = new Array(matrix_size);
@@ -39,7 +60,9 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 		setBTitle('b');
 		setShowMatrix(true);
 	};
-
+	const round = (value, decimals) => {
+		return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+	};
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const b_vector_selected = [...document.querySelectorAll('.b_vector')];
@@ -72,22 +95,34 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 			vector: b_vector,
 		};
 		try {
-			const result = await (await axios.post(`http://127.0.0.1:5000/${endpoint}`, body)).data;
-			const matrix_result = result.filter((element) => typeof element === 'object');
-			const x_values = result.filter((element) => typeof element === 'number');
+			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
+			console.log(result);
+			const array = result.data;
+			const matrix_result = array.filter((element) => typeof element === 'object');
+			const x_values = array.filter((element) => typeof element === 'number');
 			// const matrix_result = result.filter(typeof Array);
 			console.log(x_values);
 			console.log(matrix_result);
+			setShowError(false);
 			setShowMatrixResult(true);
 			setMatrixToShow(matrix_result);
 			setVectorToShow(x_values);
 		} catch (error) {
-			console.error(error);
+			const { message } = error.response.data;
+			console.log(message);
+			setError(message);
+			setShowError(true);
 		}
 	};
 
 	const showResults = () => {
-		if (show_matrix_result) {
+		if (error && showError) {
+			return (
+				<div className="d-inline-flex p-2 m-3 text-danger font-weight-bold">
+					<p>{error}</p>
+				</div>
+			);
+		} else if (show_matrix_result) {
 			const matrix_data = matrix_to_show;
 			const vector_data = vector_to_show;
 			return (
@@ -104,7 +139,7 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 											{row.map((column, indexColumn) => {
 												return (
 													<MatrixInput
-														defaultValue={matrix_data[indexRow][indexColumn]}
+														defaultValue={round(matrix_data[indexRow][indexColumn], 4)}
 														key={indexColumn}
 														valueId={indexColumn}
 														readOnly
@@ -115,7 +150,6 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 									);
 								})}
 							</div>
-
 						</div>
 						<div className="d-flex flex-column ml-4">
 							<div className="">
@@ -125,16 +159,12 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 								{vector_data.map((row, indexRow) => {
 									return (
 										<div className="d-flex" key={indexRow}>
-										
-											
-													<MatrixInput
-														defaultValue={vector_data[indexRow]}
-														key={indexRow}
-														className="b_vector"
-														readOnly
-													/>
-												
-										
+											<MatrixInput
+												defaultValue={round(vector_data[indexRow], 4)}
+												key={indexRow}
+												className="b_vector"
+												readOnly
+											/>
 										</div>
 									);
 								})}
@@ -148,7 +178,13 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 	};
 
 	const showMatrixInput = () => {
-		if (show_matrix) {
+		if (sizeError && showError) {
+			return (
+				<div className="d-flex">
+					<p className="text-danger font-weight-bold">{sizeError}</p>
+				</div>
+			);
+		} else if (show_matrix) {
 			return (
 				<form onSubmit={handleSubmit}>
 					<div className="d-column-flex">
@@ -200,12 +236,13 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 							</div>
 						</div>
 						<div className="d-flex justify-content-center">
-							<button class="btn btn-primary" >Calculate</button>
+							<button class="btn btn-primary">Calculate</button>
 						</div>
 					</div>
 				</form>
 			);
 		}
+		return null;
 	};
 
 	return (
@@ -224,7 +261,9 @@ const MatrixMethod = ({matrix_method, endpoint}) => {
 							></input>
 							<div className="d-flex justify-content-center m-3">
 								<div className="d-flex">
-									<button class="btn btn-primary" type="submit">Generate Matrix</button>
+									<button class="btn btn-primary" type="submit">
+										Generate Matrix
+									</button>
 								</div>
 							</div>
 						</div>

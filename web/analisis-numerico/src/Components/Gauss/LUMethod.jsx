@@ -13,6 +13,9 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const [L, setL] = useState([]);
 	const [U, setU] = useState([]);
 	const [solution_x, setSolution] = useState([]);
+	const [augmented_matrix, setAugmentedMatrix] = useState([]);
+	const [permuted_matrix, setPermutedMatrix] = useState([]);
+
 	const [show_matrix_result, setShowMatrixResult] = useState(false);
 	const [error, setError] = useState(null);
 	const [showError, setShowError] = useState(false);
@@ -55,7 +58,7 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 			matrix_ones[i] = Array(matrix_size_aux).fill(1);
 		}
 		// setMatrix(matrix_ones);
-		setMatrix( [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]);
+		setMatrix(matrix_ones);
 		setBVector(vector_ones);
 		setATitle('A');
 		setBTitle('b');
@@ -65,7 +68,7 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		const b_vector_selected = [...document.querySelectorAll('.b_vector')];
-		console.log(b_vector_selected[1].value);
+		console.log(typeof b_vector_selected[1].value);
 		let count = 0;
 		for (let i = 0; i < matrix.length; i++) {
 			for (let j = 0; j < matrix[0].length; j++) {
@@ -95,13 +98,13 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		};
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
-			console.log(result);
-			const { L, U, solution } = result.data;
+			// console.log(JSON.parse(result.data));
+			const { aumented_matrix, permuted_matrix, L, U, solution } = result.data;
 
 			// const matrix_result = result.filter(typeof Array);
-			console.log(L);
-			console.log(U);
 			setShowMatrixResult(true);
+			setAugmentedMatrix(aumented_matrix);
+			setPermutedMatrix(permuted_matrix);
 			setL(L);
 			setU(U);
 			setSolution(solution);
@@ -127,10 +130,64 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		} else if (show_matrix_result) {
 			const L_Matrix = L;
 			const U_Matrix = U;
+			const augmented_matrix_to_show = augmented_matrix;
+			const permuted_matrix_to_show = permuted_matrix;
 			const solution_vector = solution_x;
 			return (
 				<React.Fragment>
-					<div className="d-inline-flex justify-content-center p-2 m-3">
+					<div className="d-inline-flex justify-content-center p-2 m-3 flex-wrap">
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="text-center font-weight-bold">Augmented Matrix</p>
+							</div>
+							<div>
+								{augmented_matrix_to_show.map((row, indexRow) => {
+									return (
+										<div className="d-flex-inline" key={indexRow}>
+											{row.map((column, indexColumn) => {
+												return (
+													<MatrixInput
+														defaultValue={round(
+															augmented_matrix_to_show[indexRow][indexColumn],
+															4
+														)}
+														key={indexColumn}
+														valueId={indexColumn}
+														readOnly
+													/>
+												);
+											})}
+										</div>
+									);
+								})}
+							</div>
+						</div>
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="text-center font-weight-bold">Permuted Matrix</p>
+							</div>
+							<div>
+								{permuted_matrix_to_show.map((row, indexRow) => {
+									return (
+										<div className="d-flex-inline" key={indexRow}>
+											{row.map((column, indexColumn) => {
+												return (
+													<MatrixInput
+														defaultValue={round(
+															permuted_matrix_to_show[indexRow][indexColumn],
+															4
+														)}
+														key={indexColumn}
+														valueId={indexColumn}
+														readOnly
+													/>
+												);
+											})}
+										</div>
+									);
+								})}
+							</div>
+						</div>
 						<div className="d-column-flex p-2 m-3">
 							<div>
 								<p className="text-center font-weight-bold">L</p>

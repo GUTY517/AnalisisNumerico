@@ -28,6 +28,12 @@ class LuPivoting(Resource):
         vector = body_params["vector"]
         augmented_matrix, permuted_matrix, lower_triangular_matrix, upper_triangular_matrix, answer = lu_pivoting(
             matrix, vector)
-        json_data = json.loads(json.dumps(augmented_matrix.tolist() + permuted_matrix.tolist(
-        ) + lower_triangular_matrix.tolist() + upper_triangular_matrix.tolist() + answer.tolist()))
+        json_response = json.loads(json.dumps(
+                                             {
+                                                "aumented_matrix":augmented_matrix.tolist(), 
+                                                "permuted_matrix":permuted_matrix.tolist(), 
+                                                "L":lower_triangular_matrix.tolist(), 
+                                                "U":upper_triangular_matrix.tolist(),
+                                                "solution":answer.tolist()
+                                            }))
         return json_data

@@ -1,4 +1,4 @@
-The input in the methods help you to be sure in the dimension of the matrix..
+The input in the methods help you to be sure in the dimension of the matrix.
 
 If you know that a matrix is positively defined, the method converges with certainty.
 
