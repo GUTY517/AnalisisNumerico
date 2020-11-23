@@ -1,16 +1,14 @@
 #! /usr/bin/env python3
 '''New Jacobi method implementation'''
 
-import numpy as np
-import pandas as pd
+import json
 from math import sqrt
 from copy import copy
-from prettytable import PrettyTable
+import pandas as pd
 from numpy.linalg import inv, det, LinAlgError
 from flask_restful import Resource
 from flask import request
 from flask import abort
-import json
 
 
 def jacobi(x_0, matrix, vector):
@@ -41,8 +39,6 @@ def norm_2(x_0, x_1):
 
 def main(matrix, vector, x_0, tolerance, iterations):
     '''Returns Jacobi answer and calculation table'''
-
-
     determinant = det(matrix)
     if determinant == 0:
         abort(500, "Determinant is zero")
@@ -50,7 +46,6 @@ def main(matrix, vector, x_0, tolerance, iterations):
         inv(matrix)
     except LinAlgError:
         abort(500, "Matrix is not invertible")
-
     title = ['iterations']
     answer = 0
     iterator = 0
