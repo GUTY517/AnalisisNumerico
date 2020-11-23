@@ -45,5 +45,5 @@ class Crout(Resource):
         lower_triangular_matrix = lower_triangular_matrix.tolist()
         upper_triangular_matrix = upper_triangular_matrix.tolist()
         solution = solved.tolist()
-        json_response = json.loads(json.dumps({"LowerMatrix":lower_triangular_matrix, "UpperMatrix":upper_triangular_matrix, "Answer":solution}))
+        json_response = json.loads(json.dumps({"L":lower_triangular_matrix, "U":upper_triangular_matrix, "solution":solution}))
         return json_response
