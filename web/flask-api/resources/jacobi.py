@@ -24,6 +24,7 @@ def jacobi(x_0, matrix, vector):
         answer.append(results)
     return answer
 
+
 def norm_2(x_0, x_1):
     '''Returns vectors norm'''
     results = 0
@@ -36,6 +37,7 @@ def norm_2(x_0, x_1):
             return error, 0
     except OverflowError:
         return 0, 1
+
 
 def main(matrix, vector, x_0, tolerance, iterations):
     '''Returns Jacobi answer and calculation table'''
@@ -54,7 +56,8 @@ def main(matrix, vector, x_0, tolerance, iterations):
         answer += 1
     title.append("Error")
     table = pd.DataFrame(columns=title)
-    table = table.append(pd.Series([iterator] + x_0 + ["-"], index=table.columns), ignore_index=True)
+    table = table.append(
+        pd.Series([iterator] + x_0 + ["-"], index=table.columns), ignore_index=True)
     error = tolerance + 1
     jacobi_response = jacobi(x_0, matrix, vector)
     while error > tolerance and iterator < iterations:
@@ -65,7 +68,8 @@ def main(matrix, vector, x_0, tolerance, iterations):
         if err == 1:
             abort(500, "Result is too big")
         iterator += 1
-        table = table.append(pd.Series([iterator] + x_1 + [error], index=table.columns), ignore_index=True)
+        table = table.append(
+            pd.Series([iterator] + x_1 + [error], index=table.columns), ignore_index=True)
         x_0 = copy(x_1)
 
     return jacobi_response, table
