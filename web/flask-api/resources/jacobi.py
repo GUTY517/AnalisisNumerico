@@ -94,7 +94,6 @@ class Jacobi(Resource):
             abort(500, "Inadequate iterations.")
         if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
-        _ = main(matrix, vector, x_0, tolerance, iterations)
         answer, json_table = main(matrix, vector, x_0, tolerance, iterations)
         json_data = (json.loads(json_table.to_json(orient="records")) + answer)
         return json_data
