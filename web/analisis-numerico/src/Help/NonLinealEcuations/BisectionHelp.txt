@@ -1,0 +1,13 @@
+The function must be continuous and differentiable, in addition the specific function evaluated at the interval ends must have a different sign.
+
+The value of A must be minor than b.
+
+The value of A represents the lower limit.
+
+The value of B represents the upper limit.
+
+Tolerance must have a positive value.
+
+Both values, a and b must exist in the function.
+
+The iteration number must be positive.

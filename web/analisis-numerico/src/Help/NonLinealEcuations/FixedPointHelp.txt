@@ -1,0 +1,11 @@
+The functions must be continuous and differentiable.
+
+Be sure that the function have a root.
+
+The initial value is important for the method.
+
+Tolerance must have a positive value.
+
+The iteration number must be positive.
+
+You need to make sure that f(X) is continuous and g(X) is smooth and continuous on the interval.

@@ -1,0 +1,7 @@
+Sample Input
+
+exp(5) = e^5
+
+sin(exp(3)*ln(x)) = sin(e^3*log(x))
+
+ln(x) = log(x)

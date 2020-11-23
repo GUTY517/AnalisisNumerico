@@ -1,0 +1,7 @@
+The input in the methods help you to be sure in the dimension of the matrix..
+
+If you know that a matrix is positively defined, the method converges with certainty.
+
+The determinant of the matrix cannot be 0.
+
+The matrix can´t have a 0 on the diagonal, although the method is made in such a way that it does not stop.

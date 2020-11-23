@@ -1,0 +1,9 @@
+The convergence decreases or stops if there is any division by zero.
+
+Be sure the derivatives of the function are correct.
+
+The function must be continuous and differentiable.
+
+Tolerance must have a positive value.
+
+The iteration number must be positive.

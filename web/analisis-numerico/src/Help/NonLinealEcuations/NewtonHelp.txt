@@ -1,0 +1,11 @@
+You need to make sure that the function in continuous for the given interval, and that derivative does not equal zero in any of the points of the interval being analyzed. 
+
+Newton's method is generally faster than the other methods. If the derivative approaches zero, the method loses its speed because is possible to be a case of multiple root.
+
+Be sure that the function have a root.
+
+The initial value is very very important.
+
+Tolerance must have a positive value.
+
+The iteration number must be positive.

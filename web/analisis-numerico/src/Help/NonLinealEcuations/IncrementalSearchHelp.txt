@@ -1,0 +1,11 @@
+You need to make sure that there is no discontinuity in the function with the numbers that are going to be tested
+
+The delta should not be too small because it can slow down the method.
+
+The initial value must exist in the function.
+
+The function must be continuous and differentiable.
+
+Tolerance must have a positive value.
+
+The iteration number must be positive.

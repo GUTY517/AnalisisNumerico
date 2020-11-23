@@ -1,0 +1,1 @@
+X vector or Y vector can´t contain a repeat value.

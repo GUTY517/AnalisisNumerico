@@ -1,0 +1,11 @@
+You need to make sure that the function in continuous for the given interval.
+
+The method requires two initial values which should be chosen to lie close to the root, to be more fast.
+
+Be sure that the function have a root.
+
+The function must be continuous and differentiable.
+
+Tolerance must have a positive value.
+
+The iteration number must be positive.
