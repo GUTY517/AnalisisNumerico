@@ -40,7 +40,7 @@ class Crout(Resource):
         try:
             solved = solve(matrix, vector)
         except LinAlgError:
-            abort(500, "Matrix is singular")
+            abort(500, "Imposible to perform this action because matrix is singular")
         lower_triangular_matrix, upper_triangular_matrix = crout(matrix)
         lower_triangular_matrix = lower_triangular_matrix.tolist()
         upper_triangular_matrix = upper_triangular_matrix.tolist()

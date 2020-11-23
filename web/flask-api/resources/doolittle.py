@@ -3,9 +3,10 @@
 
 import json
 import numpy as np
-from scipy.linalg import solve
+from scipy.linalg import solve, LinAlgError
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def doolittle(matrix):
@@ -31,7 +32,10 @@ class Doolittle(Resource):
         body_params = request.get_json()
         matrix = np.array(body_params["matrix"])
         vector = np.array(body_params["vector"])
-        solved = solve(matrix, vector)
+        try:
+            solved = solve(matrix, vector)
+        except LinAlgError:
+            abort(500, "Imposible to perform this action because matrix is singular")
         lower_triangular_matrix, upper_triangular_matrix = doolittle(matrix)
         L = lower_triangular_matrix.tolist()
         U = upper_triangular_matrix.tolist()
