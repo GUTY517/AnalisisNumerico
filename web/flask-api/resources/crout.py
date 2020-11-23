@@ -38,6 +38,8 @@ class Crout(Resource):
         vector = np.array(body_params["vector"])
         solved = solve(matrix, vector)
         lower_triangular_matrix, upper_triangular_matrix = crout(matrix)
-        json_data = json.loads(json.dumps(lower_triangular_matrix.tolist(
-        ) + upper_triangular_matrix.tolist() + solved.tolist()))
-        return json_data
+        L = lower_triangular_matrix.tolist()
+        U = upper_triangular_matrix.tolist()
+        solution = solved.tolist()
+        json_response = json.loads(json.dumps({"L":L, "U":U, "solution":solution}))
+        return json_response

@@ -3,14 +3,16 @@ import json_data from '../../json_data/total_pivoting.json';
 import MatrixInput from '../assets/MartrixInput';
 import axios from 'axios';
 import '../../App.css';
-const DirectMethodInput = ({matrix_method, endpoint}) => {
+const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const [matrix_size, setMatrixSize] = useState(3);
 	const [matrix, setMatrix] = useState(new Array(matrix_size));
 	const [b_vector, setBVector] = useState(new Array(matrix_size));
 	const [a_title, setATitle] = useState(null);
 	const [b_title, setBTitle] = useState(null);
 	const [show_matrix, setShowMatrix] = useState(false);
-	const [matrix_to_show, setMatrixToShow] = useState([]);
+	const [L, setL] = useState([]);
+	const [U, setU] = useState([]);
+	const [solution_x, setSolution] = useState([]);
 	const [show_matrix_result, setShowMatrixResult] = useState(false);
 	const [vector_to_show, setVectorToShow] = useState([]);
 
@@ -33,7 +35,11 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 			matrix_ones[i] = Array(matrix_size_aux).fill(1);
 		}
 		// setMatrix(matrix_ones);
-		setMatrix([[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]);
+		setMatrix([
+			[1, 1, 3],
+			[1, 5, 5],
+			[3, 5, 19],
+		]);
 		setBVector(vector_ones);
 		setATitle('A');
 		setBTitle('b');
@@ -72,16 +78,16 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 			vector: b_vector,
 		};
 		try {
-      const result = await (await axios.post(`http://127.0.0.1:5000/${endpoint}`, body)).data;
-      console.log(result);
-			const matrix_result = result.filter((element) => typeof element === 'object');
-			const x_values = result.filter((element) => typeof element === 'number');
+			const result = await (await axios.post(`http://127.0.0.1:5000/${endpoint}`, body)).data;
+			console.log(result);
+			const { L, U, solution } = result;
 			// const matrix_result = result.filter(typeof Array);
-			console.log(x_values);
-			console.log(matrix_result);
+			console.log(L);
+			console.log(U);
 			setShowMatrixResult(true);
-			setMatrixToShow(matrix_result);
-			setVectorToShow(x_values);
+			setL(L);
+			setU(U);
+			setSolution(solution);
 		} catch (error) {
 			console.error(error);
 		}
@@ -89,23 +95,24 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 
 	const showResults = () => {
 		if (show_matrix_result) {
-			const matrix_data = matrix_to_show;
-			const vector_data = vector_to_show;
+			const L_Matrix = L;
+			const U_Matrix = U;
+			const solution_vector = solution_x;
 			return (
 				<React.Fragment>
-					<div className="d-inline-flex p-2 m-3">
-						<div className="d-column-flex">
+					<div className="d-inline-flex justify-content-center p-2 m-3">
+						<div className="d-column-flex p-2 m-3">
 							<div>
-								<p className="text-center font-weight-bold">Pivoted Matrix</p>
+								<p className="text-center font-weight-bold">L</p>
 							</div>
 							<div>
-								{matrix_data.map((row, indexRow) => {
+								{L_Matrix.map((row, indexRow) => {
 									return (
 										<div className="d-flex-inline" key={indexRow}>
 											{row.map((column, indexColumn) => {
 												return (
 													<MatrixInput
-														defaultValue={matrix_data[indexRow][indexColumn]}
+														defaultValue={L_Matrix[indexRow][indexColumn]}
 														key={indexColumn}
 														valueId={indexColumn}
 														readOnly
@@ -116,26 +123,48 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 									);
 								})}
 							</div>
-
 						</div>
-						<div className="d-flex flex-column ml-4">
-							<div className="">
-								<p className="text-center font-weight-bold">X values</p>
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="text-center font-weight-bold">U</p>
 							</div>
-							<div class="d-flex flex-column">
-								{vector_data.map((row, indexRow) => {
+							<div>
+								{U_Matrix.map((row, indexRow) => {
 									return (
-										<div className="d-flex" key={indexRow}>
-										
-											
+										<div className="d-flex-inline" key={indexRow}>
+											{row.map((column, indexColumn) => {
+												return (
 													<MatrixInput
-														defaultValue={vector_data[indexRow]}
-														key={indexRow}
-														className="b_vector"
+														defaultValue={U_Matrix[indexRow][indexColumn]}
+														key={indexColumn}
+														valueId={indexColumn}
 														readOnly
 													/>
-												
-										
+												);
+											})}
+										</div>
+									);
+								})}
+							</div>
+						</div>
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="text-center font-weight-bold">X values</p>
+							</div>
+							<div className="d-column-flex">
+								{solution_vector.map((row, indexRow) => {
+									return (
+										<div className="d-flex-inline" key={indexRow}>
+											{row.map((column, indexColumn) => {
+												return (
+													<MatrixInput
+														defaultValue={solution_vector[indexRow][indexColumn]}
+														key={indexColumn}
+														valueId={indexColumn}
+														readOnly
+													/>
+												);
+											})}
 										</div>
 									);
 								})}
@@ -151,6 +180,7 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 	const showMatrixInput = () => {
 		if (show_matrix) {
 			return (
+        <div className="d-flex justify-content-center">
 				<form onSubmit={handleSubmit}>
 					<div className="d-column-flex">
 						<div className="d-inline-flex  mb-3 justify-content-center ">
@@ -201,10 +231,11 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 							</div>
 						</div>
 						<div className="d-flex justify-content-center">
-							<button class="btn btn-primary" >Calculate</button>
+							<button class="btn btn-primary">Calculate</button>
 						</div>
 					</div>
 				</form>
+        </div>
 			);
 		}
 	};
@@ -225,7 +256,9 @@ const DirectMethodInput = ({matrix_method, endpoint}) => {
 							></input>
 							<div className="d-flex justify-content-center m-3">
 								<div className="d-flex">
-									<button class="btn btn-primary" type="submit">Generate Matrix</button>
+									<button class="btn btn-primary" type="submit">
+										Generate Matrix
+									</button>
 								</div>
 							</div>
 						</div>

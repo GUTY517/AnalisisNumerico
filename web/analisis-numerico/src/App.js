@@ -13,6 +13,8 @@ import Gauss from './Components/Gauss/Gauss';
 import PartialPivoting from './Components/Gauss/PartialPivoting';
 import TotalPivoting from './Components/Gauss/TotalPivoting';
 import Cholesky from './Components/Gauss/Cholesky';
+import Crout from './Components/Gauss/Crout';
+import Doolittle from './Components/Gauss/Doolittle';
 
 function App() {
 	return (
@@ -36,8 +38,14 @@ function App() {
 					<Route path="/total_pivoting">
 						<TotalPivoting/>
 					</Route>
-					<Route path="/Cholesky">
+					<Route path="/cholesky">
 						<Cholesky/>
+					</Route>
+					<Route path="/doolittle">
+						<Doolittle/>
+					</Route>
+					<Route path="/crout">
+						<Crout/>
 					</Route>
 					<Route path="/false_rule">
 						<False_Rule />

@@ -86,6 +86,12 @@ const Header = () => {
                 <Link className="dropdown-item" to="cholesky">
                   Cholesky
                 </Link>
+                <Link className="dropdown-item" to="crout">
+                  Crout
+                </Link>
+                <Link className="dropdown-item" to="doolittle">
+                  Dolittle
+                </Link>
                 {/* <Link className="dropdown-item" to="#">
                   Something else here
                 </Link> */}
