@@ -8,17 +8,18 @@ from scipy.linalg import lu
 from numpy import linalg as la
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def stepped_matrix(matrix, vector):
     '''Return the stepped matrix'''
 
     if la.det(matrix) == 0:
-        return 0
+        abort(500, "Determinant is zero")
     try:
         la.inv(matrix)
     except la.LinAlgError:
-        return -1
+        abort(500, "Matrix cannot be inverted")
     augmented_matrix = np.append(matrix, vector, axis=1)
     matrix_size = len(augmented_matrix)
     for i in range(0, matrix_size):
@@ -35,7 +36,7 @@ def stepped_matrix(matrix, vector):
                             break
 
                 if augmented_matrix[i][i] == 0:
-                    return 1
+                    abort(500, "Matrix cannot be augmented")
             else:
                 mult = augmented_matrix[j][i] / augmented_matrix[i][i]
                 row1 = augmented_matrix[i]

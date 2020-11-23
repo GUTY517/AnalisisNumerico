@@ -34,6 +34,7 @@ def main(x_values, y_values):
 
     x_size = len(x_values)
     data_size = len(data)
+    ecuations = []
     for i in range(x_size):
         polynomial_ecuation = 0
         answer = 0
@@ -41,8 +42,8 @@ def main(x_values, y_values):
             lagrange_answer = lagrange(x_values[i], j, data)
             answer += lagrange_answer[1]*data[j][1]
             polynomial_ecuation += lagrange_answer[0]*data[j][1]
-        answer += f"Ecuation {i+1}:\n {polynomial_ecuation} = {answer}"
-    return answer
+        ecuations.append(f"{polynomial_ecuation} , {answer}")
+    return ecuations
 
 
 class Lagrange(Resource):
@@ -51,6 +52,5 @@ class Lagrange(Resource):
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
-        json_answer = main(x_values, y_values)
-        json_data = json.dumps(json_answer)
+        json_data = json.loads(json.dumps([l.split(',') for l in ','.join(main(x_values, y_values)).split(',')]))
         return json_data

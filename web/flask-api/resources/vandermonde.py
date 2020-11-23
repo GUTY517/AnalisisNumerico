@@ -120,27 +120,9 @@ def polynomials(x_points, y_points):
 
 def main(x_values, y_values):
     '''Input data and execute code'''
-    polinomial_values = polynomials(x_values, y_values)
-    coefficients = [item[-1] for item in polinomial_values]
-    polynomial_text = "P(X)="
-    data_size = len(coefficients)
-    for i in range(data_size):
-        if len(coefficients) - (i+1) == 1:
-            polynomial_text += (f"{coefficients[i]}x")
-        elif len(coefficients) - (i+1) == 0:
-            if coefficients[i] >= 0:
-                polynomial_text += (f"+{coefficients[i]}")
-            else:
-                polynomial_text += (f"{coefficients[i]}")
-        else:
-            if coefficients[i] >= 0:
-                polynomial_text += (
-                    f"+{coefficients[i]}x^{len(coefficients) - (i+1)}")
-            else:
-                polynomial_text += (
-                    f"{coefficients[i]}x^{len(coefficients) - (i+1)}")
-
-    return vander(x_values), polynomial_text, coefficients
+    polynomial_values = polynomials(x_values, y_values)
+    coefficients = [item[-1] for item in polynomial_values]
+    return vander(x_values), polynomial_values, coefficients
 
 class Vandermonde(Resource):
 
@@ -148,6 +130,6 @@ class Vandermonde(Resource):
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
-        vander_table, json_polynomials, json_coefficients = main(x_values, y_values)
-        json_data = json.dumps(vander_table, json_polynomials, json_coefficients)
+        json_vander_table, json_polynomials, json_coefficients = main(x_values, y_values)
+        json_data = json.loads(json.dumps(json_vander_table.tolist() + json_polynomials + json_coefficients))
         return json_data

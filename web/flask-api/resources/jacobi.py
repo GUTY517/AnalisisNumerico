@@ -10,6 +10,7 @@ from numpy.linalg import inv, det, LinAlgError
 from flask_restful import Resource
 from flask import request
 from flask import abort
+import json
 
 
 def jacobi(x_0, matrix, vector):
@@ -56,8 +57,9 @@ def main(matrix, vector, x_0, tolerance, iterations):
         title.append(f"x{str(answer)}")
         answer += 1
     title.append("Error")
-    table = pd.DataFrame(columns=title)
-    table.append(pd.Series([iterator, x_0, x_0, x_0, x_0, "-"], index=table.columns), ignore_index=True)
+    table = PrettyTable(title)
+    table.add_row([iterator] + x_0 + ["-"])
+    print(table)
     error = tolerance + 1
     jacobi_response = jacobi(x_0, matrix, vector)
     while error > tolerance and iterator < iterations:
@@ -68,7 +70,7 @@ def main(matrix, vector, x_0, tolerance, iterations):
         if err == 1:
             abort(500, "Result is too big")
         iterator += 1
-        table.append(pd.Series([iterator, x_1, x_1, x_1, x_1, error], index=table.columns), ignore_index=True)
+        table.add_row([iterator] + x_1 + [error])
         x_0 = copy(x_1)
 
     return jacobi_response, table
@@ -88,11 +90,10 @@ class Jacobi(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        if iterations < 0:
+        if iterations <= 0:
             abort(500, "Inadequate iterations.")
-        if tolerance < 0:
+        if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
         answer, json_table = main(matrix, vector, x_0, tolerance, iterations)
-        print(json_table)
-        json_data = None
+        json_data = json.loads(json.dumps(answer + json_table))
         return json_data

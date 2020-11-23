@@ -14,12 +14,10 @@ def cubic_spline(data):
     matrix = resulted_matrix(data, data_size)
     gen = matrix
     determinant = check_det(matrix)
-    if determinant[0] == 1:
-        return determinant
     _, matrix = lu(matrix, permute_l=True)
     coefficients = polynomial_values(matrix, len(matrix))
     polynomials = clean_output(coefficients, data)
-    return (0, polynomials, gen)
+    return polynomials, gen
 
 
 def resulted_matrix(data, data_size):
@@ -142,17 +140,19 @@ def check_det(matrix):
     data_size = len(matrix[0]) - 1
     square_matrix = [x[0:data_size] for x in matrix]
     if det(square_matrix) == 0:
-        return(
-            1, 'The generated matrix is not invertible. '
-            'You may want to select a different set of points')
-    return(0, "OK")
+        abort(500, "Matrix is not invertable.")
+    return 0
 
 
 class CubicSpline(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
-        data = body_params["table"]
-        _, polynomials, gen = cubic_spline(data)
-        json_data = json.dumps(polynomials, gen)
+        x_values = body_params["x_values"]
+        y_values = body_params["y_values"]
+        data = list(map(lambda x, y: [x, y], x_values, y_values))
+        polynomials, gen = cubic_spline(data)
+        json_data = json.loads(json.dumps(gen + polynomials))
         return json_data

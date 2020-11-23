@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+'''Path definitions and methods imports'''
+
 from flask import Flask
 from flask_restful import Api, Resource
 from resources.bisection import Bisection
@@ -19,7 +22,7 @@ from resources.gauss_seidel import GaussSeidel
 from resources.gauss_seidel_sor import GaussSeidelSor
 from resources.jacobi_sor import JacobiSor
 from resources.vandermonde import Vandermonde
-from resources.newton_interpolating import NewtonInterpolating
+from resources.newton_interpolation import NewtonInterpolation
 from resources.lagrange import Lagrange
 from resources.lineal_spline import LinealSpline
 from resources.cuadratic_spline import CuadraticSpline
@@ -51,7 +54,7 @@ api.add_resource(GaussSeidel, "/gauss_seidel")
 api.add_resource(GaussSeidelSor, "/gauss_seidel_sor")
 api.add_resource(JacobiSor, "/jacobi_sor")
 api.add_resource(Vandermonde, "/vandermonde")
-api.add_resource(NewtonInterpolating, "/newton_interpolating")
+api.add_resource(NewtonInterpolation, "/newton_interpolation")
 api.add_resource(Lagrange, "/lagrange")
 api.add_resource(LinealSpline, "/lineal_spline")
 api.add_resource(CuadraticSpline, "/cuadratic_spline")
