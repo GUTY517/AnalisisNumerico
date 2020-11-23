@@ -42,13 +42,14 @@ def norm_2(x_0, x_1):
 def main(matrix, vector, x_0, tolerance, iterations):
     '''Returns Jacobi answer and calculation table'''
 
+
     determinant = det(matrix)
     if determinant == 0:
         abort(500, "Determinant is zero")
     try:
         inv(matrix)
     except LinAlgError:
-        abort(500, "Matrix is not invertable")
+        abort(500, "Matrix is not invertible")
 
     title = ['iterations']
     answer = 0
@@ -57,9 +58,8 @@ def main(matrix, vector, x_0, tolerance, iterations):
         title.append(f"x{str(answer)}")
         answer += 1
     title.append("Error")
-    table = PrettyTable(title)
-    table.add_row([iterator] + x_0 + ["-"])
-    print(table)
+    table = pd.DataFrame(columns=title)
+    table = table.append(pd.Series([iterator] + x_0 + ["-"], index=table.columns), ignore_index=True)
     error = tolerance + 1
     jacobi_response = jacobi(x_0, matrix, vector)
     while error > tolerance and iterator < iterations:
@@ -70,10 +70,11 @@ def main(matrix, vector, x_0, tolerance, iterations):
         if err == 1:
             abort(500, "Result is too big")
         iterator += 1
-        table.add_row([iterator] + x_1 + [error])
+        table = table.append(pd.Series([iterator] + x_1 + [error], index=table.columns), ignore_index=True)
         x_0 = copy(x_1)
 
     return jacobi_response, table
+
 
 class Jacobi(Resource):
     '''Flask functions for web page'''
@@ -81,9 +82,9 @@ class Jacobi(Resource):
     def post(self):
         '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
-        matrix = np.array(body_params["matrix"])
-        vector = np.array(body_params["vector"])
-        x_0 = np.array(body_params["x_0"])
+        matrix = body_params["matrix"]
+        vector = body_params["vector"]
+        x_0 = body_params["x_0"]
         tolerance = body_params["tolerance"]
         iterations = body_params["iterations"]
         if not tolerance:
@@ -94,6 +95,7 @@ class Jacobi(Resource):
             abort(500, "Inadequate iterations.")
         if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
+        _ = main(matrix, vector, x_0, tolerance, iterations)
         answer, json_table = main(matrix, vector, x_0, tolerance, iterations)
-        json_data = json.loads(json.dumps(answer + json_table))
+        json_data = (json.loads(json_table.to_json(orient="records")) + answer)
         return json_data
