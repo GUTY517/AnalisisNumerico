@@ -27,7 +27,7 @@ def interpolate_coefficients(x_values, y_values):
         new_y_values = iterative_data
         depth += 1
 
-    return coefficients
+    return(coefficients)
 
 
 def interpolate_values(x_values, y_values):
