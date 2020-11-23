@@ -84,5 +84,5 @@ class PartialPivoting(Resource):
         matrix = body_params["matrix"]
         vector = body_params["vector"]
         pivoted_matrix, x_values = partial_pivoting(matrix, vector)
-        json_data = json.loads(json.dumps(pivoted_matrix.tolist() + x_values))
+        json_data = json.loads(json.dumps({"PivotedMatrix": pivoted_matrix.tolist(), "ValuesX": x_values}))
         return json_data

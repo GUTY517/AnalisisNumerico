@@ -46,7 +46,7 @@ class MultipleRoots(Resource):
 
     def post(self):
         body_params = request.get_json()
-        function= body_params["function"]
+        function = body_params["function"]
         initial_x0 = body_params["initial_x0"]
         tolerance = body_params["tolerance"]
         iterations = body_params["iterations"]
@@ -60,8 +60,9 @@ class MultipleRoots(Resource):
             abort(500, "Inadequate tolerance.")
         try:
             root, table = multiple_roots(function, initial_x0, tolerance, iterations)
-            table = table.to_json(orient="records", default_handler=str)
-            json_table = json.loads(table)
+            json_table = json.loads(table.to_json(orient="records", default_handler=str))
+            json_data = json.loads(json.dumps({"Root":[float(root)], "Table":json_table}))
+            return json_data
         except TypeError:
             abort(500, "Function not correctly inputed.")
-        return json_table
+        return json_data

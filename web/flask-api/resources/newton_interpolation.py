@@ -82,5 +82,5 @@ class NewtonInterpolation(Resource):
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
         coefficients = interpolate_coefficients(x_values, y_values)
-        json_data = json.loads(json.dumps(coefficients))
+        json_data = json.loads(json.dumps({"Coefficients":coefficients}))
         return json_data

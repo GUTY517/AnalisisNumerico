@@ -67,8 +67,8 @@ class Secant(Resource):
             abort(500, "Inadequate tolerance.")
         try:
             root, table = secant(function, initial_x0, initial_x1, tolerance, iterations)
-            table = table.to_json(orient="records", default_handler=str)
-            json_table = json.loads(table)
+            table = json.loads(table.to_json(orient="records", default_handler=str))
+            json_data = json.loads(json.dumps({"Root": [float(root)], "Table": table}))
         except TypeError:
             abort(500, "Function not correctly inputed.")
-        return json_table
+        return json_data

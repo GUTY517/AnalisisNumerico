@@ -6,6 +6,7 @@ from flask_restful import Resource
 from flask import request
 from resources.f_function import f_x as fx
 import pandas as pd
+from flask import abort
 
 
 def fixed_point(function_f, function_g, x_a, tolerance, iterations):

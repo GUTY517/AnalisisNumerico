@@ -72,9 +72,7 @@ class TotalPivoting(Resource):
         body_params = request.get_json()
         matrix = np.array(body_params["matrix"])
         vector = np.array(body_params["vector"])
-        print((vector))
-        print((matrix))
         pivoted_matrix = stepped_matrix(matrix, vector).tolist()
         x_values = get_values(stepped_matrix(matrix, vector), len(matrix))
-        json_data = json.loads(json.dumps(pivoted_matrix + x_values))
+        json_data = json.loads(json.dumps({"PivotedMatrix": pivoted_matrix, "ValuesX": x_values}))
         return json_data

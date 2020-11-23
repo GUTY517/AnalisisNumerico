@@ -59,10 +59,10 @@ class Newton(Resource):
             abort(500, "Inadequate tolerance.")
         try:
             root, table = newton(function, initial_x0, tolerance, iterations)
-            table = table.to_json(orient="records", default_handler=str)
-            json_table = json.loads(table)
-            if root == None:
+            table = json.loads(table.to_json(orient="records", default_handler=str))
+            json_data = json.loads(json.dumps({"Root": [float(root)], "Table": table}))
+            if root is None:
                 abort(500, "Root not found!")
         except TypeError:
             abort(500, "Function not correctly inputed.")
-        return json_table
+        return json_data

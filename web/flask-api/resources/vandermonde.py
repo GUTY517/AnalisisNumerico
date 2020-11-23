@@ -119,17 +119,19 @@ def polynomials(x_points, y_points):
 
 
 def main(x_values, y_values):
-    '''Input data and execute code'''
+    '''Method execution'''
     polynomial_values = polynomials(x_values, y_values)
     coefficients = [item[-1] for item in polynomial_values]
     return vander(x_values), polynomial_values, coefficients
 
 class Vandermonde(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
         json_vander_table, json_polynomials, json_coefficients = main(x_values, y_values)
-        json_data = json.loads(json.dumps(json_vander_table.tolist() + json_polynomials + json_coefficients))
+        json_data = json.loads(json.dumps({"VanderTable": json_vander_table.tolist(), "Polynomials": json_polynomials, "Coefficients": json_coefficients}))
         return json_data

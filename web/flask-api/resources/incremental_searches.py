@@ -39,7 +39,7 @@ def incremental_search(function, x_0, delta, iterations):
                 root = (x_0, x_1)
                 roots.append(root)
             else:
-                abort(500, "No roots found, method failed due to complex numbers")
+                root = None
             x_0 = x_1
             fx_1 = fx1
             x_1 = x_0 + delta
@@ -62,6 +62,5 @@ class IncrementalSearch(Resource):
             iterations = 100
         if iterations <= 0:
             abort(500, "Inadequate iterations.")
-        json_data = json.loads(json.dumps(incremental_search(function, x_0, delta_x, iterations)))
-        print(json_data)
-        return None #json_data
+        json_data = json.loads(json.dumps({"Roots": incremental_search(function, x_0, delta_x, iterations)}))
+        return json_data
