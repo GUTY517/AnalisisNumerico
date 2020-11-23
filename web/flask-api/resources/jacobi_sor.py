@@ -1,29 +1,29 @@
 #! /usr/bin/env python3
 '''Jacobi SOR implementation'''
 
+import json
 from decimal import Decimal
+import pandas as pd
 from numpy import linalg, diag, tril, triu, transpose, matmul, array
 from scipy.linalg import eigvals
-from prettytable import PrettyTable
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
-def jacobi_sor(matrix, vector, x_value, w_value, iterations, tolerance):
+def jacobi_sor(matrix, vector, x_0, w_value, iterations, tolerance):
     '''Jacobi method'''
     title = ['Iteration']
     table_names = 0
-    while table_names < len(x_value):
-        title.append(f"x_value{str(table_names)}")
+    while table_names < len(x_0):
+        title.append(f"x_0{str(table_names)}")
         table_names += 1
-
     title.append("Error")
-    table = PrettyTable(title)
-
+    table = pd.DataFrame(columns=title)
     data_size = len(matrix)
     determinant = linalg.det(matrix)
     if determinant == 0:
-        return(1, "Determinant is ZERO")
+        abort(500, "Determinant is zero")
 
     diagonal_matrix = diag(diag(matrix))
     lower_matrix = diagonal_matrix - tril(matrix)
@@ -50,29 +50,31 @@ def jacobi_sor(matrix, vector, x_value, w_value, iterations, tolerance):
     if spectral_checker == 2:
         spectral_value = max(abs(eigvals(t_matrix)))
         if spectral_value > 1:
-            return (
-                1, f"The spectral radio is larger than 1" / \
-                    "({str(spectral_value)}). This method won't work")
+            abort(
+                500, f"The spectral radio is larger than 1" /
+                "({str(spectral_value)}). This method won't work")
         spectral_checker = 1
-
     if spectral_checker == 1:
         counter = 0
-        table.add_row([counter] + x_value + ["-"])
-        x_value = transpose(x_value)
+        table = table.append(
+            pd.Series([counter] + x_0 + ["-"], index=table.columns), ignore_index=True)
+        x_0 = transpose(x_0)
         new_tolerance = tolerance + 1
         while counter < iterations and new_tolerance > tolerance:
-            x_n = (matmul(t_matrix, x_value)) + sor_answer
-            new_tolerance = linalg.norm(x_n - x_value)
+            x_n = (matmul(t_matrix, x_0)) + sor_answer
+            new_tolerance = linalg.norm(x_n - x_0)
             counter += 1
-            table.add_row([counter] + x_n.tolist() + ['%.2E' %
-                                                      Decimal(str(new_tolerance))])
-            x_value = x_n
-    return table, sor_answer, max(abs(eigvals(t_matrix)))
+            table = table.append(pd.Series([counter] + x_n.tolist() + ['%.2E' %
+                                                                       Decimal(str(new_tolerance))], index=table.columns), ignore_index=True)
+            x_0 = x_n
+    return sor_answer, table, max(abs(eigvals(t_matrix)))
 
 
 class JacobiSor(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         matrix = body_params["matrix"]
         w_value = body_params["w_value"]
@@ -84,5 +86,12 @@ class JacobiSor(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        json_table, _, _ = jacobi_sor(tolerance, iterations, w_value, matrix, vector, x_0)
-        return json_table
+        if iterations <= 0:
+            abort(500, "Inadequate iterations.")
+        if tolerance <= 0:
+            abort(500, "Inadequate tolerance.")
+        answer, json_table, spectral_values = jacobi_sor(
+            matrix, vector, x_0, w_value, iterations, tolerance)
+        json_data = (json.loads(json_table.to_json(orient="records")
+                                ) + answer.tolist() + [spectral_values])
+        return json_data
