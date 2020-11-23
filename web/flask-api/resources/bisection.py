@@ -1,5 +1,7 @@
+#! /usr/bin/env python3
+'''Bisection web method'''
+
 from __future__ import print_function
-import math
 import json
 from decimal import Decimal
 from prettytable import PrettyTable
@@ -11,7 +13,6 @@ from flask import abort
 
 def bisection(function, initial_b, initial_a, tolerance, iterations):
     '''Main function to calculate the root of the provided function'''
-    # Output table titles
     raw_function = f_x(function=function, g_function='')
     table = PrettyTable(['Iteration', 'a', 'xm', 'b', 'f(xm)', 'Error'])
     fbi = raw_function.get_f_components(initial_b)[0]
@@ -54,8 +55,10 @@ def bisection(function, initial_b, initial_a, tolerance, iterations):
 
 
 class Bisection(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         function = body_params["function"]
         initial_a = body_params["initial_a"]
@@ -66,14 +69,15 @@ class Bisection(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        if iterations < 0:
+        if iterations <= 0:
             abort(500, "Inadequate iterations.")
-        if tolerance < 0:
+        if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
         try:
             root, json_table = bisection(function, initial_b, initial_a, tolerance, iterations)
+            json_data = json.loads(json.dumps({"Root":root, "Table":json_table}))
         except TypeError:
             abort(500, "Funtion not correctly inputed.")
-        if(root == None):
+        if root is None:
             abort(500, "Root not found!")
-        return json_table
+        return json_data

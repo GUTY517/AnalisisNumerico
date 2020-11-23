@@ -35,8 +35,10 @@ def fixed_point(function_f, function_g, x_a, tolerance, iterations):
 
 
 class FixedPoint(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         function_f = body_params["function_f"]
         function_g = body_params["function_g"]
@@ -47,14 +49,14 @@ class FixedPoint(Resource):
             tolerance = 1e-07
         if not iterations:
             iterations = 100
-        if iterations < 0:
+        if iterations <= 0:
             abort(500, "Inadequate iterations.")
-        if tolerance < 0:
+        if tolerance <= 0:
             abort(500, "Inadequate tolerance.")
         try:
             root, table = fixed_point(function_f, function_g, initial_ax, tolerance, iterations)
-            table = table.to_json(orient="records", default_handler=str)
-            json_table = json.loads(table)
+            json_table = json.loads(table.to_json(orient="records", default_handler=str))
+            json_data = json.loads(json.dumps({"Root":[float(root)], "Table":json_table}))
         except TypeError:
             abort(500, "Function not correctly inputed.")
-        return json_table
+        return json_data

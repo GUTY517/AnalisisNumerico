@@ -1,40 +1,28 @@
-from __future__ import print_function
-import math
-import json
-import pandas as pd
-from decimal import Decimal
-from prettytable import PrettyTable
-from flask_restful import Resource
-from flask import request
-from resources.f_function import f_x as fx
-
-
 #! /usr/bin/env python3
 '''Incremental method to find roots of a function'''
 
 from __future__ import print_function
-import math
+import json
 from flask_restful import Resource
 from flask import request
 from resources.f_function import f_x
 from flask import abort
-import pandas as pd
 
 
 def verify_complex(error):
     '''Check for complex numbers in results'''
     if 'I' in error:
-        return 1
+        abort(500, "Cannot execute method since answer has complex numbers")
     return 0
 
 
-def incremental_searches(function, x_0, delta, iterations):
+def incremental_search(function, x_0, delta, iterations):
     '''Incremental search method'''
-    function = fx(function=function, g_function='')
-    f_x = raw_function.get_f_components(x_0)[0]
+    raw_function = f_x(function=function, g_function='')
+    fx_1 = raw_function.get_f_components(x_0)[0]
     root = 0
-    roots = ['There are roots in: ']
-    if f_x == 0:
+    roots = []
+    if fx_1 == 0:
         root = x_0
         roots.append(x_0)
     else:
@@ -45,20 +33,35 @@ def incremental_searches(function, x_0, delta, iterations):
             if fx1 == 0:
                 root = x_1
                 roots.append(x_1)
-            elif verify_complex(str(f_x * fx1)) > 0:
-                strerr = "Error: obtained results contains complex numbers"
-                return(1, strerr)
-            elif f_x * fx1 < 0:
+            elif verify_complex(str(fx_1 * fx1)) > 0:
+                abort(500, "Answer has complex numbers")
+            elif fx_1 * fx1 < 0:
                 root = (x_0, x_1)
                 roots.append(root)
             else:
-                root = None
+                abort(500, "No roots found, method failed due to complex numbers")
             x_0 = x_1
-            f_x = fx1
+            fx_1 = fx1
             x_1 = x_0 + delta
             fx1 = raw_function.get_f_components(x_1)[0]
             iteration += 1
-    return '\n'.join([str(elem) for elem in roots])
+    return roots
 
 
-print(incremental_searches(-3, 0.5, 100))
+class IncrementalSearch(Resource):
+    '''Flask functions for web page'''
+
+    def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
+        body_params = request.get_json()
+        function = body_params["function"]
+        x_0 = body_params["x0"]
+        delta_x = body_params["delta_x"]
+        iterations = body_params["iterations"]
+        if not iterations:
+            iterations = 100
+        if iterations <= 0:
+            abort(500, "Inadequate iterations.")
+        json_data = json.loads(json.dumps(incremental_search(function, x_0, delta_x, iterations)))
+        print(json_data)
+        return None #json_data

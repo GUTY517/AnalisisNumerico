@@ -3,6 +3,7 @@
 
 from flask import Flask
 from flask_restful import Api, Resource
+from resources.incremental_searches import IncrementalSearch
 from resources.bisection import Bisection
 from resources.false_rule import FalseRule
 from resources.fixed_point import FixedPoint
@@ -34,7 +35,7 @@ app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
-
+api.add_resource(IncrementalSearch, "/incremental_searches")
 api.add_resource(Bisection, "/bisection")
 api.add_resource(FalseRule, "/false_rule")
 api.add_resource(FixedPoint, "/fixed_point")

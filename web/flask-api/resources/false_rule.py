@@ -80,8 +80,9 @@ class FalseRule(Resource):
         try:
             root, table = false_rule(function, initial_b, initial_a, tolerance, iterations)
             json_table = json.loads(table.to_json(orient="records", default_handler=str))
+            json_data = json.loads(json.dumps({"Root":[float(root)], "Table":json_table}))
         except TypeError:
             abort(500, "Function not correctly inputed.")
-        if root == None:
+        if root is None:
             abort(500, "Root not found!")
-        return json_table
+        return json_data
