@@ -29,6 +29,6 @@ class LuGauss(Resource):
         vector = body_params["vector"]
         augmented_matrix, permuted_matrix, lower_triangular_matrix, upper_triangular_matrix, answer = lu_gauss(
             matrix, vector)
-        json_data = json.loads(json.dumps({"AugmentedMatrix": augmented_matrix.tolist(), "PermutedMatrix": permuted_matrix.tolist(
-        ), "LowerMatrix": lower_triangular_matrix.tolist(), "UpperMatrix": upper_triangular_matrix.tolist(), "Answers": answer.tolist()}))
+        json_data = json.loads(json.dumps(augmented_matrix.tolist() + permuted_matrix.tolist(
+        ) + lower_triangular_matrix.tolist() + upper_triangular_matrix.tolist() + answer.tolist()))
         return json_data
