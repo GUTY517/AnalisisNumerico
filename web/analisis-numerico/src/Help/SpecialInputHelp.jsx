@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SecantHelp = () => {
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
+
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+						<li className="list-group-item">exp(5) = e^5</li>
+							<li className="list-group-item">sin(exp(3)*ln(x)) = sin(e^3*log(x))</li>
+							<li className="list-group-item">ln(x) = log(x)</li>
+							<li className="list-group-item">use ** instead of ^ eg: 2x^2 = 2x**2 </li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
-		<div className="">
-            Sample Input
-			<ul>
-				<li>exp(5) = e^5</li>
-				<li>sin(exp(3)*ln(x)) = sin(e^3*log(x))</li>
-				<li>ln(x) = log(x)</li>
-			</ul>
+		<div className="d-flex justify-content-center">
+			<button class="btn btn-primary" onClick={showHelpCard}>
+				Input Help
+			</button>
+			{HelpCard()}
 		</div>
 	);
 };
 
-export default SecantHelp;
+
+export default SpecialInputHelp;

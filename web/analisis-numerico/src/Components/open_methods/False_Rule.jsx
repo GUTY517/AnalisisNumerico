@@ -3,6 +3,8 @@ import Geogebra from '../assets/Geogebra';
 import json_data from '../../json_data/bisection.json';
 import axios from 'axios';
 
+import FalseRuleHelp from "../../Help/NonLinealEcuations/FalseRuleHelp";
+
 const Bisection = () => {
 	const [data, setData] = useState([]);
 	const [table, setTable] = useState([]);
@@ -211,6 +213,7 @@ const Bisection = () => {
 								</button>
 							</div>
 						</form>
+					<FalseRuleHelp/>
 					</div>
 					<div>
 						<Geogebra />

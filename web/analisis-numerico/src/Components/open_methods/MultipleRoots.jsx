@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
+import MultipleRootsHelp from "../../Help/NonLinealEcuations/MultipleRootHelp";
+
 const MultipleRoots = () => {
 	const [data, setData] = useState([]);
 
@@ -159,6 +161,7 @@ const MultipleRoots = () => {
 								</button>
 							</div>
 						</form>
+            <MultipleRootsHelp/>
 					</div>
 					<div>
 						<Geogebra />

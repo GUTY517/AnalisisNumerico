@@ -9,7 +9,6 @@ const BisectionHelp = () => {
 		} else {
 			setShowHelp(true);
 		}
-		// HelpCard();
 	};
 
 	const HelpCard = () => {

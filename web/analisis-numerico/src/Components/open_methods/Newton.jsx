@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
+import NewtonHelp from "../../Help/NonLinealEcuations/NewtonHelp";
+
 const Newton = () => {
 	const [data, setData] = useState([]);
 
@@ -155,6 +157,7 @@ const Newton = () => {
 								</button>
 							</div>
 						</form>
+					<NewtonHelp/>
 					</div>
 					<div>
 						<Geogebra />

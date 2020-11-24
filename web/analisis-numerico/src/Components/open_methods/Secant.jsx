@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Geogebra from '../assets/Geogebra';
-import json_data from '../../json_data/bisection.json';
 import axios from 'axios';
+
+import SecantHelp from "../../Help/NonLinealEcuations/MultipleRootHelp";
 
 const Secant = () => {
 	const [data, setData] = useState([]);
@@ -213,6 +214,7 @@ const Secant = () => {
 								</button>
 							</div>
 						</form>
+					<SecantHelp/>
 					</div>
 					<div>
 						<Geogebra />
