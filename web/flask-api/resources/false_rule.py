@@ -61,8 +61,10 @@ def false_rule(function, initial_b, initial_a, tolerance, iterations):
 
 
 class FalseRule(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         function = body_params["function"]
         initial_a = body_params["initial_a"]

@@ -49,8 +49,10 @@ def secant(function ,x_0, x_1, tolerance, iterations):
 
 
 class Secant(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         function = body_params["function"]
         initial_x0 = body_params["initial_x0"]
