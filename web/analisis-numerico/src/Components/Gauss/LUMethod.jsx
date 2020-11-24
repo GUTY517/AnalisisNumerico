@@ -354,9 +354,9 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 				<div className="d-flex">
 					<div className="card">
 						<ul className="list-group list-group-flush">
-							<li className="list-group-item"></li>
-							<li className="list-group-item"></li>
-							<li className="list-group-item"></li>
+							<li className="list-group-item">The input the methods input help you set the dimension of the matrix.</li>
+							<li className="list-group-item">The determinant of the matrix cannot be 0.</li>
+							<li className="list-group-item">The matrix can't have a 0 on the diagonal.</li>
 						</ul>
 					</div>
 				</div>
