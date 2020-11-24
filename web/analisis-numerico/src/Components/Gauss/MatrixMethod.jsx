@@ -97,16 +97,16 @@ const MatrixMethod = ({ matrix_method, endpoint }) => {
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
 			console.log(result);
-			const array = result.data;
-			const matrix_result = array.filter((element) => typeof element === 'object');
-			const x_values = array.filter((element) => typeof element === 'number');
+			const {PivotedMatrix, ValuesX} = result.data;
+			// const matrix_result = array.filter((element) => typeof element === 'object');
+			// const x_values = array.filter((element) => typeof element === 'number');
 			// const matrix_result = result.filter(typeof Array);
-			console.log(x_values);
-			console.log(matrix_result);
+			console.log(ValuesX);
+			console.log(PivotedMatrix);
 			setShowError(false);
 			setShowMatrixResult(true);
-			setMatrixToShow(matrix_result);
-			setVectorToShow(x_values);
+			setMatrixToShow(PivotedMatrix);
+			setVectorToShow(ValuesX);
 		} catch (error) {
 			const { message } = error.response.data;
 			console.log(message);
