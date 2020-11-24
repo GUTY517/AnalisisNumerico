@@ -95,7 +95,7 @@ def check_det(data):
     data_size = len(data[0]) - 1
     square_a = [x[0:data_size] for x in data]
     if det(square_a) == 0:
-        abort(500, "Resulted matrix is not invertable")
+        abort(500, "Resulted matrix is not invertable, Determinant is zero")
     return 0
 
 

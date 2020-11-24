@@ -116,7 +116,7 @@ def check_det(matrix):
     data_size = len(matrix[0]) - 1
     square_a = [x[0:data_size] for x in matrix]
     if det(square_a) == 0:
-        abort(500, "Determinant is zero")
+        abort(500, "Resulted matrix is not invertable, Determinant is zero")
     return 0
 
 
