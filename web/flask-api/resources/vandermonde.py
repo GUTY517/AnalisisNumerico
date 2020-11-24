@@ -121,26 +121,26 @@ def polynomials(x_points, y_points):
 def main(x_values, y_values):
     '''Method execution'''
     polynomial_values = polynomials(x_values, y_values)
-    coefficients = [item[-1] for item in polynomial_values]
+    rounded_coefficients = [round(num, 4) for num in [item[-1] for item in polynomial_values]]
     polynomial_text = "P(X)="
-    data_size = len(coefficients)
+    data_size = len(rounded_coefficients)
     for i in range(data_size):
-        if len(coefficients) - (i+1) == 1:
-            polynomial_text += (f"{coefficients[i]}x")
-        elif len(coefficients) - (i+1) == 0:
-            if coefficients[i] >= 0:
-                polynomial_text += (f"+{coefficients[i]}")
+        if len(rounded_coefficients) - (i+1) == 1:
+            polynomial_text += (f"{rounded_coefficients[i]}x")
+        elif len(rounded_coefficients) - (i+1) == 0:
+            if rounded_coefficients[i] >= 0:
+                polynomial_text += (f"+{rounded_coefficients[i]}")
             else:
-                polynomial_text += (f"{coefficients[i]}")
+                polynomial_text += (f"{rounded_coefficients[i]}")
         else:
-            if coefficients[i] >= 0:
+            if rounded_coefficients[i] >= 0:
                 polynomial_text += (
-                    f"+{coefficients[i]}x^{len(coefficients) - (i+1)}")
+                    f"+{rounded_coefficients[i]}x^{len(rounded_coefficients) - (i+1)}")
             else:
                 polynomial_text += (
-                    f"{coefficients[i]}x^{len(coefficients) - (i+1)}")
+                    f"{rounded_coefficients[i]}x^{len(rounded_coefficients) - (i+1)}")
     polynomial_text = [polynomial_text]
-    return vander(x_values), polynomial_text, coefficients
+    return vander(x_values), polynomial_text, rounded_coefficients
 
 class Vandermonde(Resource):
     '''Flask functions for web page'''
