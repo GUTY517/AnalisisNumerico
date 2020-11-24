@@ -5,7 +5,7 @@ const Header = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-secondary">
         <Link className="navbar-brand" to="#">
-          Numeric Methods
+          Euclid
         </Link>
         <button
           className="navbar-toggler"
@@ -140,6 +140,15 @@ const Header = () => {
                 </Link>
                 <Link className="dropdown-item" to="lagrange">
                   Lagrange
+                </Link>
+                <Link className="dropdown-item" to="lineal_spline">
+                  Linear Spline
+                </Link>
+                <Link className="dropdown-item" to="cuadratic_spline">
+                  Cuadratic Spline
+                </Link>
+                <Link className="dropdown-item" to="cubic_spline">
+                  Cubic Spline
                 </Link>
 
                 {/* <Link className="dropdown-item" to="#">
