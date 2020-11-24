@@ -4,6 +4,7 @@
 import json
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def interpolate_coefficients(x_values, y_values):
@@ -23,8 +24,11 @@ def interpolate_coefficients(x_values, y_values):
         for i in range(len(new_y_values)-1):
             delta_y = new_y_values[i+1]-new_y_values[i]
             delta_x = x_values[i+depth]-x_values[i]
-            iterative_value = (delta_y/delta_x)
-            iterative_data.append(iterative_value)
+            try:
+                iterative_value = (delta_y/delta_x)
+                iterative_data.append(iterative_value)
+            except ZeroDivisionError:
+                abort(500, "Matrix not correctly inputed (zero division)")
             if i == 0:
                 coefficients.append(iterative_value)
 
@@ -49,8 +53,11 @@ def interpolate_values(x_values, y_values):
         for i in range(len(new_y_values)-1):
             delta_y = new_y_values[i+1]-new_y_values[i]
             delta_x = x_values[i+depth]-x_values[i]
-            iterative_value = (delta_y/delta_x)
-            iterative_data.append(iterative_value)
+            try:
+                iterative_value = (delta_y/delta_x)
+                iterative_data.append(iterative_value)
+            except ZeroDivisionError:
+                abort(500, "Matrix not inputed correclty (zero division)")
 
             if i == 0:
                 coefficients.append(iterative_value)
@@ -76,8 +83,10 @@ def interpolate_values(x_values, y_values):
 
 
 class NewtonInterpolation(Resource):
+    '''Flask functions for web page'''
 
     def post(self):
+        '''Web function to get variables from web page, execute method and return answers'''
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
