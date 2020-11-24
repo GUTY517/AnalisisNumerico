@@ -6,6 +6,7 @@ import numpy as np
 import json
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 
 def swapping_lower(matrix, column, i):
@@ -121,7 +122,10 @@ def polynomials(x_points, y_points):
 def main(x_values, y_values):
     '''Method execution'''
     polynomial_values = polynomials(x_values, y_values)
-    rounded_coefficients = [round(num, 4) for num in [item[-1] for item in polynomial_values]]
+    try:
+        rounded_coefficients = [round(num, 4) for num in [item[-1] for item in polynomial_values]]
+    except TypeError:
+        abort(500, "There are two equal values in the table. Please fix this.")
     polynomial_text = "P(X)="
     data_size = len(rounded_coefficients)
     for i in range(data_size):

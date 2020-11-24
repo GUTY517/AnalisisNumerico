@@ -5,6 +5,7 @@ from sympy import Symbol, expand, factor, init_printing
 import json
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 def lagrange(value, j, matrix):
     '''Lagrange method'''
@@ -54,7 +55,10 @@ class Lagrange(Resource):
         body_params = request.get_json()
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
-        answers = [float(i.split(',')[1]) for i in main(x_values, y_values)]
-        ecuations = [str(i.split(',')[0]) for i in main(x_values, y_values)]
-        json_data = json.loads(json.dumps({"Ecuations": ecuations, "Answers": answers}))
+        try:
+            answers = [float(i.split(',')[1]) for i in main(x_values, y_values)]
+            ecuations = [str(i.split(',')[0]) for i in main(x_values, y_values)]
+            json_data = json.loads(json.dumps({"Ecuations": ecuations, "Answers": answers}))
+        except ValueError:
+            abort(500, "There are two equal values in the table. Please fix this.")
         return json_data
