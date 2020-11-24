@@ -19,6 +19,10 @@ import LUGauss from './Components/Gauss/LUGauss';
 import LUPartial from "./Components/Gauss/LUPartial";
 import Jacobi from './Components/Gauss/Jacobi';
 import GaussSeidel from './Components/Gauss/GaussSeidel';
+import Jacobi_SOR from './Components/Gauss/Jacobi_SOR';
+import Gauss_Seidel_SOR from './Components/Gauss/Gauss_Seidel_SOR';
+import Newton_Interpolation from './Components/interpolation/Newton_Interpolation';
+import Vandermonde from './Components/interpolation/VanderMonde';
 
 function App() {
 	return (
@@ -74,6 +78,18 @@ function App() {
 					</Route>
 					<Route path="/gauss_seidel">
 						<GaussSeidel/>
+					</Route>
+					<Route path="/jacobi_sor">
+						<Jacobi_SOR/>
+					</Route>
+					<Route path="/gauss_seidel_sor">
+						<Gauss_Seidel_SOR/>
+					</Route>
+					<Route path="/newton_interpolation">
+						<Newton_Interpolation/>
+					</Route>
+					<Route path="/vandermonde">
+						<Vandermonde/>
 					</Route>
 				</Switch>
 			</Router>

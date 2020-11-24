@@ -56,6 +56,7 @@ const Header = () => {
                 <Link className="dropdown-item" to="/secant">
                   Secant
                 </Link>
+
               </div>
             </li>
             <li className="nav-item dropdown">
@@ -104,6 +105,40 @@ const Header = () => {
                 <Link className="dropdown-item" to="gauss_seidel">
                   Gauss Seidel
                 </Link>
+                <Link className="dropdown-item" to="/jacobi_sor">
+                  Jacobi SOR
+                </Link>
+                <Link className="dropdown-item" to="/gauss_seidel_sor">
+                  Gauss Seidel SOR
+                </Link>
+                {/* <Link className="dropdown-item" to="#">
+                  Something else here
+                </Link> */}
+              </div>
+            </li>
+            <li className="nav-item dropdown">
+              <Link
+                className="nav-link dropdown-toggle"
+                to="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Equations Systems
+              </Link>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <Link className="dropdown-item" to="vandermonde">
+                  Vandermonde
+                </Link>
+                <Link className="dropdown-item" to="newton_interpolation">
+                  Newton
+                </Link>
+
                 {/* <Link className="dropdown-item" to="#">
                   Something else here
                 </Link> */}

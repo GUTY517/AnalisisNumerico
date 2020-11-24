@@ -121,5 +121,5 @@ class GaussSeidelSor(Resource):
             abort(500, "Inadequate tolerance.")
         answer, json_table, spectral_value = main(matrix, vector, x_0, w_value, iterations, tolerance)
         json_table = json.loads(json_table.to_json(orient="records"))
-        json_data = json.loads(json.dumps({"Table":json_table, "Answers": answer.tolist(), "SpectralValue": [spectral_value]}))
+        json_data = json.loads(json.dumps({"Table":json_table, "Answers": answer.tolist(), "SpectralValues": [spectral_value]}))
         return json_data
