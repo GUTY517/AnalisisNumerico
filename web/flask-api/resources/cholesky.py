@@ -4,7 +4,7 @@
 import warnings
 import json
 import numpy as np
-from scipy.linalg import solve
+from scipy.linalg import solve, LinAlgError
 from flask_restful import Resource
 from flask import request
 from flask import abort
@@ -42,7 +42,10 @@ class Cholesky(Resource):
         body_params = request.get_json()
         matrix = np.array(body_params["matrix"])
         vector = np.array(body_params["vector"])
-        solved = solve(matrix, vector)
+        try:
+            solved = solve(matrix, vector)
+        except LinAlgError:
+            abort(500, "Matrix is singular")
         lower_triangular_matrix, upper_triangular_matrix = cholesky(matrix)
 
         lower_triangular_matrix = lower_triangular_matrix.tolist()
