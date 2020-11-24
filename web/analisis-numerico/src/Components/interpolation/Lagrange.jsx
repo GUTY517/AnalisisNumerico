@@ -11,9 +11,11 @@ const Lagrange = () => {
 	const [showError, setShowError] = useState(false);
 	const [sizeError, setSizeError] = useState(null);
 
-	const [coefficients, setCoefficients] = useState([]);
-	const [vander_table, setVanderTable] = useState([]);
-	const [polinomials, setPolinomials] = useState([]);
+	// const [coefficients, setCoefficients] = useState([]);
+	// const [vander_table, setVanderTable] = useState([]);
+  // const [polinomials, setPolinomials] = useState([]);
+  const [ecuations, setEcuations] = useState([]);
+  const [answers, setAnswers] = useState([]); 
 	const [x_values, setXValues] = useState(new Array(matrix_size));
 	const [y_values, setYValues] = useState(new Array(matrix_size));
 
@@ -43,10 +45,10 @@ const Lagrange = () => {
 		}
 		setShowError(false);
 		const matrix_size_aux = parseInt(matrix_size);
-		// const x_values_ones = new Array(matrix_size_aux).fill(1);
-		// const y_values_ones = new Array(matrix_size_aux).fill(1);
-		const x_values_ones = [-1, 0, 3, 4];
-		const y_values_ones = [15.5, 3, 8, 1];
+		const x_values_ones = new Array(matrix_size_aux).fill(1);
+		const y_values_ones = new Array(matrix_size_aux).fill(1);
+		// const x_values_ones = [-1, 0, 3, 4];
+		// const y_values_ones = [15.5, 3, 8, 1];
 		setXValues(x_values_ones);
 		setYValues(y_values_ones);
 		setShowMatrix(true);
@@ -87,10 +89,12 @@ const Lagrange = () => {
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/lagrange`, body);
 			console.log(result.data);
-			const { Coefficients, VanderTable, Polynomials } = result.data;
-			setPolinomials(Polynomials);
-			setCoefficients(Coefficients);
-			setVanderTable(VanderTable);
+      const { Answers, Ecuations } = result.data;
+      setAnswers(Answers);
+      setEcuations(Ecuations);
+			// setPolinomials(Polynomials);
+			// setCoefficients(Coefficients);
+			// setVanderTable(VanderTable);
 			setShowMatrixResult(true);
 			setShowError(false);
 			setError(null);
@@ -114,16 +118,31 @@ const Lagrange = () => {
 				</div>
 			);
 		} else if (show_matrix_result) {
-			const coefficients_to_show = coefficients;
-			const polinomials_to_show = polinomials;
-			const vandertable_to_show = vander_table;
+      const answers_to_show = answers;
+      const ecuations_to_swow = ecuations;
+			// const coefficients_to_show = coefficients;
+			// const polinomials_to_show = polinomials;
+			// const vandertable_to_show = vander_table;
 			return (
 				<React.Fragment>
-					<div className="d-column-flex">
-						<div className="d-flex-column">
+					<div className="d-inline-flex">
+						<div className="d-column-flex">
+							<p className="font-weight-bold">Ecuations:</p>
+							<div className="d-column-flex justify-content-between">
+								{ecuations_to_swow.map((value, key) => {
+									// let rounded = round(value, 4);
+									return (
+										<div className="m-2">
+											<p className="font-weight-bold">{`P(X) = `+ value + "= "} </p>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+						<div className="d-column-flex">
 							<p className="font-weight-bold">Coefficients:</p>
-							<div className="d-inline-flex justify-content-between">
-								{coefficients_to_show.map((value, key) => {
+							<div className="d-column-flex justify-content-between">
+								{answers_to_show.map((value, key) => {
 									let rounded = round(value, 4);
 									return (
 										<div className="m-2">
@@ -133,63 +152,7 @@ const Lagrange = () => {
 								})}
 							</div>
 						</div>
-						<div className="d-inline-flex">
-							<div className="d-column-flex p-2 m-3">
-								<div>
-									<p className="text-center font-weight-bold">Polinomials</p>
-								</div>
-								<div>
-									{polinomials_to_show.map((row, indexRow) => {
-										return (
-											<div className="d-flex-inline" key={indexRow}>
-												{row.map((column, indexColumn) => {
-													if (indexColumn === row.length - 1) {
-														return (
-															<MatrixInput
-																defaultValue={round(
-																	polinomials_to_show[indexRow][indexColumn],
-																	4
-																)}
-																key={indexColumn}
-																valueId={indexColumn}
-																className="text-danger font-weight-bold"
-																readOnly
-															/>
-														);
-													}
-												})}
-											</div>
-										);
-									})}
-								</div>
-							</div>
-							<div className="d-column-flex p-2 m-3">
-								<div>
-									<p className="text-center font-weight-bold">VanderTable</p>
-								</div>
-								<div>
-									{vandertable_to_show.map((row, indexRow) => {
-										return (
-											<div className="d-flex-inline" key={indexRow}>
-												{row.map((column, indexColumn) => {
-													return (
-														<MatrixInput
-															defaultValue={round(
-																vandertable_to_show[indexRow][indexColumn],
-																4
-															)}
-															key={indexColumn}
-															valueId={indexColumn}
-															readOnly
-														/>
-													);
-												})}
-											</div>
-										);
-									})}
-								</div>
-							</div>
-						</div>
+            
 					</div>
 				</React.Fragment>
 			);

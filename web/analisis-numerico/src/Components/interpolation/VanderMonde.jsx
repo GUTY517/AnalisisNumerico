@@ -43,10 +43,10 @@ const Vandermonde = () => {
 		}
 		setShowError(false);
 		const matrix_size_aux = parseInt(matrix_size);
-		// const x_values_ones = new Array(matrix_size_aux).fill(1);
-		// const y_values_ones = new Array(matrix_size_aux).fill(1);
-		const x_values_ones = [-1, 0, 3, 4];
-		const y_values_ones = [15.5, 3, 8, 1];
+		const x_values_ones = new Array(matrix_size_aux).fill(1);
+		const y_values_ones = new Array(matrix_size_aux).fill(1);
+		// const x_values_ones = [-1, 0, 3, 4];
+		// const y_values_ones = [15.5, 3, 8, 1];
 		setXValues(x_values_ones);
 		setYValues(y_values_ones);
 		setShowMatrix(true);
@@ -120,7 +120,28 @@ const Vandermonde = () => {
 			return (
 				<React.Fragment>
 					<div className="d-column-flex">
-						<div className="d-flex-column">
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="font-weight-bold">Polinomials</p>
+							</div>
+							<div>
+								{polinomials_to_show.map((row, indexRow) => {
+									return (
+										<div className="d-flex-inline" key={indexRow}>
+											<p
+												key={indexRow}
+												valueId={indexRow}
+												className="text-danger font-weight-bold"
+												readOnly
+											>
+												{row}
+											</p>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+						<div className="d-flex-column p-2 m-3">
 							<p className="font-weight-bold">Coefficients:</p>
 							<div className="d-inline-flex justify-content-between">
 								{coefficients_to_show.map((value, key) => {
@@ -133,39 +154,10 @@ const Vandermonde = () => {
 								})}
 							</div>
 						</div>
-						<div className="d-inline-flex">
+						<div className="d-column-flex">
 							<div className="d-column-flex p-2 m-3">
 								<div>
-									<p className="text-center font-weight-bold">Polinomials</p>
-								</div>
-								<div>
-									{polinomials_to_show.map((row, indexRow) => {
-										return (
-											<div className="d-flex-inline" key={indexRow}>
-												{row.map((column, indexColumn) => {
-													if (indexColumn === row.length - 1) {
-														return (
-															<MatrixInput
-																defaultValue={round(
-																	polinomials_to_show[indexRow][indexColumn],
-																	4
-																)}
-																key={indexColumn}
-																valueId={indexColumn}
-																className="text-danger font-weight-bold"
-																readOnly
-															/>
-														);
-													}
-												})}
-											</div>
-										);
-									})}
-								</div>
-							</div>
-							<div className="d-column-flex p-2 m-3">
-								<div>
-									<p className="text-center font-weight-bold">VanderTable</p>
+									<p className=" font-weight-bold">VanderTable</p>
 								</div>
 								<div>
 									{vandertable_to_show.map((row, indexRow) => {

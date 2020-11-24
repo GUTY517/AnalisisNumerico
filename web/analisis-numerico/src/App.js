@@ -23,6 +23,7 @@ import Jacobi_SOR from './Components/Gauss/Jacobi_SOR';
 import Gauss_Seidel_SOR from './Components/Gauss/Gauss_Seidel_SOR';
 import Newton_Interpolation from './Components/interpolation/Newton_Interpolation';
 import Vandermonde from './Components/interpolation/VanderMonde';
+import Lagrange from './Components/interpolation/Lagrange';
 
 function App() {
 	return (
@@ -90,6 +91,9 @@ function App() {
 					</Route>
 					<Route path="/vandermonde">
 						<Vandermonde/>
+					</Route>
+					<Route path="/lagrange">
+						<Lagrange/>
 					</Route>
 				</Switch>
 			</Router>
