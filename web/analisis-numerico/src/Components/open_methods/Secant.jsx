@@ -3,7 +3,7 @@ import Geogebra from '../assets/Geogebra';
 import json_data from '../../json_data/bisection.json';
 import axios from 'axios';
 
-const Bisection = () => {
+const Secant = () => {
 	const [data, setData] = useState([]);
 	const [table, setTable] = useState([]);
 	const [root, setRoot] = useState(null);
@@ -89,7 +89,6 @@ const Bisection = () => {
 		try {
 			const result = await axios.post('http://127.0.0.1:5000/secant', body);
 			const { Table, Root } = result.data;
-			const headers = Table.shift();
 			console.log(result.data);
 			setTable(Table);
 			setRoot(Root);
@@ -116,26 +115,26 @@ const Bisection = () => {
 		if (showResults) {
 			const table_to_show = table;
 			const root_to_show = root;
-			const header_to_show = headers;
 			// console.log(results);
 			return (
 				<React.Fragment>
 					<table class="table">
 						<thead>
 							<tr>
-								{header_to_show.map((column) => (
-									<th scope="col">{column}</th>
-								))}
+				
+									<th scope="col">Iteration</th>
+									<th scope="col">xi</th>
+									<th scope="col">f(xi)</th>
+									<th scope="col">Error</th>
+
 							</tr>
 						</thead>
 						<tbody>
 							{table_to_show.map((result, index) => (
-								<tr id={index}>
+								<tr key={index}>
 									<th>{round(result.Iteration, 4)}</th>
-									<th>{round(result.a, 4)}</th>
-									<th>{round(result.xm, 4)}</th>
-									<th>{round(result.b, 4)}</th>
-									<th>{result['f(xm)']}</th>
+									<th>{round(result.xi, 4)}</th>
+									<th>{result["f(xi)"]}</th>
 									<th>{result.Error}</th>
 								</tr>
 							))}
@@ -230,4 +229,4 @@ const Bisection = () => {
 	);
 };
 
-export default Bisection;
+export default Secant;
