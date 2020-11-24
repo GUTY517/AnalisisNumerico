@@ -138,6 +138,9 @@ const Header = () => {
                 <Link className="dropdown-item" to="newton_interpolation">
                   Newton
                 </Link>
+                <Link className="dropdown-item" to="lagrange">
+                  Lagrange
+                </Link>
 
                 {/* <Link className="dropdown-item" to="#">
                   Something else here
