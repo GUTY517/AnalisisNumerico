@@ -122,7 +122,25 @@ def main(x_values, y_values):
     '''Method execution'''
     polynomial_values = polynomials(x_values, y_values)
     coefficients = [item[-1] for item in polynomial_values]
-    return vander(x_values), polynomial_values, coefficients
+    polynomial_text = "P(X)="
+    data_size = len(coefficients)
+    for i in range(data_size):
+        if len(coefficients) - (i+1) == 1:
+            polynomial_text += (f"{coefficients[i]}x")
+        elif len(coefficients) - (i+1) == 0:
+            if coefficients[i] >= 0:
+                polynomial_text += (f"+{coefficients[i]}")
+            else:
+                polynomial_text += (f"{coefficients[i]}")
+        else:
+            if coefficients[i] >= 0:
+                polynomial_text += (
+                    f"+{coefficients[i]}x^{len(coefficients) - (i+1)}")
+            else:
+                polynomial_text += (
+                    f"{coefficients[i]}x^{len(coefficients) - (i+1)}")
+    polynomial_text = [polynomial_text]
+    return vander(x_values), polynomial_text, coefficients
 
 class Vandermonde(Resource):
     '''Flask functions for web page'''
