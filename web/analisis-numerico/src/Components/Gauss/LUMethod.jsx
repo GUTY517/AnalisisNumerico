@@ -98,7 +98,12 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		};
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
-			// console.log(JSON.parse(result.data));
+			// console.log((result.data));
+			if(result.data.includes("NaN")) {
+				setError("There is no solution for this system");
+				setShowError(true);
+				return
+			}
 			const { aumented_matrix, permuted_matrix, L, U, solution } = result.data;
 
 			// const matrix_result = result.filter(typeof Array);
@@ -108,6 +113,7 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 			setL(L);
 			setU(U);
 			setSolution(solution);
+
 		} catch (error) {
 			console.error(error);
 			const { message } = error.response.data;

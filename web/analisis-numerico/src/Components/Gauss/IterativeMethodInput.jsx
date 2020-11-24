@@ -128,6 +128,8 @@ const IterativeMethodInput = ({ matrix_method, endpoint }) => {
 			setTable(Table);
 			setAnswers(Answers);
 			setShowMatrixResult(true);
+			setError(null);
+			setShowError(false);
 		} catch (error) {
 			console.error(error);
 			const { message } = error.response.data;

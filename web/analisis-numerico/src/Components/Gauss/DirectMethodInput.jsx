@@ -54,8 +54,8 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		for (let i = 0; i < matrix_size_aux; i++) {
 			matrix_ones[i] = Array(matrix_size_aux).fill(1);
 		}
-		// setMatrix(matrix_ones);
-		setMatrix( [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]);
+		setMatrix(matrix_ones);
+		// setMatrix( [[4, -1, 0, 3], [1, 15.5, 3, 8], [0, -1.3, -4, 1.1], [14, 5, -2, 30]]);
 		setBVector(vector_ones);
 		setATitle('A');
 		setBTitle('b');
@@ -105,6 +105,8 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 			setL(L);
 			setU(U);
 			setSolution(solution);
+			setShowError(false);
+			setError(null);
 		} catch (error) {
 			console.error(error);
 			const { message } = error.response.data;

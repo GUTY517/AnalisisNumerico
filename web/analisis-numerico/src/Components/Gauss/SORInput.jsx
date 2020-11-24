@@ -138,6 +138,8 @@ const SORInput = ({ matrix_method, endpoint }) => {
 			setAnswers(Answers);
 			setSpectralValues(SpectralValues);
 			setShowMatrixResult(true);
+			setShowError(false);
+			setError(null);
 		} catch (error) {
 			console.error(error);
 			const { message } = error.response.data;
