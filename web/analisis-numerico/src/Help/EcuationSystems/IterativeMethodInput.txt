@@ -1,0 +1,9 @@
+The initial vector isn't too important.
+
+The determinant of the matrix cannot be 0.
+
+The matrix cannot have a 0 on the main diagonal.
+
+The number of iterations mus be positive.
+
+The tolerance must be positive.
