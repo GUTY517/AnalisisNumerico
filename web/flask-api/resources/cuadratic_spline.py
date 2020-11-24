@@ -1,13 +1,13 @@
 #!/bin/python3
 '''Cuadratic spline method'''
 
-import numpy as np
 import json
+import numpy as np
 from numpy.linalg import det
 from scipy.linalg import lu
 from flask_restful import Resource
 from flask import request
-
+from flask import abort
 
 def cuadratic_spline(data):
     '''Cuadratic spline method'''

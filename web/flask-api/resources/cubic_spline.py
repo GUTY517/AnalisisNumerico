@@ -7,6 +7,7 @@ from numpy.linalg import det
 from scipy.linalg import lu
 from flask_restful import Resource
 from flask import request
+from flask import abort
 
 def cubic_spline(data):
     '''Cubic spline method'''
