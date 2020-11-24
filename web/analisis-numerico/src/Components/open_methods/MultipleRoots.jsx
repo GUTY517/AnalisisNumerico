@@ -3,6 +3,7 @@ import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
 import MultipleRootsHelp from "../../Help/NonLinealEcuations/MultipleRootHelp";
+import SpecialInputHelp from "../../Help/SpecialInputHelp";
 
 const MultipleRoots = () => {
 	const [data, setData] = useState([]);
@@ -41,6 +42,8 @@ const MultipleRoots = () => {
 			setShowError(true);
 			return;
 		}
+		setError(null);
+		setShowError(false);
 		const body = {
 			function: func_inputed,
 			initial_x0: parseFloat(initial_x0_inputed),
@@ -162,6 +165,7 @@ const MultipleRoots = () => {
 							</div>
 						</form>
             <MultipleRootsHelp/>
+            <SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />

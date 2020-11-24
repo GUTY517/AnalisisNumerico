@@ -3,6 +3,8 @@ import json_data from '../../json_data/total_pivoting.json';
 import MatrixInput from '../assets/MartrixInput';
 import axios from 'axios';
 import '../../App.css';
+import DirectMethodInputHelp from "../../Help/EcuationSystems/SORHelp";
+
 const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const [matrix_size, setMatrixSize] = useState(3);
 	const [matrix, setMatrix] = useState(new Array(matrix_size));
@@ -17,6 +19,15 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const [error, setError] = useState(null);
 	const [showError, setShowError] = useState(false);
 	const [sizeError, setSizeError] = useState(null);
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -278,6 +289,23 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">The input in the methods help you to be sure in the dimension of the matrix.</li>
+							<li className="list-group-item">The determinant of the matrix cannot be 0.</li>
+							<li className="list-group-item">The matrix can´t have a 0 on the diagonal, although the method is made in such a way that it does not stop.</li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">{matrix_method}</h2>
@@ -301,6 +329,12 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+						<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>

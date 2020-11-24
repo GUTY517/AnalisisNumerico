@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SpecialInputHelp = () => {
+const DirectMethodInput = () => {
 	const [showHelp, setShowHelp] = useState(false);
 
 	const showHelpCard = (e) => {
@@ -17,10 +17,9 @@ const SpecialInputHelp = () => {
 				<div className="d-flex">
 					<div className="card">
 						<ul className="list-group list-group-flush">
-						<li className="list-group-item">exp(5) = e^5</li>
-							<li className="list-group-item">sin(exp(3)*ln(x)) = sin(e^3*log(x))</li>
-							<li className="list-group-item">ln(x) = log(x)</li>
-							<li className="list-group-item">use ** instead of ^ eg: 2x^2 = 2x**2 </li>
+						<li className="list-group-item">The input in the methods help you to be sure in the dimension of the matrix.</li>
+						<li className="list-group-item">The determinant of the matrix cannot be 0.</li>
+						<li className="list-group-item">The matrix can´t have a 0 on the diagonal.</li>
 						</ul>
 					</div>
 				</div>
@@ -32,12 +31,11 @@ const SpecialInputHelp = () => {
 	return (
 		<div className="d-flex justify-content-center">
 			<button class="btn btn-primary" onClick={showHelpCard}>
-				Input Help
+				Help
 			</button>
 			{HelpCard()}
 		</div>
 	);
 };
 
-
-export default SpecialInputHelp;
+export default DirectMethodInput;

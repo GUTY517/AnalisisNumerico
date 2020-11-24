@@ -3,6 +3,8 @@ import json_data from '../../json_data/total_pivoting.json';
 import MatrixInput from '../assets/MartrixInput';
 import axios from 'axios';
 import '../../App.css';
+import DirectMethodInputHelp from "../../Help/EcuationSystems/SORHelp";
+
 const SORInput = ({ matrix_method, endpoint }) => {
 	const [matrix_size, setMatrixSize] = useState(3);
 	const [matrix, setMatrix] = useState(new Array(matrix_size));
@@ -21,6 +23,15 @@ const SORInput = ({ matrix_method, endpoint }) => {
 	const [sizeError, setSizeError] = useState(null);
 	const [answers, setAnswers] = useState([]);
 	const [spectral_values, setSpectralValues] = useState([]);
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -312,6 +323,28 @@ const SORInput = ({ matrix_method, endpoint }) => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">In SOR if w = 1 is like Gauss-Seidel method.</li>
+							<li className="list-group-item">In SOR if 0 {"<"} w {"<"} 1 we got sub-relaxation methods (used in non-convergent Gauss-Seidel systems).</li>
+							<li className="list-group-item">In SOR if 1 {"<"} w {"<"} 2 we got over-relaxation methods (used to "increase" the speed of some methods).</li>
+							<li className="list-group-item">The initial vector isn't too important.</li>
+							<li className="list-group-item">The determinant of the matrix cannot be 0.</li>
+							<li className="list-group-item">The matrix cannot have a 0 on the main diagonal.</li>
+							<li className="list-group-item">The number of iterations mus be positive.</li>
+							<li className="list-group-item">The tolerance must be positive.</li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">{matrix_method}</h2>
@@ -335,6 +368,12 @@ const SORInput = ({ matrix_method, endpoint }) => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+					<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>

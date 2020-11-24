@@ -3,6 +3,7 @@ import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
 import FixedPointHelp from "../../Help/NonLinealEcuations/FixedPointHelp";
+import SpecialInputHelp from '../../Help/SpecialInputHelp';
 
 const FixedPoint = () => {
 	const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ const FixedPoint = () => {
 		return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 	};
 
-	const handleSubtmit = async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
     // const { func, initial_a, initial_b, tolerance, iterations } = form_data;
     let f_func_inputed = document.querySelector(".f-func-input").value;
@@ -150,7 +151,7 @@ const FixedPoint = () => {
 			<div className="container mt-2">
 				<div className="row">
 					<div className="col-6 mt-3">
-						<form className="m-auto" onSubmit={handleSubtmit}>
+						<form className="m-auto" onSubmit={handleSubmit}>
 							<div className="form-group">
 								<input
 									type="text"
@@ -207,6 +208,7 @@ const FixedPoint = () => {
 							</div>
 						</form>
             <FixedPointHelp/>
+            <SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />

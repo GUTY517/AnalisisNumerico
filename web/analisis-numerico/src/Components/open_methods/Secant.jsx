@@ -3,6 +3,7 @@ import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
 import SecantHelp from "../../Help/NonLinealEcuations/MultipleRootHelp";
+import SpecialInputHelp from "../../Help/SpecialInputHelp";
 
 const Secant = () => {
 	const [data, setData] = useState([]);
@@ -122,7 +123,6 @@ const Secant = () => {
 					<table class="table">
 						<thead>
 							<tr>
-				
 									<th scope="col">Iteration</th>
 									<th scope="col">xi</th>
 									<th scope="col">f(xi)</th>
@@ -215,6 +215,7 @@ const Secant = () => {
 							</div>
 						</form>
 					<SecantHelp/>
+					<SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />

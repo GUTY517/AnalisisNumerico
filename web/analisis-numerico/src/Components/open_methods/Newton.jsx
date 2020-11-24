@@ -3,6 +3,7 @@ import Geogebra from '../assets/Geogebra';
 import axios from 'axios';
 
 import NewtonHelp from "../../Help/NonLinealEcuations/NewtonHelp";
+import SpecialInputHelp from "../../Help/SpecialInputHelp";
 
 const Newton = () => {
 	const [data, setData] = useState([]);
@@ -41,6 +42,8 @@ const Newton = () => {
 			setShowError(true);
 			return;
 		}
+		setShowError(false);
+		setError(null)
 		const body = {
 			function: func_inputed,
 			initial_x0: parseFloat(initial_x0_inputed),
@@ -158,6 +161,7 @@ const Newton = () => {
 							</div>
 						</form>
 					<NewtonHelp/>
+					<SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />

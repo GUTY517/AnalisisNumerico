@@ -5,6 +5,7 @@ import axios from 'axios';
 
 
 import BisectionHelp from "../../Help/NonLinealEcuations/BisectionHelp";
+import SpecialInputHelp from "../../Help/SpecialInputHelp";
 
 const Bisection = () => {
 	const [data, setData] = useState([]);
@@ -217,7 +218,8 @@ const Bisection = () => {
 								</button>
 							</div>
 						</form>
-            <BisectionHelp/>
+            			<BisectionHelp/>
+						<SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />

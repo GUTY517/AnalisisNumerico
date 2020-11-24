@@ -27,6 +27,7 @@ import Lagrange from './Components/interpolation/Lagrange';
 import LinearSpline from './Components/interpolation/LinearSpline';
 import CuadraticSpline from './Components/interpolation/CuadraticSpline';
 import CubicSpline from './Components/interpolation/CubicSpline';
+import IncrementalSearch from './Components/open_methods/IncrementalSearch';
 
 function App() {
 	return (
@@ -40,6 +41,9 @@ function App() {
 					</Route>
 					<Route path="/newton">
 						<Newton />
+					</Route>
+					<Route path="/incremental_search">
+						<IncrementalSearch />
 					</Route>
 					<Route path="/gauss">
 						<Gauss/>

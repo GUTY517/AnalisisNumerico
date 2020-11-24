@@ -4,8 +4,9 @@ import json_data from '../../json_data/bisection.json';
 import axios from 'axios';
 
 import FalseRuleHelp from "../../Help/NonLinealEcuations/FalseRuleHelp";
+import SpecialInputHelp from "../../Help/SpecialInputHelp";
 
-const Bisection = () => {
+const False_Rule = () => {
 	const [data, setData] = useState([]);
 	const [table, setTable] = useState([]);
 	const [root, setRoot] = useState(null);
@@ -214,6 +215,7 @@ const Bisection = () => {
 							</div>
 						</form>
 					<FalseRuleHelp/>
+					<SpecialInputHelp/>
 					</div>
 					<div>
 						<Geogebra />
@@ -230,4 +232,4 @@ const Bisection = () => {
 	);
 };
 
-export default Bisection;
+export default False_Rule;

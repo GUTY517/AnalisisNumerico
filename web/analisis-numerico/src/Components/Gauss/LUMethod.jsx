@@ -20,6 +20,15 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 	const [error, setError] = useState(null);
 	const [showError, setShowError] = useState(false);
 	const [sizeError, setSizeError] = useState(null);
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -339,6 +348,23 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item"></li>
+							<li className="list-group-item"></li>
+							<li className="list-group-item"></li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">{matrix_method}</h2>
@@ -362,6 +388,12 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+					<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>

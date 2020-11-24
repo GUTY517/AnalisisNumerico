@@ -35,7 +35,7 @@ const Header = () => {
                 className="dropdown-menu"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/incremental_search">
                   Incremental Search
                 </Link>
                 <Link className="dropdown-item" to="/bisection">
