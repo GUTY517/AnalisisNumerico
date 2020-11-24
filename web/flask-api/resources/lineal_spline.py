@@ -17,7 +17,7 @@ def lineal_spline(data):
     gen = matrix
     determinant = check_det(matrix)
     _, matrix = lu(matrix, permute_l=True)
-    coefficients = polynomial_values(matrix.tolist(), len(matrix))
+    coefficients = [round(x, 4) for x in polynomial_values(matrix.tolist(), len(matrix))]
     polynomials = clean_output(coefficients, data)
     return polynomials, gen
 
