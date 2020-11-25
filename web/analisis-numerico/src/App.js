@@ -29,6 +29,7 @@ import CuadraticSpline from './Components/interpolation/CuadraticSpline';
 import CubicSpline from './Components/interpolation/CubicSpline';
 import IncrementalSearch from './Components/open_methods/IncrementalSearch';
 import About from './Components/About';
+import NotFound from './NotFound';
 
 function App() {
 	return (
@@ -37,10 +38,10 @@ function App() {
 				<Header />
 
 				<Switch>
-					<Route path="/">
+					<Route  exact path="/">
 						<About/>
 					</Route>
-					<Route path="/bisection">
+					<Route exact path="/bisection">
 						<Bisection />
 					</Route>
 					<Route path="/newton">
@@ -115,6 +116,7 @@ function App() {
 					<Route path="/cubic_spline">
 						<CubicSpline/>
 					</Route>
+					<Route path="*" component={NotFound}></Route>
 				</Switch>
 			</Router>
 		</div>
