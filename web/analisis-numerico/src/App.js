@@ -28,6 +28,7 @@ import LinearSpline from './Components/interpolation/LinearSpline';
 import CuadraticSpline from './Components/interpolation/CuadraticSpline';
 import CubicSpline from './Components/interpolation/CubicSpline';
 import IncrementalSearch from './Components/open_methods/IncrementalSearch';
+import About from './Components/About';
 
 function App() {
 	return (
@@ -36,6 +37,9 @@ function App() {
 				<Header />
 
 				<Switch>
+					<Route path="/">
+						<About/>
+					</Route>
 					<Route path="/bisection">
 						<Bisection />
 					</Route>

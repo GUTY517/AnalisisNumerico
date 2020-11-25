@@ -84,7 +84,7 @@ const FixedPoint = () => {
 			iterations: parseFloat(iterations_inputed),
 		};
 		try {
-			const result = await axios.post('http://127.0.0.1:5000/fixed_point', body);
+			const result = await axios.post('https://euclid-api.herokuapp.com/fixed_point', body);
 			const { Table, Root } = result.data;
 			console.log(result.data);
 			setTable(Table);
