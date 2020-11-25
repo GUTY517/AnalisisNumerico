@@ -12,6 +12,7 @@ const Newton_Interpolation = () => {
 	const [sizeError, setSizeError] = useState(null);
 
 	const [coefficients, setCoefficients] = useState([]);
+	const [polynomials, setPolynomials] = useState([])
 	const [x_values, setXValues] = useState(new Array(matrix_size));
 	const [y_values, setYValues] = useState(new Array(matrix_size));
 	const [showHelp, setShowHelp] = useState(false);
@@ -99,8 +100,9 @@ const Newton_Interpolation = () => {
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/newton_interpolation`, body);
 			console.log(result.data);
-			const { Coefficients } = result.data;
+			const { Coefficients, Polynomials } = result.data;
 			setCoefficients(Coefficients);
+			setPolynomials(Polynomials);
 			setShowMatrixResult(true);
 			setShowError(false);
 			setError(null);
@@ -125,20 +127,46 @@ const Newton_Interpolation = () => {
 			);
 		} else if (show_matrix_result) {
 			const coefficients_to_show = coefficients;
+			const polynomials_to_show = polynomials;
+
 			return (
 				<React.Fragment>
-					<div className="d-flex-column">
-						<p className="font-weight-bold">Answers:</p>
-						<div className="d-inline-flex justify-content-between">
-							{coefficients_to_show.map((value, key) => {
-								return (
-									<div className="m-2">
-										<p className="font-weight-bold">{value}</p>
-									</div>
-								);
-							})}
+					<div className="d-column-flex">
+						<div className="d-column-flex p-2 m-3">
+							<div>
+								<p className="font-weight-bold">Polynomials</p>
+							</div>
+							<div>
+								{polynomials_to_show.map((row, indexRow) => {
+									return (
+										<div className="d-flex-inline" key={indexRow}>
+											<p
+												key={indexRow}
+												valueId={indexRow}
+												className="font-weight-bold"
+												readOnly
+											>
+												{row}
+											</p>
+										</div>
+									);
+								})}
+							</div>
 						</div>
-					</div>
+						<div className="d-flex-column p-2 m-3">
+							<p className="font-weight-bold">Coefficients:</p>
+							<div className="d-inline-flex justify-content-between">
+								{coefficients_to_show.map((value, key) => {
+									let rounded = round(value, 4);
+									return (
+										<div className="m-2">
+											<p className="font-weight-bold">{rounded}</p>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+						</div>
 				</React.Fragment>
 			);
 		}

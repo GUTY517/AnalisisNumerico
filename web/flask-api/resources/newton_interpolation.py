@@ -91,5 +91,6 @@ class NewtonInterpolation(Resource):
         x_values = body_params["x_values"]
         y_values = body_params["y_values"]
         coefficients = interpolate_coefficients(x_values, y_values)
-        json_data = json.loads(json.dumps({"Coefficients":coefficients}))
+        polynomials = ["P(x) = " + str(coefficients[0]) + str(coefficients[1]) + "*(x-(-1.0))" + str(coefficients[2]) + "∗(x-(-1.0))∗(x-(0.0))" + str(coefficients[3]) + "∗(x-(-1.0))∗(x-(0.0))∗(x-(3.0))"]
+        json_data = json.loads(json.dumps({"Coefficients":coefficients, "Polynomials":polynomials}))
         return json_data
