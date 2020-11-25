@@ -40,15 +40,15 @@ const SplineInput = ({ spline_method, endpoint }) => {
 		const regex = new RegExp('[0-9]+');
 		setError(null);
 		if (matrix_size < 2 || matrix_size === null) {
-			setSizeError('Error performing matrix size, the value must be greater than 1');
+			setSizeError('Error performing table size, the value must be greater than 1');
 			setShowError(true);
 			return;
 		} else if (!matrix_size.toString().match(regex)) {
-			setSizeError('Only numbers are allowed in the matrix size');
+			setSizeError('Only numbers are allowed in the table size');
 			setShowError(true);
 			return;
 		} else if (matrix_size > 5) {
-			setSizeError('The matrix size should be less than 6 for helping to perform operations');
+			setSizeError('The table size should be less than 6 for helping to perform operations');
 			setShowError(true);
 			return;
 		} else {
@@ -284,7 +284,7 @@ const SplineInput = ({ spline_method, endpoint }) => {
 							<div className="d-flex justify-content-center m-3">
 								<div className="d-flex">
 									<button class="btn btn-primary" type="submit">
-										Generate Matrix
+										Generate Table
 									</button>
 								</div>
 							</div>

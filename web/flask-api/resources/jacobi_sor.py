@@ -5,7 +5,7 @@ import json
 from decimal import Decimal
 import pandas as pd
 from numpy import linalg, diag, tril, triu, transpose, matmul, array
-from scipy.linalg import eigvals
+from scipy.linalg import eigvals, LinAlgError
 from flask_restful import Resource
 from flask import request
 from flask import abort
@@ -21,7 +21,10 @@ def jacobi_sor(matrix, vector, x_0, w_value, iterations, tolerance):
     title.append("Error")
     table = pd.DataFrame(columns=title)
     data_size = len(matrix)
-    determinant = linalg.det(matrix)
+    try:
+        determinant = linalg.det(matrix)
+    except LinAlgError:
+        abort(500, "You have inputed a one dimensional array, array must be at least two dimensions")
     if determinant == 0:
         abort(500, "Determinant is zero")
 
