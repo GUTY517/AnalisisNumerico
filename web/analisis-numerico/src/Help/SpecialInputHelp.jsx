@@ -20,7 +20,7 @@ const SpecialInputHelp = () => {
 						<li className="list-group-item">exp(5) = e^5</li>
 							<li className="list-group-item">sin(exp(3)*ln(x)) = sin(e^3*log(x))</li>
 							<li className="list-group-item">ln(x) = log(x)</li>
-							<li className="list-group-item">use ** instead of ^ eg: 2x^2 = 2x**2 </li>
+							<li className="list-group-item">use ** instead of ^ eg: 2*x^2 = 2*x**2 </li>
 						</ul>
 					</div>
 				</div>
