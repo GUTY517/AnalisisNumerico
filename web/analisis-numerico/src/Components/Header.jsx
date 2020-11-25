@@ -135,7 +135,7 @@ const Header = () => {
 									Linear Spline
 								</Link>
 								<Link className="dropdown-item" to="cuadratic_spline">
-									Cuadratic Spline
+									Quadratic Spline
 								</Link>
 								<Link className="dropdown-item" to="cubic_spline">
 									Cubic Spline

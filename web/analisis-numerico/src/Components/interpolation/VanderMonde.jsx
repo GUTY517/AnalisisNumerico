@@ -94,7 +94,7 @@ const Vandermonde = () => {
 		};
 		console.log(body);
 		try {
-			const result = await await axios.post(`http://127.0.0.1:5000/vandermonde`, body);
+			const result = await await axios.post(`https://euclid-api.herokuapp.com/vandermonde`, body);
 			console.log(result.data);
 			const { Coefficients, VanderTable, Polynomials } = result.data;
 			setPolinomials(Polynomials);

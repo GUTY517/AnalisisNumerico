@@ -107,17 +107,24 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 		};
 		try {
 			const result = await await axios.post(`https://euclid-api.herokuapp.com/${endpoint}`, body);
-			// console.log((result.data));
-			if(result.data.includes("NaN")) {
-				setError("There is no solution for this system");
-				setShowError(true);
-				return
+			console.log((result.data));
+			if(typeof(result.data) == "string") {
+
+				if(result.data.includes("NaN")) {
+					setError("There is no solution for this system");
+					setShowError(true);
+					return
+				}
+			} else {
+				setError(null);
+				setShowError(false);
 			}
-			const { aumented_matrix, permuted_matrix, L, U, solution } = result.data;
+			
+			const { augmented_matrix, permuted_matrix, L, U, solution } = result.data;
 
 			// const matrix_result = result.filter(typeof Array);
 			setShowMatrixResult(true);
-			setAugmentedMatrix(aumented_matrix);
+			setAugmentedMatrix(augmented_matrix);
 			setPermutedMatrix(permuted_matrix);
 			setL(L);
 			setU(U);
@@ -146,6 +153,7 @@ const DirectMethodInput = ({ matrix_method, endpoint }) => {
 			const L_Matrix = L;
 			const U_Matrix = U;
 			const augmented_matrix_to_show = augmented_matrix;
+			console.log(augmented_matrix_to_show)
 			const permuted_matrix_to_show = permuted_matrix;
 			const solution_vector = solution_x;
 			return (
