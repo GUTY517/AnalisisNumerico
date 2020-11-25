@@ -32,7 +32,7 @@ const MultipleRoots = () => {
 			return;
 		}
 		if (number_regex.test(initial_x0_inputed) === false) {
-			setError('Enter valid number for A value');
+			setError('x0 must be different than zero (0)');
 			setShowError(true);
 
 			return;

@@ -22,6 +22,7 @@ const HelpCard = () => {
 						<li className="list-group-item">The initial value must exist in the function.</li>
 						<li className="list-group-item">The functionTolerance must have a positive value.</li>
 						<li className="list-group-item">The iteration number must be positive.</li>
+						<li className="list-group-item">X Lower and X Upper represents the interval where the root where founded.</li>
 					</ul>
 				</div>
 			</div>

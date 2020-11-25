@@ -32,7 +32,7 @@ const IncrementalSearch = () => {
 			return;
 		}
 		if (number_regex.test(initial_x0_inputed) === false) {
-			setError('Enter valid number for A value');
+			setError('x0 must be different than zero (0)');
 			setShowError(true);
 
 			return;
@@ -86,8 +86,8 @@ const IncrementalSearch = () => {
 					<table class="table">
           <thead>
             <tr>
-              <th scope="col">X</th>
-              <th scope="col">Y</th>
+              <th scope="col">X Lower</th>
+              <th scope="col">X Upper</th>
 
             </tr>
           </thead>
