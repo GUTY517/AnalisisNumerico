@@ -52,7 +52,7 @@ const Newton = () => {
 		};
 		try {
 			console.log(body);
-			const result = await axios.post('http://127.0.0.1:5000/newton', body);
+			const result = await axios.post('https://euclid-api.herokuapp.com/newton', body);
       const { Table, Root } = result.data;
       console.log(Table)
       console.log(Root)

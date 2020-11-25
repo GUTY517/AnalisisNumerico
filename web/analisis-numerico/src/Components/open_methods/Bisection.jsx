@@ -91,7 +91,7 @@ const Bisection = () => {
 			iterations: parseFloat(iterations_inputed),
 		};
 		try {
-			const result = await axios.post('http://127.0.0.1:5000/bisection', body);
+			const result = await axios.post('https://euclid-api.herokuapp.com/bisection', body);
 			const { Table, Root } = result.data;
 			const headers = Table.shift();
 			// console.log(result.data);

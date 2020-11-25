@@ -52,7 +52,7 @@ const MultipleRoots = () => {
 		};
 		try {
 			console.log(body);
-			const result = await axios.post('http://127.0.0.1:5000/multiple_roots', body);
+			const result = await axios.post('https://euclid-api.herokuapp.com/multiple_roots', body);
 			const { Table, Root } = result.data;
 			console.log(Table);
 			console.log(Root);

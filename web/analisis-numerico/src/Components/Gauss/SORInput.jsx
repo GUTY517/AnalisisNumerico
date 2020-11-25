@@ -140,7 +140,7 @@ const SORInput = ({ matrix_method, endpoint }) => {
 			iterations: parseInt(iterations_inputed),
 		};
 		try {
-			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
+			const result = await await axios.post(`https://euclid-api.herokuapp.com/${endpoint}`, body);
 			console.log(result.data);
 			const { Table, Answers, SpectralValues } = result.data;
 

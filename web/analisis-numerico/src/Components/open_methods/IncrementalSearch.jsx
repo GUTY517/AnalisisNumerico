@@ -53,7 +53,7 @@ const IncrementalSearch = () => {
 		};
 		try {
 			console.log(body);
-			const result = await axios.post('http://127.0.0.1:5000/incremental_searches', body);
+			const result = await axios.post('https://euclid-api.herokuapp.com/incremental_searches', body);
 			const { Roots } = result.data;
 			console.log(Roots);
 			setRoots(Roots);
