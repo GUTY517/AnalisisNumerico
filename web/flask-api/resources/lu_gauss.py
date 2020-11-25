@@ -31,7 +31,7 @@ class LuGauss(Resource):
             matrix, vector)
         json_response = json.loads(json.dumps(
                                              {
-                                                "aumented_matrix":augmented_matrix.tolist(),
+                                                "augmented_matrix":augmented_matrix.tolist(),
                                                 "permuted_matrix":permuted_matrix.tolist(),
                                                 "L":lower_triangular_matrix.tolist(),
                                                 "U":upper_triangular_matrix.tolist(),

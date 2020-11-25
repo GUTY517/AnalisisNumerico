@@ -4,7 +4,7 @@ import SplineInput from './SplineInput';
 const CuadraticSpline = () => {
   return ( 
     <SplineInput
-      spline_method="Cuadratic Spline"
+      spline_method="Quadratic Spline"
       endpoint="cuadratic_spline"
     />
    );

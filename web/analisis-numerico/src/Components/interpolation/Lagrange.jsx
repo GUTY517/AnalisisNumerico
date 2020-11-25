@@ -96,7 +96,7 @@ const Lagrange = () => {
 		};
 		console.log(body);
 		try {
-			const result = await await axios.post(`http://127.0.0.1:5000/lagrange`, body);
+			const result = await await axios.post(`https://euclid-api.herokuapp.com/lagrange`, body);
 			console.log(result.data);
 			const { Answers, Ecuations } = result.data;
 			setAnswers(Answers);

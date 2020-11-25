@@ -98,7 +98,7 @@ const Newton_Interpolation = () => {
 		};
 		console.log(body);
 		try {
-			const result = await await axios.post(`http://127.0.0.1:5000/newton_interpolation`, body);
+			const result = await await axios.post(`https://euclid-api.herokuapp.com/newton_interpolation`, body);
 			console.log(result.data);
 			const { Coefficients, Polynomials } = result.data;
 			setCoefficients(Coefficients);

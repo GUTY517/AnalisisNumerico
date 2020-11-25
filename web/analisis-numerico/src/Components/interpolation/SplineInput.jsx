@@ -98,7 +98,7 @@ const SplineInput = ({ spline_method, endpoint }) => {
 		};
 		console.log(body);
 		try {
-			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
+			const result = await await axios.post(`https://euclid-api.herokuapp.com/${endpoint}`, body);
 			console.log(result.data);
 			let { Polynomials, Table } = result.data;
 			let headers = Polynomials.shift();

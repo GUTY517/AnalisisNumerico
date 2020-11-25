@@ -62,13 +62,13 @@ const IterativeMethodInput = ({ matrix_method, endpoint }) => {
 		for (let i = 0; i < matrix_size_aux; i++) {
 			matrix_ones[i] = Array(matrix_size_aux).fill(1);
 		}
-		// setMatrix(matrix_ones);
-		setMatrix([
-			[4, -1, 0, 3],
-			[1, 15.5, 3, 8],
-			[0, -1.3, -4, 1.1],
-			[14, 5, -2, 30],
-		]);
+		setMatrix(matrix_ones);
+		// setMatrix([
+		// 	[4, -1, 0, 3],
+		// 	[1, 15.5, 3, 8],
+		// 	[0, -1.3, -4, 1.1],
+		// 	[14, 5, -2, 30],
+		// ]);
 		setBVector(vector_ones);
 		setX0Vector(x0_ones);
 		setATitle('A');
