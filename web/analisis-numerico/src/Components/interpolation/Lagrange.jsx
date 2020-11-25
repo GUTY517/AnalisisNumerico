@@ -13,11 +13,20 @@ const Lagrange = () => {
 
 	// const [coefficients, setCoefficients] = useState([]);
 	// const [vander_table, setVanderTable] = useState([]);
-  // const [polinomials, setPolinomials] = useState([]);
-  const [ecuations, setEcuations] = useState([]);
-  const [answers, setAnswers] = useState([]); 
+	// const [polinomials, setPolinomials] = useState([]);
+	const [ecuations, setEcuations] = useState([]);
+	const [answers, setAnswers] = useState([]);
 	const [x_values, setXValues] = useState(new Array(matrix_size));
 	const [y_values, setYValues] = useState(new Array(matrix_size));
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -89,9 +98,9 @@ const Lagrange = () => {
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/lagrange`, body);
 			console.log(result.data);
-      const { Answers, Ecuations } = result.data;
-      setAnswers(Answers);
-      setEcuations(Ecuations);
+			const { Answers, Ecuations } = result.data;
+			setAnswers(Answers);
+			setEcuations(Ecuations);
 			// setPolinomials(Polynomials);
 			// setCoefficients(Coefficients);
 			// setVanderTable(VanderTable);
@@ -118,8 +127,8 @@ const Lagrange = () => {
 				</div>
 			);
 		} else if (show_matrix_result) {
-      const answers_to_show = answers;
-      const ecuations_to_swow = ecuations;
+			const answers_to_show = answers;
+			const ecuations_to_swow = ecuations;
 			// const coefficients_to_show = coefficients;
 			// const polinomials_to_show = polinomials;
 			// const vandertable_to_show = vander_table;
@@ -133,7 +142,7 @@ const Lagrange = () => {
 									// let rounded = round(value, 4);
 									return (
 										<div className="m-2">
-											<p className="font-weight-bold">{`P(X) = `+ value + "= "} </p>
+											<p className="font-weight-bold">{`P(X) = ` + value + '= '} </p>
 										</div>
 									);
 								})}
@@ -152,7 +161,6 @@ const Lagrange = () => {
 								})}
 							</div>
 						</div>
-            
 					</div>
 				</React.Fragment>
 			);
@@ -225,6 +233,21 @@ const Lagrange = () => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">Data in table can't have repeated values.</li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">Lagrange</h2>
@@ -234,7 +257,7 @@ const Lagrange = () => {
 						<div className="d-flex justify-content-center">
 							<input
 								className="m-3"
-								placeholder="Enter the matrix's size"
+								placeholder="Enter the table size"
 								name="matrix_size"
 								type="number"
 								onChange={handleChangeSizeMatrix}
@@ -248,6 +271,12 @@ const Lagrange = () => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+						<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>

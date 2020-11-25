@@ -16,6 +16,15 @@ const Vandermonde = () => {
 	const [polinomials, setPolinomials] = useState([]);
 	const [x_values, setXValues] = useState(new Array(matrix_size));
 	const [y_values, setYValues] = useState(new Array(matrix_size));
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -254,6 +263,21 @@ const Vandermonde = () => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">Data in table can't have repeated values.</li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">Vandermonde</h2>
@@ -263,7 +287,7 @@ const Vandermonde = () => {
 						<div className="d-flex justify-content-center">
 							<input
 								className="m-3"
-								placeholder="Enter the matrix's size"
+								placeholder="Enter the table size"
 								name="matrix_size"
 								type="number"
 								onChange={handleChangeSizeMatrix}
@@ -277,6 +301,12 @@ const Vandermonde = () => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+						<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>

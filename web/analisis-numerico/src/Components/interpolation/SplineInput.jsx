@@ -3,7 +3,7 @@ import json_data from '../../json_data/total_pivoting.json';
 import MatrixInput from '../assets/MartrixInput';
 import axios from 'axios';
 import '../../App.css';
-const SplineInput = ({spline_method, endpoint}) => {
+const SplineInput = ({ spline_method, endpoint }) => {
 	const [matrix_size, setMatrixSize] = useState(3);
 	const [show_matrix, setShowMatrix] = useState(false);
 	const [show_matrix_result, setShowMatrixResult] = useState(false);
@@ -13,13 +13,22 @@ const SplineInput = ({spline_method, endpoint}) => {
 
 	// const [coefficients, setCoefficients] = useState([]);
 	// const [vander_table, setVanderTable] = useState([]);
-  const [polinomials, setPolinomials] = useState([]);
-  const [table, setTable] = useState([]);
+	const [polinomials, setPolinomials] = useState([]);
+	const [table, setTable] = useState([]);
 	const [ecuations, setEcuations] = useState([]);
 	const [answers, setAnswers] = useState([]);
 	const [x_values, setXValues] = useState(new Array(matrix_size));
-  const [y_values, setYValues] = useState(new Array(matrix_size));
-  const [headers, setHeaders] = useState([]);
+	const [y_values, setYValues] = useState(new Array(matrix_size));
+	const [headers, setHeaders] = useState([]);
+	const [showHelp, setShowHelp] = useState(false);
+
+	const showHelpCard = (e) => {
+		if (showHelp) {
+			setShowHelp(false);
+		} else {
+			setShowHelp(true);
+		}
+	};
 
 	const handleChangeSizeMatrix = (event) => {
 		let value = event.target.value;
@@ -91,9 +100,9 @@ const SplineInput = ({spline_method, endpoint}) => {
 		try {
 			const result = await await axios.post(`http://127.0.0.1:5000/${endpoint}`, body);
 			console.log(result.data);
-      let { Polynomials, Table } = result.data;
-      let headers = Polynomials.shift();
-      setHeaders(headers)
+			let { Polynomials, Table } = result.data;
+			let headers = Polynomials.shift();
+			setHeaders(headers);
 			setPolinomials(Polynomials);
 			setTable(Table);
 			// setPolinomials(Polynomials);
@@ -125,10 +134,10 @@ const SplineInput = ({spline_method, endpoint}) => {
 			const answers_to_show = answers;
 			const ecuations_to_swow = ecuations;
 			// const coefficients_to_show = coefficients;
-      let polinomials_to_show = polinomials;
-      const headers_to_show =  headers;
-      let table_to_show = table;
-      console.log(polinomials_to_show)
+			let polinomials_to_show = polinomials;
+			const headers_to_show = headers;
+			let table_to_show = table;
+			console.log(polinomials_to_show);
 			return (
 				<React.Fragment>
 					<table class="table mt-4">
@@ -149,32 +158,29 @@ const SplineInput = ({spline_method, endpoint}) => {
 							))}
 						</tbody>
 					</table>
-          <div className="d-column-flex p-2 m-3">
-							<div>
-								<p className="text-center font-weight-bold">Table</p>
-							</div>
-							<div>
-								{table_to_show.map((row, indexRow) => {
-									return (
-										<div className="d-flex-inline" key={indexRow}>
-											{row.map((column, indexColumn) => {
-												return (
-													<MatrixInput
-														defaultValue={round(
-															table_to_show[indexRow][indexColumn],
-															4
-														)}
-														key={indexColumn}
-														valueId={indexColumn}
-														readOnly
-													/>
-												);
-											})}
-										</div>
-									);
-								})}
-							</div>
+					<div className="d-column-flex p-2 m-3">
+						<div>
+							<p className="text-center font-weight-bold">Table</p>
 						</div>
+						<div>
+							{table_to_show.map((row, indexRow) => {
+								return (
+									<div className="d-flex-inline" key={indexRow}>
+										{row.map((column, indexColumn) => {
+											return (
+												<MatrixInput
+													defaultValue={round(table_to_show[indexRow][indexColumn], 4)}
+													key={indexColumn}
+													valueId={indexColumn}
+													readOnly
+												/>
+											);
+										})}
+									</div>
+								);
+							})}
+						</div>
+					</div>
 				</React.Fragment>
 			);
 		}
@@ -246,6 +252,21 @@ const SplineInput = ({spline_method, endpoint}) => {
 		}
 	};
 
+	const HelpCard = () => {
+		if (showHelp) {
+			return (
+				<div className="d-flex">
+					<div className="card">
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item">Data in table can't have repeated values.</li>
+						</ul>
+					</div>
+				</div>
+			);
+		}
+		return null;
+	};
+
 	return (
 		<div className="m-5">
 			<h2 className="text-center mt-2">{spline_method}</h2>
@@ -255,7 +276,7 @@ const SplineInput = ({spline_method, endpoint}) => {
 						<div className="d-flex justify-content-center">
 							<input
 								className="m-3"
-								placeholder="Enter the matrix's size"
+								placeholder="Enter the table size"
 								name="matrix_size"
 								type="number"
 								onChange={handleChangeSizeMatrix}
@@ -269,6 +290,12 @@ const SplineInput = ({spline_method, endpoint}) => {
 							</div>
 						</div>
 					</form>
+					<div className="d-flex justify-content-center">
+						<button class="btn btn-primary" onClick={showHelpCard}>
+							Help
+						</button>
+						{HelpCard()}
+					</div>
 					{showMatrixInput()}
 					{showResults()}
 				</div>
